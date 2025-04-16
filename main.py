@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from datetime import datetime, timedelta
 import pytz
 import yaml
@@ -51,13 +51,21 @@ def homepage():
         extract = re.match(r"^---\n(.*?)\n---\n", article_content, re.DOTALL)
         article_data = yaml.safe_load(extract.group(1))
 
-        article_data["cover"] = f"/static/assets/images/{article_id}.jpg"
+        article_data["cover"] = f"/static/assets/news/covers/{article_id}.jpg"
         article_data["url"] = f"/article/{article_id}"
         article_data["datetime_formatted"] = format_date(datetime.fromisoformat(str(article_data["datetime"])))
 
         article_list.append(article_data)
 
     return render_template("index.html", article_list = article_list)
+
+
+
+# Temporary
+@app.route("/static/assets/news/covers/<int:id>.jpg")
+def temp_images(id):
+    return redirect("https://picsum.photos/1500/1000")
+
 
 
 if __name__ == "__main__":

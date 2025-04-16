@@ -4,6 +4,7 @@
     color-scheme: light dark;
     --front: light-dark(black, white);
     --back: light-dark(white, black);
+    --blue: #0f95b0;
 }
 
 @media (prefers-color-scheme: light) {
@@ -42,32 +43,97 @@ body {
 }
 
 header {
-    border-bottom: 1px solid light-dark(#bbb, #444);
-    padding: 15px 25px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: var(--back);
+    margin: 0 25px;
 }
 
-header a {
+header #header-content {
+    padding: 15px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: auto;
+}
+
+#header-logo {
     color: inherit;
     text-decoration: none;
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+#settings-container {
+    position: relative;
+}
+
+#theme-settings {
+    display: none;
+    position: absolute;
+    top: 150%;
+    right: 0;
+    flex-direction: column;
+    gap: 15px;
+    border: 2px solid #808080;
+    padding: 15px;
+    background: var(--back);
+    border-radius: 10px;
+    z-index: 10;
+}
+
+.theme-toggle {
+    width: max-content;
+    border: navajowhite;
+    background: none;
+}
+
+.toggle-circle {
+    margin-inline-end: 1em;
+}
+
+.theme-descript i {
+    margin-inline-start: .5em;
+}
+
+[data-theme="light"] #theme-light .toggle-circle {
+    color: var(--blue);
+}
+
+[data-theme="dark"] #theme-dark .toggle-circle {
+    color: var(--blue);
+}
+
+[data-theme="system"] #theme-system .toggle-circle {
+    color: var(--blue);
 }
 
 main {
-    margin: 15px 25px;
+    border: solid light-dark(#bbb, #444);
+    border-width: 1px 0;
+    padding: 15px 25px;
 }
 
 footer {
-    border-top: 1px solid light-dark(#bbb, #444);
     padding: 15px 25px;
 }
 
 footer {
     font-size: .9em;
     font-style: italic;
-    font-weight: 300;
+    font-weight: 700;
     color: light-dark(#555, #aaa);
     text-align: right;
 }
 
 footer a {
     color: light-dark(#555, #aaa);
+}
+
+#main-content {
+    max-width: 800px;
+    margin: auto;
 }

@@ -1,12 +1,7 @@
-main * {
+main article * {
     /* Reset the reset */
     margin: revert;
     padding: revert;
-}
-
-main article {
-    max-width: 800px;
-    margin: auto;
 }
 
 #article-header {
@@ -30,4 +25,14 @@ main article {
     margin-block: .25em 0;
     font-size: 1.1em;
     font-weight: 300;
+}
+
+article p {
+    margin-block: .75em;
+}
+
+article h2 {
+    font-size: 1.4em;
+    font-weight: 800;
+    margin-block-end: -0.25em;
 }

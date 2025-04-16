@@ -7,14 +7,12 @@
 {% endblock %}
 
 {% block content %}
-    <div id="article-list">
-        {% for article in article_list %}
-            <a class="article-container" href="{{ article.url }}">
-                <img class="article-image" src="{{ article.cover }}">
-                <span class="article-title">{{ article.title }}</span>
-                <span class="article-description">{{ article.description }}</span>
-                <span class="article-datetime">{{ article.datetime_formatted }}</span>
-            </a>
-        {% endfor %}
-    </div>
+    {% for article in article_list %}
+        <a class="article-container" href="{{ article.url }}">
+            <img class="article-image" src="{{ article.cover }}">
+            <span class="article-title">{{ article.title }}</span>
+            <span class="article-description">{{ article.description }}</span>
+            <span class="article-datetime">{{ article.datetime_formatted }}</span>
+        </a>
+    {% endfor %}
 {% endblock %}

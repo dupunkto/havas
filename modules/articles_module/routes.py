@@ -20,7 +20,7 @@ project_dir =  os.path.abspath(project_dir)
 
 
 @article_module.route("/<string:slug>")
-def article_article(slug):
+def article(slug):
     file_name = slug + ".md"
     try:
         with open(os.path.join(project_dir, "articles", "news", file_name), encoding="utf-8") as file:
@@ -48,7 +48,7 @@ def article_article(slug):
             formatted = dt_input.strftime("%a %d %b %Y, %H:%M:%S")
     
     article_data["dt_formatted"] = formatted
-    article_data["cover"] = f"/static/assets/images/{slug}.jpg"
+    article_data["cover"] = f"/static/assets/news/covers/{slug}.jpg"
 
     text = commonmark.commonmark(file_content_clean)
 

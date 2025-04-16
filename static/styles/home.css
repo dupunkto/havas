@@ -1,8 +1,8 @@
-#article-list {
+#main-content {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px 40px;
-    max-width: 750px;
+    margin: auto;
 }
 
 .article-container {
@@ -16,7 +16,7 @@
 
 .article-image {
     width: 100%;
-    height: 100px;
+    height: 125px;
     object-fit: cover;
     border-radius: 4px;
 }
