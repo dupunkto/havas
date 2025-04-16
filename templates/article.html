@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/article.css') }}">
+{% endblock %}
+
+{% block content %}
+    <article>
+        <section id="article-header">
+            <img id="article-cover-image" src="{{ cover }}">
+            <h1 id="article-title">{{ title }}</h1>
+            <p id="article-date">{{ dt_formatted }}</p>
+        </section>
+        {{ article_content | safe }}
+    </article>
+{% endblock %}

@@ -16,7 +16,7 @@ def load_modules():
                     for attr in dir(module):
                         if attr.endswith("_module"):
                             module_name = getattr(module, attr)
-                            modules.append((module_name, f"/{file_item.name}"))
+                            modules.append((module_name, str(attr.removesuffix("_module"))))
                 except Exception as e:
                     print(f"An error occured while trying to load {module_path}: {e}")
 

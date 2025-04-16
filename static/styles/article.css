@@ -1,0 +1,33 @@
+main * {
+    /* Reset the reset */
+    margin: revert;
+    padding: revert;
+}
+
+main article {
+    max-width: 800px;
+    margin: auto;
+}
+
+#article-header {
+    margin-bottom: 2em;
+}
+
+#article-cover-image {
+    width: 100%;
+    aspect-ratio: 2/1;
+    object-fit: cover;
+    margin-bottom: .5em;
+}
+
+#article-title {
+    font-size: 2em;
+    font-weight: 800;
+    margin-block: 0;
+}
+
+#article-date {
+    margin-block: .25em 0;
+    font-size: 1.1em;
+    font-weight: 300;
+}
