@@ -47,7 +47,8 @@ header {
     top: 0;
     z-index: 999;
     background: var(--back);
-    margin: 0 25px;
+    padding: 0 25px;
+    border-bottom: 1px solid light-dark(#bbb, #444);
 }
 
 header #header-content {
@@ -87,7 +88,7 @@ header #header-content {
 
 .theme-toggle {
     width: max-content;
-    border: navajowhite;
+    border: none;
     background: none;
 }
 
@@ -112,8 +113,7 @@ header #header-content {
 }
 
 main {
-    border: solid light-dark(#bbb, #444);
-    border-width: 1px 0;
+    border-bottom: 1px solid light-dark(#bbb, #444);
     padding: 15px 25px;
 }
 

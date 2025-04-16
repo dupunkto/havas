@@ -1,0 +1,11 @@
+{% extends "manager_base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('manager_module.static', filename='styles/home.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Index</h1>
+{% endblock %}

@@ -1,7 +1,7 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 import os
 
-manager_module = Blueprint("manager_module", __name__)
+manager_module = Blueprint("manager_module", __name__, template_folder="templates", static_folder="static")
 
 BASE_DIR = os.path.dirname(__file__)
 
@@ -16,4 +16,4 @@ project_dir =  os.path.abspath(project_dir)
 
 @manager_module.route("/")
 def manager_index():
-    return "Test"
+    return render_template("manager_index.html")

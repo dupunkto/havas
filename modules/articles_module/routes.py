@@ -38,14 +38,14 @@ def article(slug):
     now = datetime.now(pytz.timezone("Europe/Amsterdam"))
 
     if dt_input.date() == now.date():
-        formatted = f"Today, {dt_input.strftime('%H:%M:%S')}"
+        formatted = f"Today, {dt_input.strftime('%H:%M')}"
     elif dt_input.date() == (now.date() - timedelta(days=1)):
-        formatted = f"Yesterday, {dt_input.strftime('%H:%M:%S')}"
+        formatted = f"Yesterday, {dt_input.strftime('%H:%M')}"
     else:
         if dt_input.year == now.year:
-            formatted = dt_input.strftime("%a %d %b, %H:%M:%S")
+            formatted = dt_input.strftime("%a %d %b, %H:%M")
         else:
-            formatted = dt_input.strftime("%a %d %b %Y, %H:%M:%S")
+            formatted = dt_input.strftime("%a %d %b %Y, %H:%M")
     
     article_data["dt_formatted"] = formatted
     article_data["cover"] = f"/static/assets/news/covers/{slug}.jpg"

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Home{% endblock %} - HavasManager - {{ global.compname }}</title>
+        <link rel="stylesheet" href="{{ url_for('manager_module.static', filename='styles/base.css') }}">
+        <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
+        
+        {% block extra_headers %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            <a href="/" id="header-logo">HavasManager - {{ global.compname }}</a>
+        </header>
+
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+
+
+        <footer>
+            Powered by <a href="https://github.com/Gijs6/Havas">Havas</a>
+        </footer>
+    </body>
+</html>

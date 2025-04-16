@@ -34,14 +34,14 @@ def homepage():
     def format_date(dt_input):
         now = datetime.now(pytz.timezone("Europe/Amsterdam"))
         if dt_input.date() == now.date():
-            formatted = f"Today, {dt_input.strftime('%H:%M:%S')}"
+            formatted = f"Today, {dt_input.strftime('%H:%M')}"
         elif dt_input.date() == (now.date() - timedelta(days=1)):
-            formatted = f"Yesterday, {dt_input.strftime('%H:%M:%S')}"
+            formatted = f"Yesterday, {dt_input.strftime('%H:%M')}"
         else:
             if dt_input.year == now.year:
-                formatted = dt_input.strftime("%a %d %b, %H:%M:%S")
+                formatted = dt_input.strftime("%a %d %b, %H:%M")
             else:
-                formatted = dt_input.strftime("%a %d %b %Y, %H:%M:%S")
+                formatted = dt_input.strftime("%a %d %b %Y, %H:%M")
         return formatted
 
     for article in os.listdir(os.path.join(BASE_DIR, "articles", "news")):
@@ -51,11 +51,16 @@ def homepage():
         extract = re.match(r"^---\n(.*?)\n---\n", article_content, re.DOTALL)
         article_data = yaml.safe_load(extract.group(1))
 
+        dt_obj = datetime.fromisoformat(str(article_data["datetime"]))
+        article_data["datetime_obj"] = dt_obj
+        article_data["datetime_formatted"] = format_date(dt_obj)
+
         article_data["cover"] = f"/static/assets/news/covers/{article_id}.jpg"
         article_data["url"] = f"/article/{article_id}"
-        article_data["datetime_formatted"] = format_date(datetime.fromisoformat(str(article_data["datetime"])))
 
         article_list.append(article_data)
+
+    article_list.sort(key=lambda x: x["datetime_obj"], reverse=True)
 
     return render_template("index.html", article_list = article_list)
 
