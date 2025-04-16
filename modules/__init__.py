@@ -12,7 +12,7 @@ def load_modules():
                 module_path = f"modules.{file_item.name}.routes"
                 try:
                     module = importlib.import_module(module_path)
-
+                    
                     for attr in dir(module):
                         if attr.endswith("_module"):
                             module_name = getattr(module, attr)

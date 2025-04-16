@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %} - {{ global.compname }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}">
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favs/new_fav.ico') }}">
+        <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
+        
+        {% block extra_headers %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            <em>{{ global.compname }}</em>
+        </header>
+
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+
+
+        <footer>
+            <em>Havas</em>
+        </footer>
+    </body>
+</html>
