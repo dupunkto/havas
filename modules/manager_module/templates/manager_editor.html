@@ -1,0 +1,182 @@
+{% extends "manager_base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('manager_module.static', filename='styles/editor.css') }}">
+     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Article editor</h1>
+    
+    <div id="file-control">
+        <h2 id="file-title">You're editing file <code>{{ id }}</code></h2>
+        <div id="save-file-container">
+            <button id="save-file" onclick="saveMarkdown()"><i class="fa-solid fa-floppy-disk"></i> Save and deploy</button>
+            <div id="status"></div>
+        </div>
+    </div>
+
+    <div id="editor-container">
+        <div class="editor-element" id="tags-element">
+            <span class="element-title">Tags</span>
+            <div id="tags" class="element-editor-container">
+                {% for tag in tags %}
+                    <div class="tagbox"><i class="fa-solid fa-tag"></i>{{ tag }}<span class="remove-tag"><i class="fa-solid fa-xmark"></i></span></div>
+                {% endfor %}
+                <div class="tagbox" id="add-tag"><i class="fa-solid fa-plus"></i></div>
+            </div>
+        </div>
+        <div class="editor-element" id="authors-element">
+            <span class="element-title">Authors</span>
+            <div id="authors" class="element-editor-container">
+                {% for author in authors %}
+                    <div class="authorbox"><i class="fa-solid fa-user"></i></i>{{ author }}<span class="remove-author"><i class="fa-solid fa-xmark"></i></span></div>
+                {% endfor %}
+                <div class="authorbox" id="add-author"><i class="fa-solid fa-plus"></i></div>
+            </div>
+        </div>
+        <div class="editor-element" id="title-element">
+            <span class="element-title">Title</span>
+            <div contenteditable="true" id="title" class="element-editor-container inputable">{{ title }}</div>
+        </div>
+        <div class="editor-element" id="description-element">
+            <span class="element-title">Description</span>
+            <div contenteditable="true" id="description" class="element-editor-container inputable">{{ description }}</div>
+        </div>
+        <div class="editor-element" id="article-element">
+            <span class="element-title">Article</span>
+            <textarea id="article" placeholder="Article" class="element-editor-container inputable">{{ article_content }}</textarea>
+        </div>
+        <div class="editor-element" id="preview-element">
+            <span class="element-title">Preview</span>
+            <div id="preview" class="element-editor-container"></div>
+        </div>
+    </div>
+
+    <script>
+        const title = document.getElementById("title");
+        const textarea = document.getElementById("article");
+        const preview = document.getElementById("preview");
+    
+        function updatePreview() {
+            const fullMarkdown = "# " + title.innerText + "\n\n" + textarea.value
+            preview.innerHTML = marked.parse(fullMarkdown);
+        }
+    
+        textarea.addEventListener("input", updatePreview);
+        title.addEventListener("input", updatePreview);
+        updatePreview();
+    </script>
+
+    <p id="status"></p>
+
+    <script>
+        async function updateFile() {
+            const id = "{{ id }}"
+            const content = document.getElementById("article").value;
+            const status = document.getElementById("status");
+
+            status.textContent = "";
+
+            try {
+                const response = await fetch("/manager/api/save_markdown", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ id, content })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || "An error occurred while saving.");
+                }
+
+                status.innerText = "File saved successfully!";
+                status.style.background = "var(--green)";
+
+                setTimeout(() => {
+                    status.innerText = "";
+                    status.style.background = "";
+                }, 2000);
+            } catch (err) {
+                status.innerText = "Error: " + err.message;
+                status.style.background = "var(--red)";
+
+                setTimeout(() => {
+                    status.innerText = "";
+                    status.style.background = "";
+                }, 2000);
+            }
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const tagsContainer = document.getElementById("tags");
+            const addTagBtn = document.getElementById("add-tag");
+        
+            // Handle removing tags
+            tagsContainer.addEventListener("click", function (e) {
+                if (e.target.closest(".remove-tag")) {
+                    const tagBox = e.target.closest(".tagbox");
+                    if (tagBox && tagBox.id !== "add-tag") {
+                        tagBox.remove();
+                        updateFile();
+                    }
+                }
+            });
+        
+            // Handle adding a new tag
+            addTagBtn.addEventListener("click", function () {
+                const tagName = prompt("Enter new tag:");
+                if (tagName && tagName.trim() !== "") {
+                    const newTag = document.createElement("div");
+                    newTag.classList.add("tagbox");
+                    newTag.innerHTML = `
+                        <i class="fa-solid fa-tag"></i>${tagName}
+                        <span class="remove-tag"><i class="fa-solid fa-xmark"></i></span>
+                    `;
+                    tagsContainer.insertBefore(newTag, addTagBtn);
+                    updateFile();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const authorsContainer = document.getElementById("authors");
+            const addauthorBtn = document.getElementById("add-author");
+        
+            // Handle removing authors
+            authorsContainer.addEventListener("click", function (e) {
+                if (e.target.closest(".remove-author")) {
+                    const authorBox = e.target.closest(".authorbox");
+                    if (authorBox && authorBox.id !== "add-author") {
+                        authorBox.remove();
+                        updateFile();
+                    }
+                }
+            });
+        
+            // Handle adding a new author
+            addauthorBtn.addEventListener("click", function () {
+                const authorName = prompt("Enter new author:");
+                if (authorName && authorName.trim() !== "") {
+                    const newauthor = document.createElement("div");
+                    newauthor.classList.add("authorbox");
+                    newauthor.innerHTML = `
+                        <i class="fa-solid fa-user"></i>${authorName}
+                        <span class="remove-author"><i class="fa-solid fa-xmark"></i></span>
+                    `;
+                    authorsContainer.insertBefore(newauthor, addauthorBtn);
+                    updateFile();
+                }
+            });
+        });
+    </script>
+{% endblock %}

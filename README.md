@@ -14,4 +14,5 @@ Havas is named after **Charles-Louis Havas**, the founder of the first news agen
 - [ ] Add inline video's
 - [ ] Add menu/nav
 - [ ] Add tags
+- [ ] Add a system for managing ID's and managing files
 - [ ] Add footer

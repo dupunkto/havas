@@ -5,23 +5,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Home{% endblock %} - HavasManager - {{ global.compname }}</title>
         <link rel="stylesheet" href="{{ url_for('manager_module.static', filename='styles/base.css') }}">
+        <link rel="icon" href="{{ url_for('manager_module.static', filename='favs/manager.ico') }}">
         <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
         
         {% block extra_headers %}{% endblock %}
     </head>
     <body>
-        <header>
-            <a href="/" id="header-logo">HavasManager - {{ global.compname }}</a>
+        <header id="sidebar">
+            <a href="/manager/" id="header-logo">HavasManager</a>
+            <nav>
+                <a href="/manager/" class="menu-item{% if request.path == '/manager/' %} active{% endif %}">Dashboard</a>
+            </nav>
         </header>
 
-
-        <main>
-            {% block content %}{% endblock %}
-        </main>
-
-
-        <footer>
-            Powered by <a href="https://github.com/Gijs6/Havas">Havas</a>
-        </footer>
+        <div id="content">
+            <main>
+                {% block content %}{% endblock %}
+            </main>
+            <footer>
+                Powered by <a href="https://github.com/Gijs6/Havas">Havas</a>
+            </footer>
+        </div>
     </body>
 </html>

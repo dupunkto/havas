@@ -55,7 +55,7 @@ def homepage():
         article_data["datetime_obj"] = dt_obj
         article_data["datetime_formatted"] = format_date(dt_obj)
 
-        article_data["cover"] = f"/static/assets/news/covers/{article_id}.jpg"
+        article_data["cover"] = f"/static/media/news/covers/{article_id}.jpg"
         article_data["url"] = f"/article/{article_id}"
 
         article_list.append(article_data)
@@ -65,12 +65,10 @@ def homepage():
     return render_template("index.html", article_list = article_list)
 
 
-
 # Temporary
-@app.route("/static/assets/news/covers/<int:id>.jpg")
+@app.route("/static/media/news/covers/<string:id>.jpg")
 def temp_images(id):
     return redirect("https://picsum.photos/1500/1000")
-
 
 
 if __name__ == "__main__":
