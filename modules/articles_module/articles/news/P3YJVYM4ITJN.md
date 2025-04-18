@@ -35,7 +35,7 @@ De afgelopen jaren hebben veel bedrijven die voorheen hun spullen lieten maken i
 Volgens president Trumps adviseur Peter Navarro is dit een van de redenen waarom Vietnam een van de hoogste importheffingen voor de kiezen kreeg. En dus wil Vietnam, net als veel andere landen in de regio, van deze rol af, terwijl China juist gebaat is bij meer samenwerking.
 
 > **Correspondent Zuidoost-Azië Mustafa Marghadi:**
-> 
+>
 > "De landen in Zuidoost-Azië worden in een heel ongemakkelijke positie geduwd door de handelsoorlog tussen Amerika en China.
 >
 > De regio wil normaliter geen kant tussen de twee kiezen. China is de belangrijkste handelspartner van de ASEAN-landen, en voor veel landen is Amerika bijna net zo belangrijk. Daarom willen ze Amerika te vriend houden en geen tegenmaatregelen nemen.

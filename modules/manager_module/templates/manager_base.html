@@ -16,7 +16,7 @@
             <nav>
                 <a href="/manager/" class="menu-item{% if request.path == '/manager/' %} active{% endif %}">Dashboard <i class="fa-solid fa-table-list"></i></a>
                 {% if '/manager/editor' in request.path %}  
-                    <a href="/manager/editor?id={{ id }}" class="menu-item active">Editor <i class="fa-solid fa-file-pen"></i></a>
+                    <a href="/manager/editor/{{ id }}" class="menu-item active">Editor <i class="fa-solid fa-file-pen"></i></a>
                 {% endif %}
                 <a href="/manager/editor/new" class="menu-item">New article <i class="fa-solid fa-file-circle-plus"></i></a>
             </nav>

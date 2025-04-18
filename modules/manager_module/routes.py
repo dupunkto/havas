@@ -5,6 +5,7 @@ import random
 import os
 import yaml
 import pytz
+import json
 
 
 manager_module = Blueprint("manager_module", __name__, template_folder="templates", static_folder="static")
@@ -35,7 +36,7 @@ def manager_home():
         article_data["datetime_obj"] = dt_obj
         article_data["datetime_formatted"] = dt_obj.strftime("%d-%m-%Y %H:%M:%S")
 
-        article_data["cover"] = f"/media/cover/{article_id}.jpg"
+        article_data["cover"] = f"/media/api/cover/{article_id}.jpg"
         article_data["url"] = f"/article/{article_id}"
 
         article_data["id"] = article_id
@@ -47,10 +48,8 @@ def manager_home():
     return render_template("manager_home.html", article_list = article_list)
 
 
-@manager_module.route("/editor")
-def manager_editor():
-    article = request.args.get("id")
-
+@manager_module.route("/editor/<string:article>")
+def manager_editor(article):
     with open(os.path.join(project_dir, "modules", "articles_module", "articles", "news", f"{article}.md"), encoding="utf-8") as file:
         article_content = file.read().strip()
     
@@ -62,10 +61,17 @@ def manager_editor():
     dt_obj = datetime.fromisoformat(str(article_data["datetime"]))
     article_data["datetime_obj"] = dt_obj
 
-    article_data["cover"] = f"/media/cover/{article}.jpg"
+    article_data["cover"] = f"/media/api/cover/{article}.jpg"
     article_data["url"] = f"/article/{article}"
 
     article_data["id"] = article
+
+    with open(os.path.join(project_dir, "modules", "media_module", "data", "coverlist.json")) as jf:
+        coverlist = json.load(jf)
+
+    image_id = coverlist.get(article, "fallback")
+
+    article_data["image_name"] = image_id
 
     return render_template("manager_editor.html", article_content = article_content_clean, **article_data)
 
@@ -88,7 +94,7 @@ def manager_editor_new():
    
 
 
-    return redirect(f"/manager/editor?id={id}")
+    return redirect(f"/manager/editor/{id}")
 
 
 @manager_module.route("/api/save_article", methods=["POST"])

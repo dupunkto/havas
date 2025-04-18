@@ -1,7 +1,7 @@
 ---
 title: "Groep boeren dreigt deel vee te moeten afvoeren na nieuwe uitspraak rechter"
 description: "Een nieuwe uitspraak van de rechtbank kan Friese boeren die buiten hun schuld zonder geldige natuurvergunning werken in grote problemen brengen"
-datetime_edited: "2025-04-18T19:08:06.272Z"
+datetime_edited: "2025-04-18T21:17:55.140Z"
 datetime: "2025-04-18T19:06:43.017922+00:00"
 tags:
   - "binnenland"
@@ -18,11 +18,11 @@ Mobilisation for the Environment (MOB) en Vereniging Leefmilieu vroegen de provi
 De milieuorganisaties vinden dat de politiek te weinig doet om door stikstof overbelaste natuur te redden en richten daarom hun pijlen op illegale bedrijven. De provincie weigerde in te grijpen bij de boeren, waarop de milieuorganisaties naar de rechter stapten.
 
 > **Wat zijn PAS-melders ook alweer?**
-> 
+>
 > In mei 2019 zette de Raad van State een streep door het Programma Aanpak Stikstof (PAS). De hoogste bestuursrechter oordeelde dat het stikstofbeleid niet deugde, omdat daardoor steeds meer stikstof neer kon komen op al overbelaste Natura 2000-gebieden.
-> 
+>
 > Boeren en andere bedrijven die wilden uitbreiden en maar weinig stikstofneerslag veroorzaakten, hoefden daar geen vergunning voor aan te vragen, een melding was genoeg. Totdat de Raad van State dus oordeelde dat dit niet had gemogen. Daarmee werden de bedrijven in een klap illegaal.
-> 
+>
 > Die bedrijven worden PAS-melders genoemd. Uiteindelijk meldden zo'n 2000 boeren en andere bedrijven zich aan om een vergunning te krijgen.
 
 Saillant detail: minister Wierma was lid van het Friese provinciebestuur dat de handhavingsverzoeken afwees. Nu is ze verantwoordelijk voor het oplossen van het stikstofprobleem.

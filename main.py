@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template
 from datetime import datetime, timedelta
 import pytz
 import yaml
@@ -55,7 +55,7 @@ def homepage():
         article_data["datetime_obj"] = dt_obj
         article_data["datetime_formatted"] = format_date(dt_obj)
 
-        article_data["cover"] = f"/media/cover/{article_id}.jpg"
+        article_data["cover"] = f"/media/api/cover/{article_id}.jpg"
         article_data["url"] = f"/article/{article_id}"
 
         article_list.append(article_data)

@@ -21,7 +21,7 @@
         </tr>
         {% for article in article_list %}
             <tr>
-                <td class="article-edit"><a href="/manager/editor?id={{ article.id }}"><i class="fa-solid fa-file-pen"></i></a></td>
+                <td class="article-edit"><a href="/manager/editor/{{ article.id }}"><i class="fa-solid fa-file-pen"></i></a></td>
                 <td class="article-title">{{ article.title }}</td>
                 <td class="article-image"><img class="cover-image" src="{{ article.cover }}"></td>
                 <td class="article-datetime">{{ article.datetime_formatted }}</td>
