@@ -1,6 +1,7 @@
 ---
-title: "India ziet kans om fabriek van de wereld worden, maar stuit op eigen obstakels"
+title: "India ziet kans om fabriek van de wereld te worden, maar stuit op eigen obstakels"
 description: "India's maakindustrie groeit lang niet zo snel als de overheid zou willen"
+datetime_edited: "2025-04-18T18:52:22.957Z"
 datetime: "2025-04-18T13:48:08.729Z"
 tags:
   - "buitenland"

@@ -9,10 +9,9 @@ Havas is named after **Charles-Louis Havas**, the founder of the first news agen
 ## To do
 
 - [ ] Add manager and just all things with that
+- [ ] Add auth for the manager
+- [ ] Add edited datetimes (for the articles)
+- [ ] Add editor/uploader for cover images
 - [ ] Add 404 and 500
 - [ ] Add inline pictures
 - [ ] Add inline video's
-- [ ] Add menu/nav
-- [ ] Add tags
-- [ ] Add a system for managing ID's and managing files
-- [ ] Add footer

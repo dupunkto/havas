@@ -17,10 +17,6 @@ th {
     border-right: 1px #ccc dotted;
 }
 
-th:first-child {
-    border-right: 0;
-}
-
 td:last-child, th:last-child {
     border-right: 0;
 }

@@ -7,12 +7,26 @@
     gap: 30px;
 }
 
-#save-file-container {
+#manage-file-container {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+#manage-file-container button {
+    border: none;
+    color: white;
+    padding: .6em;
 }
 
 #save-file {
-    font-size: .9em;
+    background: var(--green);
+}
+
+#remove-file {
+    background: var(--red);
 }
 
 #status {
@@ -28,9 +42,9 @@
 
 #editor-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, auto) 1fr;
-    align-items: flex-start;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, auto) 1fr;
+    align-items: stretch;
     gap: 20px;
     margin-top: 30px;
 }
@@ -39,6 +53,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    height: 100%;
 }
 
 .element-title {
@@ -49,7 +64,8 @@
     border: 1px solid #e7e7e7;
     border-radius: 10px;
     padding: 10px;
-    box-shadow: 0 1px 3px 0 #0000001a, 0 1px 2px -1px #0000001a
+    box-shadow: 0 1px 3px 0 #0000001a, 0 1px 2px -1px #0000001a;
+    flex-grow: 1;
 }
 
 .element-editor-container.inputable {
@@ -65,12 +81,22 @@
 }
 
 
+
+
+#image-element {
+    grid-area:  1 / 2 / 5 / 3;
+}
+
+#cover-image-item {
+    width: 100%;
+}
+
 #tags-element {
-    grid-area: 1 / 1 / 2 / 2;
+    grid-area: 3 / 1 / 4 / 2;
 }
 
 #authors-element {
-    grid-area: 1 / 2 / 2 / 3;
+    grid-area: 4 / 1 / 5 / 2;
 }
 
 #tags, #authors {
@@ -82,7 +108,7 @@
 }
 
 .tagbox, .authorbox {
-    padding: 5px;
+    padding: 3px 5px;
     background: #f0f0f0;
     border: 1px solid #d5d5d5;
     border-radius: 5px;
@@ -107,8 +133,8 @@
 
 #add-tag, #add-author {
     color: #717171;
-    height: fit-content;
     cursor: pointer;
+    font-size: 1.1em;
 }
 
 .remove-tag:hover, #add-tag:hover, .remove-author:hover, #add-author:hover {
@@ -119,7 +145,7 @@
 
 
 #title-element {
-    grid-area: 2 / 1 / 3 / 3;
+    grid-area: 1 / 1 / 2 / 2;
 }
 
 #title {
@@ -129,7 +155,7 @@
 }
 
 #description-element {
-    grid-area: 3 / 1 / 4 / 3;
+    grid-area: 2 / 1 / 3 / 2;
 }
 
 #description {
@@ -139,7 +165,7 @@
 }
 
 #article-element {
-    grid-area: 4 / 1 / 5 / 3;
+    grid-area: 5 / 1 / 6 / 2;
 }
 
 #article {
@@ -150,11 +176,12 @@
 }
 
 #preview-element {
-    grid-area: 2 / 3 / 5 / 5;
+    grid-area: 5 / 2 / 6 / 3;
 }
 
 #preview {
     white-space: unset;
+    flex-grow: 0;
 }
 
 #preview * {

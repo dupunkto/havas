@@ -11,14 +11,22 @@
     <h1>Article editor</h1>
     
     <div id="file-control">
-        <h2 id="file-title">You're editing file <code>{{ id }}</code></h2>
-        <div id="save-file-container">
+        <h2 id="file-title">You're editing article <code>{{ id }}</code></h2>
+        <div id="manage-file-container">
             <button id="save-file" onclick="updateFile()"><i class="fa-solid fa-floppy-disk"></i> Save and deploy</button>
+            <button id="remove-file" onclick="deleteFile()"><i class="fa-solid fa-trash-can"></i> Delete</button>
             <div id="status"></div>
         </div>
     </div>
-
     <div id="editor-container">
+        <div class="editor-element" id="title-element">
+            <span class="element-title">Title</span>
+            <div contenteditable="true" id="title" class="element-editor-container inputable">{{ title }}</div>
+        </div>
+        <div class="editor-element" id="description-element">
+            <span class="element-title">Description</span>
+            <div contenteditable="true" id="description" class="element-editor-container inputable">{{ description }}</div>
+        </div>
         <div class="editor-element" id="tags-element">
             <span class="element-title">Tags</span>
             <div id="tags" class="element-editor-container">
@@ -37,17 +45,16 @@
                 <div class="authorbox" id="add-author"><i class="fa-solid fa-plus"></i></div>
             </div>
         </div>
-        <div class="editor-element" id="title-element">
-            <span class="element-title">Title</span>
-            <div contenteditable="true" id="title" class="element-editor-container inputable">{{ title }}</div>
-        </div>
-        <div class="editor-element" id="description-element">
-            <span class="element-title">Description</span>
-            <div contenteditable="true" id="description" class="element-editor-container inputable">{{ description }}</div>
-        </div>
         <div class="editor-element" id="article-element">
             <span class="element-title">Article</span>
             <textarea id="article" placeholder="Article" class="element-editor-container inputable">{{ article_content }}</textarea>
+        </div>
+        <div class="editor-element" id="image-element">
+            <span class="element-title">Cover image</span>
+            <div id="images" class="element-editor-container">
+                <img id="cover-image-item" src="{{ cover }}">
+                <div id="replace-image"><i class="fa-solid fa-repeat"></i> Replace cover image</div>
+            </div>
         </div>
         <div class="editor-element" id="preview-element">
             <span class="element-title">Preview</span>
@@ -104,7 +111,7 @@
             
             const titleYaml = 'title: "' + document.getElementById("title").innerText + '"';
             const descriptionYaml = 'description: "' + document.getElementById("description").innerText + '"';
-            const datetimeYaml = 'datetime: "' + new Date().toISOString() + '"';
+            const datetimeYaml = 'datetime_edited: "' + new Date().toISOString() + '"\n' + 'datetime: "{{ datetime }}"';
 
 
 
@@ -119,7 +126,7 @@
             status.textContent = "";
 
             try {
-                const response = await fetch("/manager/api/save_markdown", {
+                const response = await fetch("/manager/api/save_article", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -149,7 +156,38 @@
                     status.style.background = "";
                 }, 2000);
             }
-        }
+        };
+
+        async function deleteFile() {
+            const id = "{{ id }}";
+
+            const status = document.getElementById("status");
+
+            status.textContent = "";
+
+            try {
+                const response = await fetch(`/manager/api/delete_article?id=${id}`, {
+                    method: "POST"
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || "An error occurred while saving.");
+                }
+
+                window.location.href = "/manager/";
+                
+            } catch (err) {
+                status.innerText = "Error removing: " + err.message;
+                status.style.background = "var(--red)";
+
+                setTimeout(() => {
+                    status.innerText = "";
+                    status.style.background = "";
+                }, 2000);
+            }
+        };
     </script>
 
     <script>
