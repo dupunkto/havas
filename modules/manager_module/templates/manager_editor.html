@@ -13,7 +13,7 @@
     <div id="file-control">
         <h2 id="file-title">You're editing file <code>{{ id }}</code></h2>
         <div id="save-file-container">
-            <button id="save-file" onclick="saveMarkdown()"><i class="fa-solid fa-floppy-disk"></i> Save and deploy</button>
+            <button id="save-file" onclick="updateFile()"><i class="fa-solid fa-floppy-disk"></i> Save and deploy</button>
             <div id="status"></div>
         </div>
     </div>
@@ -61,7 +61,7 @@
         const preview = document.getElementById("preview");
     
         function updatePreview() {
-            const fullMarkdown = "# " + title.innerText + "\n\n" + textarea.value
+            const fullMarkdown = "# " + title.innerText + "\n\n" + textarea.value;
             preview.innerHTML = marked.parse(fullMarkdown);
         }
     
@@ -74,8 +74,46 @@
 
     <script>
         async function updateFile() {
-            const id = "{{ id }}"
-            const content = document.getElementById("article").value;
+            const id = "{{ id }}";
+            const articleContent = document.getElementById("article").value;
+
+            
+
+            const tagElements = document.querySelectorAll('.tagbox:not(#add-tag)');
+
+            const tags = Array.from(tagElements).map(el => {
+                const clone = el.cloneNode(true);
+                clone.querySelectorAll("i, span").forEach(child => child.remove());
+                return clone.textContent.trim();
+            });
+
+            const tagsYaml = `tags:\n${tags.map(tag => `  - "${tag}"`).join("\n")}`;
+
+
+
+            const authorElements = document.querySelectorAll('.authorbox:not(#add-author)');
+
+            const authors = Array.from(authorElements).map(el => {
+                const clone = el.cloneNode(true);
+                clone.querySelectorAll("i, span").forEach(child => child.remove());
+                return clone.textContent.trim();
+            });
+
+            const authorsYaml = `authors:\n${authors.map(author => `  - "${author}"`).join("\n")}`;
+
+            
+            const titleYaml = 'title: "' + document.getElementById("title").innerText + '"';
+            const descriptionYaml = 'description: "' + document.getElementById("description").innerText + '"';
+            const datetimeYaml = 'datetime: "' + new Date().toISOString() + '"';
+
+
+
+            const yaml = "---\n" + titleYaml + "\n" + descriptionYaml + "\n" + datetimeYaml + "\n" + tagsYaml + "\n" + authorsYaml + "\n---\n\n";
+
+
+
+            const content = yaml + articleContent + "\n";
+
             const status = document.getElementById("status");
 
             status.textContent = "";

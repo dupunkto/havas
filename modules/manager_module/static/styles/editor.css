@@ -78,6 +78,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 10px;
+    align-items: center;
 }
 
 .tagbox, .authorbox {
@@ -105,6 +106,7 @@
 
 #add-tag, #add-author {
     color: #717171;
+    height: fit-content;
 }
 
 .remove-tag:hover, #add-tag:hover, .remove-author:hover, #add-author:hover {
@@ -143,7 +145,7 @@
     resize: none;
     overflow: auto;
     min-height: 60vh;
-    font-family: monospace;
+    font-family: "Ubuntu Mono", monospace;
 }
 
 #preview-element {
