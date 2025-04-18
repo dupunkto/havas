@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, abort, redirect
 from datetime import datetime
 import re
+import random
 import os
 import yaml
 
@@ -64,6 +65,24 @@ def manager_editor():
     article_data["id"] = article
 
     return render_template("manager_editor.html", article_content = article_content_clean, **article_data)
+
+@manager_module.route("/editor/new")
+def manager_editor_new():
+    chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567" # Base32
+
+    id = "".join(random.choices(chars, k=12))
+
+    path = os.path.join(project_dir, "modules", "articles_module", "articles", "news", f"{id}.md")
+
+    if os.path.exists(path):
+        abort(500)
+
+    with open(os.path.join(project_dir, "modules", "articles_module", "articles", "news", f"{id}.md"), "w", encoding="utf-8") as file:
+        file.write('---\ntitle: "Lorem ipsum dolor sit amet"\ndescription: "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"\ndatetime: "1970-01-01T00:00:00Z"\ntags: []\nauthors: []\n---\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n')
+   
+
+
+    return redirect(f"/manager/editor?id={id}")
 
 
 @manager_module.route("/api/save_markdown", methods=["POST"])

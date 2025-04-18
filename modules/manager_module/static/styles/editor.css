@@ -102,18 +102,19 @@
     margin-left: 5px;
     padding: 2.5px 5px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 #add-tag, #add-author {
     color: #717171;
     height: fit-content;
+    cursor: pointer;
 }
 
 .remove-tag:hover, #add-tag:hover, .remove-author:hover, #add-author:hover {
     background: #aaa;
     color: white;
     border-color: transparent;
-    cursor: pointer;
 }
 
 
@@ -157,7 +158,6 @@
 }
 
 #preview * {
-    white-space: pre-wrap;
     word-wrap: break-word;
     word-break: break-word;
     hyphens: auto;
@@ -178,4 +178,11 @@
     font-size: 1.4em;
     font-weight: 800;
     margin-block-end: -0.25em;
+}
+
+#preview blockquote {
+    margin-inline: 0;
+    padding: 0 1em;
+    opacity: 0.8;
+    border-left: 0.25em solid light-dark(#555, #888);
 }

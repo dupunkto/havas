@@ -56,10 +56,19 @@ nav {
     border-radius: 5px;
 }
 
+.menu-item i {
+    color: #4f4f4f;
+    margin-left: .5em;
+}
+
 .menu-item.active, .menu-item:hover {
     background: #cecece;
     border-color: black;
     font-weight: 600;
+}
+
+.menu-item.active i {
+    color: black;
 }
 
 #header-logo {
@@ -86,8 +95,9 @@ main {
 
 footer {
     margin-top: 20px;
-    border-top: #bbb 1px solid;
-    padding: 10px;
+    border-top: #a8a8a8 1px solid;
+    padding: 10px 20px;
+    width: fit-content;
 }
 
 code {
@@ -104,11 +114,11 @@ button {
     color: black;
     border-radius: .6em;
     font-weight: 600;
+    cursor: pointer;
 }
 
 button:hover {
     background: black;
     border-color: black;
     color: white;
-    cursor: pointer;
 }

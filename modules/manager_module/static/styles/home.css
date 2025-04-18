@@ -13,7 +13,16 @@ table {
 
 td,
 th {
-    border-bottom: 1px #d5d5d5 solid;
+    border-bottom: 1px #bdbdbd solid;
+    border-right: 1px #ccc dotted;
+}
+
+th:first-child {
+    border-right: 0;
+}
+
+td:last-child, th:last-child {
+    border-right: 0;
 }
 
 tr th {
@@ -29,6 +38,12 @@ th {
     padding: 10px 5px;
     vertical-align: middle;
     text-align: center;
+}
+
+.article-edit {
+    padding: 10px;
+    font-size: 1.2em;
+    color: #003273;
 }
 
 .article-edit a {

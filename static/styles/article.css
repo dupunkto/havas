@@ -36,3 +36,10 @@ article h2 {
     font-weight: 800;
     margin-block-end: -0.25em;
 }
+
+article blockquote {
+  margin-inline: 0;
+  padding: 0 1em;
+  opacity: 0.8;
+  border-left: 0.25em solid light-dark(#555, #888);
+}

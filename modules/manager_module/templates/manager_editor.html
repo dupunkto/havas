@@ -87,7 +87,7 @@
                 return clone.textContent.trim();
             });
 
-            const tagsYaml = `tags:\n${tags.map(tag => `  - "${tag}"`).join("\n")}`;
+            const tagsYaml = tags.length === 0 ? `tags: []` : `tags:\n${tags.map(tag => `  - "${tag}"`).join("\n")}`;
 
 
 
@@ -99,7 +99,7 @@
                 return clone.textContent.trim();
             });
 
-            const authorsYaml = `authors:\n${authors.map(author => `  - "${author}"`).join("\n")}`;
+            const authorsYaml = authors.length === 0 ? `authors: []` : `authors:\n${authors.map(author => `  - "${author}"`).join("\n")}`;
 
             
             const titleYaml = 'title: "' + document.getElementById("title").innerText + '"';
@@ -163,7 +163,6 @@
                     const tagBox = e.target.closest(".tagbox");
                     if (tagBox && tagBox.id !== "add-tag") {
                         tagBox.remove();
-                        updateFile();
                     }
                 }
             });
@@ -179,7 +178,6 @@
                         <span class="remove-tag"><i class="fa-solid fa-xmark"></i></span>
                     `;
                     tagsContainer.insertBefore(newTag, addTagBtn);
-                    updateFile();
                 }
             });
         });
@@ -196,7 +194,6 @@
                     const authorBox = e.target.closest(".authorbox");
                     if (authorBox && authorBox.id !== "add-author") {
                         authorBox.remove();
-                        updateFile();
                     }
                 }
             });
@@ -212,7 +209,6 @@
                         <span class="remove-author"><i class="fa-solid fa-xmark"></i></span>
                     `;
                     authorsContainer.insertBefore(newauthor, addauthorBtn);
-                    updateFile();
                 }
             });
         });
