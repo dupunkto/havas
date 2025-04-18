@@ -44,9 +44,9 @@ def homepage():
                 formatted = dt_input.strftime("%a %d %b %Y, %H:%M")
         return formatted
 
-    for article in os.listdir(os.path.join(BASE_DIR, "articles", "news")):
+    for article in os.listdir(os.path.join(BASE_DIR, "modules", "articles_module", "articles", "news")):
         article_id = article.removesuffix(".md")
-        with open(os.path.join(BASE_DIR, "articles", "news", article), encoding="utf-8") as file:
+        with open(os.path.join(BASE_DIR, "modules", "articles_module", "articles", "news", article), encoding="utf-8") as file:
             article_content = file.read().strip()
         extract = re.match(r"^---\n(.*?)\n---\n", article_content, re.DOTALL)
         article_data = yaml.safe_load(extract.group(1))
@@ -55,7 +55,7 @@ def homepage():
         article_data["datetime_obj"] = dt_obj
         article_data["datetime_formatted"] = format_date(dt_obj)
 
-        article_data["cover"] = f"/static/media/news/covers/{article_id}.jpg"
+        article_data["cover"] = f"/media/cover/{article_id}.jpg"
         article_data["url"] = f"/article/{article_id}"
 
         article_list.append(article_data)
@@ -63,12 +63,6 @@ def homepage():
     article_list.sort(key=lambda x: x["datetime_obj"], reverse=True)
 
     return render_template("index.html", article_list = article_list)
-
-
-# Temporary
-@app.route("/static/media/news/covers/<string:id>.jpg")
-def temp_images(id):
-    return redirect("https://picsum.photos/1500/1000")
 
 
 if __name__ == "__main__":

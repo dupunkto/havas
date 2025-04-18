@@ -22,9 +22,9 @@ project_dir =  os.path.abspath(project_dir)
 def manager_index():
     article_list = []
 
-    for article in os.listdir(os.path.join(project_dir, "articles", "news")):
+    for article in os.listdir(os.path.join(project_dir, "modules", "articles_module", "articles", "news")):
         article_id = article.removesuffix(".md")
-        with open(os.path.join(project_dir, "articles", "news", article), encoding="utf-8") as file:
+        with open(os.path.join(project_dir, "modules", "articles_module", "articles", "news", article), encoding="utf-8") as file:
             article_content = file.read().strip()
         extract = re.match(r"^---\n(.*?)\n---\n", article_content, re.DOTALL)
         article_data = yaml.safe_load(extract.group(1))
@@ -32,7 +32,7 @@ def manager_index():
         dt_obj = datetime.fromisoformat(str(article_data["datetime"]))
         article_data["datetime_obj"] = dt_obj
 
-        article_data["cover"] = f"/static/media/news/covers/{article_id}.jpg"
+        article_data["cover"] = f"/media/cover/{article_id}.jpg"
         article_data["url"] = f"/article/{article_id}"
 
         article_data["id"] = article_id
@@ -47,7 +47,7 @@ def manager_index():
 def manager_editor():
     article = request.args.get("id")
 
-    with open(os.path.join(project_dir, "articles", "news", f"{article}.md"), encoding="utf-8") as file:
+    with open(os.path.join(project_dir, "modules", "articles_module", "articles", "news", f"{article}.md"), encoding="utf-8") as file:
         article_content = file.read().strip()
     
     extract = re.match(r"^---\n(.*?)\n---\n", article_content, re.DOTALL)
@@ -58,7 +58,7 @@ def manager_editor():
     dt_obj = datetime.fromisoformat(str(article_data["datetime"]))
     article_data["datetime_obj"] = dt_obj
 
-    article_data["cover"] = f"/static/media/news/covers/{article}.jpg"
+    article_data["cover"] = f"/media/cover/{article}.jpg"
     article_data["url"] = f"/article/{article}"
 
     article_data["id"] = article
@@ -73,7 +73,7 @@ def save_markdown():
     content = data.get("content")
 
     try:
-        file_path = os.path.join(project_dir, "articles", "news", f"{id}.md")
+        file_path = os.path.join(project_dir, "modules", "articles_module", "articles", "news", f"{id}.md")
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
         return jsonify({"message": "File saved successfully", "path": file_path}), 200

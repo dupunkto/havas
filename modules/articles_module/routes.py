@@ -23,7 +23,7 @@ project_dir =  os.path.abspath(project_dir)
 def article(slug):
     file_name = slug + ".md"
     try:
-        with open(os.path.join(project_dir, "articles", "news", file_name), encoding="utf-8") as file:
+        with open(os.path.join(project_dir, "modules", "articles_module", "articles", "news", file_name), encoding="utf-8") as file:
             file_content = file.read().strip()
     except FileNotFoundError:
         abort(404) 
@@ -48,7 +48,7 @@ def article(slug):
             formatted = dt_input.strftime("%a %d %b %Y, %H:%M")
     
     article_data["dt_formatted"] = formatted
-    article_data["cover"] = f"/static/media/news/covers/{slug}.jpg"
+    article_data["cover"] = f"/media/cover/{slug}.jpg"
 
     text = commonmark.commonmark(file_content_clean)
 

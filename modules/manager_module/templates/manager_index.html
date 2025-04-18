@@ -26,8 +26,20 @@
                 <td class="article-image"><img class="cover-image" src="{{ article.cover }}"></td>
                 <td class="article-datetime">{{ article.datetime }}</td>
                 <td class="article-id"><code>{{ article.id }}</code></td>
-                <td class="article-tags">{% for tag in article.tags %}<span class="tag"><i class="fa-solid fa-tag"></i> {{ tag }}</span>{% endfor %}</td>
-                <td class="article-author">{{ article.author|join(", ") }}</td>
+                <td class="article-tags">
+                    <div id="tags">
+                        {% for tag in article.tags %}
+                            <div class="tagbox"><i class="fa-solid fa-tag"></i>{{ tag }}</div>
+                        {% endfor %}
+                    </div>
+                </td>
+                <td class="article-author">
+                    <div id="authors">
+                        {% for author in article.authors %}
+                            <div class="authorbox"><i class="fa-solid fa-user"></i></i>{{ author }}</div>
+                        {% endfor %}
+                    </div>
+                </td>
             </tr>
         {% endfor %}
     </table>
