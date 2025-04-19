@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 from datetime import datetime, timedelta
 import pytz
+import commonmark
 import yaml
 import os
 import re
@@ -44,9 +45,9 @@ def homepage():
                 formatted = dt_input.strftime("%a %d %b %Y, %H:%M")
         return formatted
 
-    for article in os.listdir(os.path.join(BASE_DIR, "modules", "articles_module", "articles", "news")):
+    for article in os.listdir(os.path.join(BASE_DIR, "articles", "news")):
         article_id = article.removesuffix(".md")
-        with open(os.path.join(BASE_DIR, "modules", "articles_module", "articles", "news", article), encoding="utf-8") as file:
+        with open(os.path.join(BASE_DIR, "articles", "news", article), encoding="utf-8") as file:
             article_content = file.read().strip()
         extract = re.match(r"^---\n(.*?)\n---\n", article_content, re.DOTALL)
         article_data = yaml.safe_load(extract.group(1))
@@ -65,6 +66,62 @@ def homepage():
     article_list.sort(key=lambda x: x["datetime_obj"], reverse=True)
 
     return render_template("index.html", article_list = article_list)
+
+
+@app.route("/article/<string:slug>")
+def article(slug):
+    file_name = slug + ".md"
+    try:
+        with open(os.path.join(BASE_DIR, "articles", "news", file_name), encoding="utf-8") as file:
+            file_content = file.read().strip()
+    except FileNotFoundError:
+        abort(404) 
+
+    extract = re.match(r"^---\n(.*?)\n---\n", file_content, re.DOTALL)
+    article_data = yaml.safe_load(extract.group(1))
+
+    file_content_clean = re.sub(r"^---\s*\n.*?\n---\s*\n", "", file_content, flags=re.DOTALL)
+
+    dt_input = datetime.fromisoformat(str(article_data["datetime"]))
+
+    now = datetime.now(pytz.timezone("Europe/Amsterdam"))
+
+    if dt_input.date() == now.date():
+        formatted = f"Today, {dt_input.strftime('%H:%M')}"
+    elif dt_input.date() == (now.date() - timedelta(days=1)):
+        formatted = f"Yesterday, {dt_input.strftime('%H:%M')}"
+    else:
+        if dt_input.year == now.year:
+            formatted = dt_input.strftime("%a %d %b, %H:%M")
+        else:
+            formatted = dt_input.strftime("%a %d %b %Y, %H:%M")
+    
+    article_data["dt_formatted"] = formatted
+    
+    img_id = article_data.get("cover", "fallback")
+
+    article_data["cover"] = f"/media/api/get_image/{img_id}"
+
+    if article_data.get("datetime_edited"):
+        dt_edited_input = datetime.fromisoformat(str(article_data["datetime_edited"]))
+
+        now = datetime.now(pytz.timezone("Europe/Amsterdam"))
+
+        if dt_edited_input.date() == now.date():
+            formatted_edited = f"today, {dt_edited_input.strftime('%H:%M')}"
+        elif dt_edited_input.date() == (now.date() - timedelta(days=1)):
+            formatted_edited = f"yesterday, {dt_edited_input.strftime('%H:%M')}"
+        else:
+            if dt_edited_input.year == now.year:
+                formatted_edited = dt_edited_input.strftime("%a %d %b, %H:%M")
+            else:
+                formatted_edited = dt_edited_input.strftime("%a %d %b %Y, %H:%M")
+        
+        article_data["dt_edited"] = "Last edited on " + formatted_edited
+
+    text = commonmark.commonmark(file_content_clean)
+
+    return render_template("article.html", article_content = text, **article_data)
 
 
 if __name__ == "__main__":

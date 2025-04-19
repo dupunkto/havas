@@ -25,9 +25,9 @@ project_dir =  os.path.abspath(project_dir)
 def manager_home():
     article_list = []
 
-    for article in os.listdir(os.path.join(project_dir, "modules", "articles_module", "articles", "news")):
+    for article in os.listdir(os.path.join(project_dir, "articles", "news")):
         article_id = article.removesuffix(".md")
-        with open(os.path.join(project_dir, "modules", "articles_module", "articles", "news", article), encoding="utf-8") as file:
+        with open(os.path.join(project_dir, "articles", "news", article), encoding="utf-8") as file:
             article_content = file.read().strip()
         extract = re.match(r"^---\n(.*?)\n---\n", article_content, re.DOTALL)
         article_data = yaml.safe_load(extract.group(1))
@@ -52,7 +52,7 @@ def manager_home():
 
 @manager_module.route("/editor/<string:article>")
 def manager_editor(article):
-    with open(os.path.join(project_dir, "modules", "articles_module", "articles", "news", f"{article}.md"), encoding="utf-8") as file:
+    with open(os.path.join(project_dir, "articles", "news", f"{article}.md"), encoding="utf-8") as file:
         article_content = file.read().strip()
     
     extract = re.match(r"^---\n(.*?)\n---\n", article_content, re.DOTALL)
@@ -81,14 +81,14 @@ def manager_editor_new():
 
     id = "".join(random.choices(chars, k=12))
 
-    path = os.path.join(project_dir, "modules", "articles_module", "articles", "news", f"{id}.md")
+    path = os.path.join(project_dir, "articles", "news", f"{id}.md")
 
     if os.path.exists(path):
         abort(500)
 
     current_time = datetime.now(pytz.utc).isoformat()
 
-    with open(os.path.join(project_dir, "modules", "articles_module", "articles", "news", f"{id}.md"), "w", encoding="utf-8") as file:
+    with open(os.path.join(project_dir, "articles", "news", f"{id}.md"), "w", encoding="utf-8") as file:
         file.write(f'---\ntitle: "Lorem ipsum dolor sit amet"\ndescription: "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"\ndatetime: "{current_time}"\ntags: []\nauthors: []\n---\n\nLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.\n')
    
 
@@ -103,7 +103,7 @@ def save_article():
     content = data.get("content")
 
     try:
-        file_path = os.path.join(project_dir, "modules", "articles_module", "articles", "news", f"{id}.md")
+        file_path = os.path.join(project_dir, "articles", "news", f"{id}.md")
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
         return jsonify({"message": "File saved successfully", "path": file_path}), 200
@@ -116,7 +116,7 @@ def delete_article():
     id = request.args.get("id")
 
     try:
-        os.remove(os.path.join(project_dir, "modules", "articles_module", "articles", "news", f"{id}.md"))
+        os.remove(os.path.join(project_dir, "articles", "news", f"{id}.md"))
         return jsonify({"message": "File removed successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
