@@ -125,7 +125,6 @@
     align-items: center;
     gap: 5px;
     cursor: pointer;
-    font-size: 1.1em;
     margin-top: 10px;
 }
 
@@ -172,7 +171,28 @@
     width: fit-content;
     justify-self: center;
     align-self: center;
-    flex-direction: row;
+    border: 2px solid #d5d5d5;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#add-new-image:hover {
+    background: #aaa;
+    color: white;
+    border-color: #aaa;
+}
+
+#img-uploader-label {
+    cursor: pointer;
+}
+
+#img-uploader-label i {
+    margin-right: 5px;
+}
+
+#img-input {
+    display: none;
 }
 
 

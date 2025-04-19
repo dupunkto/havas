@@ -7,6 +7,7 @@ tags:
   - "binnenland"
 authors:
   - "NOS Nieuws"
+cover: "img_6G7SRDRZNSQB"
 ---
 
 Een nieuwe uitspraak van de rechtbank kan Friese boeren die buiten hun schuld zonder geldige natuurvergunning werken in grote problemen brengen. Omdat de overheid heeft beloofd ze aan een vergunning te helpen, laat de provincie Friesland hen doorwerken. Dat argument veegt de rechtbank van tafel.

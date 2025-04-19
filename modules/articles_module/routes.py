@@ -48,7 +48,10 @@ def article(slug):
             formatted = dt_input.strftime("%a %d %b %Y, %H:%M")
     
     article_data["dt_formatted"] = formatted
-    article_data["cover"] = f"/media/api/cover/{slug}.jpg"
+    
+    img_id = article_data.get("cover", "fallback")
+
+    article_data["cover"] = f"/media/api/get_image/{img_id}"
 
     text = commonmark.commonmark(file_content_clean)
 

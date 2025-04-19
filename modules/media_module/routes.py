@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify, send_file, redirect, request
+from flask import Blueprint, jsonify, send_file, request, abort
 import os
-import json
+import random
 
 media_module = Blueprint("media_module", __name__)
 
@@ -9,25 +9,19 @@ BASE_DIR = os.path.dirname(__file__)
 
 project_dir = os.path.dirname(__file__)
 
-while not os.path.isdir(os.path.join(project_dir, '.git')):
+while not os.path.isdir(os.path.join(project_dir, ".git")):
     project_dir = os.path.dirname(project_dir)
 
 project_dir =  os.path.abspath(project_dir)
 
-
-@media_module.route("/api/cover/<string:id>")
-def cover_image(id):
-    with open(os.path.join(BASE_DIR, "data", "coverlist.json")) as jf:
-        coverlist = json.load(jf)
-
-    image_id = coverlist.get(id.removesuffix(".jpg"), "fallback")
-
-    return redirect(f"/media/api/get_image/{image_id}")
-
 @media_module.route("/api/get_image/<string:filename>")
 def get_image(filename):
     path = os.path.join(BASE_DIR, "media", "image_pile", filename + ".jpg")
-    return send_file(path)
+
+    if os.path.exists(path):
+        return send_file(path)
+
+    return send_file(os.path.join(BASE_DIR, "media", "image_pile", "no_image.jpg"))
 
 @media_module.route("/api/list_images")
 def list_images():
@@ -45,21 +39,27 @@ def list_images():
     
     return jsonify(final_file_list)
 
-@media_module.route("/api/set_cover", methods=["POST"])
-def set_cover():
-    try:
-        article_id = request.args.get("article")
-        image_id = request.args.get("image")
+@media_module.route("/api/upload", methods=["POST"])
+def uploader():
+    if "file" not in request.files:
+        return jsonify({"success": False, "message": "No file part"}), 400
 
-        with open(os.path.join(BASE_DIR, "data", "coverlist.json")) as jf:
-            coverlist = json.load(jf)
+    file = request.files["file"]
+    if file.filename == "":
+        return jsonify({"success": False, "message": "No selected file"}), 400
 
-        coverlist[article_id] = image_id
+    if file and "." in file.filename and file.filename.rsplit(".", 1)[1].lower() == "jpg" and file.mimetype == "image/jpeg":
+        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567" # Base32
 
-        with open(os.path.join(BASE_DIR, "data", "coverlist.json"), "w") as jf:
-            json.dump(coverlist, jf, indent=4)
+        id = "img_" + "".join(random.choices(chars, k=12))
 
-        return jsonify({"message": "Cover updated successfully"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        filepath = os.path.join(BASE_DIR, "media", "image_pile", id + ".jpg")
 
+        if os.path.exists(filepath):
+            abort(500)
+
+        file.save(filepath)
+
+        return jsonify({"success": True, "path": filepath})
+
+    return jsonify({"success": False, "message": "Only .jpg images are allowed"}), 400

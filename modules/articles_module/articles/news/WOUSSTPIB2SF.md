@@ -10,6 +10,7 @@ tags:
   - "politiek"
 authors:
   - "NOS Nieuws"
+cover: "img_S4AWWC3MHZKG"
 ---
 
 Bij alle ministeries is een datalek op overheidswebsites ontstaan waarbij persoonsgegevens, zoals namen van ambtenaren, of gebruikersnamen en enkele telefoonnummers zijn weggelekt. Het ministerie van Binnenlandse Zaken zegt de gevolgen niet te kunnen overzien omdat nieuws over het lek snel naar buiten kwam via de media.

@@ -6,6 +6,7 @@ tags:
   - "technologie"
 authors:
   - "NOS Nieuws"
+cover: "img_S4AWWC3MHZKG"
 ---
 
 Wie een website bezoekt, moet makkelijk 'nee' kunnen zeggen tegen het plaatsen van cookies. Dat zijn bestandjes waarmee een website bezoekers kan volgen. Maar 'nee' zeggen leidt lang niet altijd tot het gewenste resultaat, zegt de Autoriteit Persoonsgegevens (AP).

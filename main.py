@@ -55,7 +55,9 @@ def homepage():
         article_data["datetime_obj"] = dt_obj
         article_data["datetime_formatted"] = format_date(dt_obj)
 
-        article_data["cover"] = f"/media/api/cover/{article_id}.jpg"
+        img_id = article_data.get("cover", "fallback")
+
+        article_data["cover"] = f"/media/api/get_image/{img_id}"
         article_data["url"] = f"/article/{article_id}"
 
         article_list.append(article_data)

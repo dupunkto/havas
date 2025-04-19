@@ -36,7 +36,9 @@ def manager_home():
         article_data["datetime_obj"] = dt_obj
         article_data["datetime_formatted"] = dt_obj.strftime("%d-%m-%Y %H:%M:%S")
 
-        article_data["cover"] = f"/media/api/cover/{article_id}.jpg"
+        img_id = article_data.get("cover", "fallback")
+        article_data["cover"] = f"/media/api/get_image/{img_id}"
+
         article_data["url"] = f"/article/{article_id}"
 
         article_data["id"] = article_id
@@ -61,17 +63,14 @@ def manager_editor(article):
     dt_obj = datetime.fromisoformat(str(article_data["datetime"]))
     article_data["datetime_obj"] = dt_obj
 
-    article_data["cover"] = f"/media/api/cover/{article}.jpg"
+    img_id = article_data.get("cover", "fallback")
+    article_data["cover"] = f"/media/api/get_image/{img_id}"
+
+    article_data["img_id"] = img_id
+    
     article_data["url"] = f"/article/{article}"
 
     article_data["id"] = article
-
-    with open(os.path.join(project_dir, "modules", "media_module", "data", "coverlist.json")) as jf:
-        coverlist = json.load(jf)
-
-    image_id = coverlist.get(article, "fallback")
-
-    article_data["image_name"] = image_id
 
     return render_template("manager_editor.html", article_content = article_content_clean, **article_data)
 

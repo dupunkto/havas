@@ -7,6 +7,7 @@ tags:
   - "binnenland"
 authors:
   - "NOS Nieuws"
+cover: "img_UZZJLSVU7UQX"
 ---
 
 Het was een van de verrassende maatregelen die eergisteren naar buiten kwamen: de huren van sociale huurwoningen mogen per 1 juli dit jaar en 1 juli volgend jaar niet omhoog.

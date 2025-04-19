@@ -8,6 +8,7 @@ tags:
 authors:
   - "NOS Nieuws"
   - "Omroep Gelderland"
+cover: "img_DPDDP4YXOXD2"
 ---
 
 Sinds 1 januari van dit jaar kunnen ruiters en mountainbikers - geheel vrijwillig - betalen voor het gebruik van de paden op de Veluwe. In het eerste kwartaal zijn 43 vrijwillige vignetten verkocht, waarvan 39 door mountainbikers en vier door ruiters. "Best verrassend", vindt Janna Brouwer van de VeluweAlliantie.

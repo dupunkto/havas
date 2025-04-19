@@ -58,7 +58,7 @@
         <div class="editor-element" id="image-element">
             <span class="element-title">Cover image</span>
             <div id="images" class="element-editor-container">
-                <img id="cover-image-item" src="{{ cover }}">
+                <img id="cover-image-item" src="{{ cover }}" data-imgid="{{ img_id }}">
                 <div id="replace-image-button" class="button-container-openclose"><i class="fa-solid fa-repeat"></i> Replace cover image</div>
 
                 <div id="new-image-selector" class="selector-container container-openclose">
@@ -67,6 +67,7 @@
                         <button class="selector-refresh" onclick="getImageOptions()"><i class="fa-solid fa-repeat"></i></button>
                     </div>
                     <div id="image-container"></div>
+                    <span id="upload-status"></span>
                 </div>
             </div>
         </div>
@@ -124,10 +125,14 @@
             const titleYaml = 'title: "' + document.getElementById("title").innerText + '"';
             const descriptionYaml = 'description: "' + document.getElementById("description").innerText + '"';
             const datetimeYaml = 'datetime_edited: "' + new Date().toISOString() + '"\n' + 'datetime: "{{ datetime }}"';
+            
+            const imgElement = document.getElementById("cover-image-item");
+
+            const coverYaml = 'cover: "' + imgElement.getAttribute("data-imgid") + '"';
 
 
 
-            const yaml = "---\n" + titleYaml + "\n" + descriptionYaml + "\n" + datetimeYaml + "\n" + tagsYaml + "\n" + authorsYaml + "\n---\n\n";
+            const yaml = "---\n" + titleYaml + "\n" + descriptionYaml + "\n" + datetimeYaml + "\n" + tagsYaml + "\n" + authorsYaml + "\n" + coverYaml + "\n---\n\n";
 
 
 
@@ -294,46 +299,24 @@
                         container.appendChild(div);
                     });
 
-                    const div2 = document.createElement("div");
-                    div2.className = "select-image-item";
-                    div2.id = "add-new-image";
-                    div2.innerHTML = '<i class="fa-solid fa-plus"></i> Upload image';
-                    container.appendChild(div2);
+                    const divInput = document.createElement("div");
+                    divInput.id = "add-new-image";
+                    divInput.innerHTML = '<label for="img-input" id="img-uploader-label"><i class="fa-solid fa-plus"></i>Upload File</label><input type="file" id="img-input" accept=".jpg,image/jpeg" onchange="uploadFile()">';
+                    container.appendChild(divInput);
 
 
 
                     const elements = document.querySelectorAll(".select-image-item");
                     elements.forEach(el => {
                         el.addEventListener("click", async () => {
+                            const imgId = el.getAttribute("data-imgid")
 
-                            try {
-                                const imgId = el.getAttribute("data-imgid")
+                            mainCoverImage.setAttribute("data-imgid", imgId)
 
-                                const response = await fetch(`/media/api/set_cover?article={{ id }}&image=${imgId}`, {
-                                    method: "POST"
-                                });
+                            mainCoverImage.src = `/media/api/get_image/${imgId}`
 
-                                const result = await response.json();
-
-                                if (!response.ok) {
-                                    throw new Error(result.error || "An error occurred while updating cover.");
-                                }
-
-                                mainCoverImage.src = `/media/api/get_image/${imgId}`
-
-                                elements.forEach(item => item.classList.remove("active"));
-                                el.classList.add("active");
-                                
-                            } catch (err) {
-                                status.innerText = "Error updating image: " + err.message;
-                                status.style.background = "var(--red)";
-
-                                setTimeout(() => {
-                                    status.innerText = "";
-                                    status.style.background = "";
-                                }, 2000);
-                            }
-                            
+                            elements.forEach(item => item.classList.remove("active"));
+                            el.classList.add("active");
                         });
                     });
 
@@ -342,6 +325,46 @@
         };
 
         getImageOptions();
+    </script>
+
+    <script>
+        async function uploadFile() {
+            const fileInput = document.getElementById("img-input");
+            const status = document.getElementById("upload-status");
+            const file = fileInput.files[0];
+        
+            if (!file) {
+                status.textContent = "Please choose a file first.";
+                return;
+            }
+        
+            const allowedTypes = ["image/jpeg"];
+            const extension = file.name.split(".").pop().toLowerCase();
+        
+            if (!allowedTypes.includes(file.type) || extension !== "jpg") {
+                status.textContent = "Only .jpg files are allowed.";
+                return;
+            }
+        
+            const formData = new FormData();
+            formData.append("file", file);
+        
+            try {
+                const res = await fetch("/media/api/upload", {
+                    method: "POST",
+                    body: formData
+                });
+        
+                const data = await res.json();
+        
+                if (data.success) getImageOptions();
+                else status.textContent = `Upload failed: ${data.message}`;
+                
+            } catch (err) {
+                console.error(err);
+                status.textContent = "An error occurred during upload.";
+            }
+        }
     </script>
 
     <script>

@@ -7,6 +7,7 @@ tags:
   - "buitenland"
 authors:
   - "NOS Nieuws"
+cover: "img_N364LYYATTLV"
 ---
 
 Zelfs voordat president Trump op de pauzeknop drukte en importheffingen voor 75 landen bijstelde naar 10 procent zagen exporteurs en producenten in India al de voordelen van hogere heffingen. India's maakindustrie groeit lang niet zo snel als de overheid zou willen. Trumps importheffingenlijst maakte van India opeens de interessantste optie in de regio om te produceren. Ook nu de hogere heffingen zijn uitgesteld is het optimisme in India nog niet verdwenen.

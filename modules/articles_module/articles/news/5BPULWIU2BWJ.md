@@ -6,6 +6,7 @@ tags:
   - "binnenland"
 authors:
   - "NOS Nieuws"
+cover: "img_KSHGFUZY6NVV"
 ---
 
 Het paasweekend en de meivakantie die voor veel mensen begint, leidt naar verwachting tot grote drukte op de wegen en bij luchthaven Schiphol. Vakantieparken zijn zo goed als volgeboekt en de veerdiensten naar de Waddeneilanden houden rekening met drukte bij de steigers.
