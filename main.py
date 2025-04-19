@@ -1,5 +1,6 @@
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, request, flash, redirect, session, make_response
 from datetime import datetime, timedelta
+from urllib.parse import urlparse
 import pytz
 import commonmark
 import yaml
@@ -11,6 +12,7 @@ from modules import load_modules
 
 app = Flask(__name__)
 
+app.secret_key = os.urandom(30)
 
 for module, module_name in load_modules():
     try:
@@ -122,6 +124,41 @@ def article(slug):
     text = commonmark.commonmark(file_content_clean)
 
     return render_template("article.html", article_content = text, **article_data)
+
+@app.errorhandler(404)
+def not_found(e):
+    referrer = request.referrer
+    target_path = urlparse(request.url).path
+
+    if not referrer or "api" in target_path or "favicon" in target_path:
+        return "404 Not Found", 404
+
+    ref_host = urlparse(referrer).hostname
+    current_host = urlparse(request.host_url).hostname
+
+    if ref_host == current_host:
+        flash(f"Sorry, <code>{target_path}</code> is not a webpage", "error")
+
+        html = f'''
+        <!doctype html>
+        <html>
+        <head>
+            <meta http-equiv="refresh" content="0;url={referrer}">
+            <title>Redirecting...</title>
+        </head>
+        <body>
+            <h1>404</h1>
+            <p>That page was not found.</p>
+            <p>You are being redirected back to to <a href="{referrer}">{referrer}</a>...</p>
+        </body>
+        </html>
+        '''
+
+        response = make_response(html, 404)
+        response.headers['Location'] = referrer
+        return response
+
+    return "404 Not Found", 404
 
 
 if __name__ == "__main__":

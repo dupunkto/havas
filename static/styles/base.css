@@ -121,6 +121,37 @@ header #header-content {
     color: var(--blue);
 }
 
+#flashes {
+    position: absolute;
+    top: 100%;
+    right: 0%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.flash {
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    width: fit-content;
+    animation: fadeout 300ms forwards 6s;
+}
+
+.flash code {
+    font-family: monospace;
+}
+
+.flash.alert-error {
+    background: #FF0000;
+}
+
+.flash.alert-success {
+    background: #00FF00;
+}
+
 main {
     border-bottom: 1px solid light-dark(#bbb, #444);
     padding: 15px 25px;
@@ -145,4 +176,13 @@ footer a {
 #main-content {
     max-width: 800px;
     margin: auto;
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }

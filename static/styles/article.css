@@ -27,6 +27,8 @@ main article * {
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
+    border-bottom: 1px solid light-dark(#ccc, #333);
+    padding-bottom: 10px;
 }
 
 #article-extra-data p {

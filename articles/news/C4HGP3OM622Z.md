@@ -1,13 +1,13 @@
 ---
 title: "Doden in Italië door zinkgat in brug, veroorzaakt door noodweer"
 description: "In het noorden van Italië zijn twee doden gevallen toen een auto in een zinkgat terechtkwam. Dat gat in de weg was ontstaan in een brug over een rivier"
-datetime_edited: "2025-04-19T11:54:17.642Z"
+datetime_edited: "2025-04-19T16:49:30.237Z"
 datetime: "2025-04-18T19:12:38.872195+00:00"
 tags:
   - "buitenland"
 authors:
   - "NOS Nieuws"
-cover: "fallback"
+cover: "img_UTWVILRUAOJ4"
 ---
 
 In het noorden van Italië zijn twee doden gevallen toen een auto in een zinkgat terechtkwam. Dat gat in de weg was ontstaan in een brug over een rivier. Het gebied heeft te kampen met zware regenval.

@@ -12,6 +12,7 @@
     align-items: stretch;
     text-decoration: none;
     color: inherit;
+    height: fit-content;
 }
 
 .article-image {
@@ -53,7 +54,7 @@
     }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 650px) {
     #article-list {
         grid-template-columns: repeat(1, 1fr);
     }
