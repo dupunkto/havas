@@ -62,7 +62,10 @@
                 <div id="replace-image-button" class="button-container-openclose"><i class="fa-solid fa-repeat"></i> Replace cover image</div>
 
                 <div id="new-image-selector" class="selector-container container-openclose">
-                    <span class="selector-title">Choose a cover image</span>
+                    <div class="selector-header">
+                        <span class="selector-title">Choose a cover image</span>
+                        <button class="selector-refresh" onclick="getImageOptions()"><i class="fa-solid fa-repeat"></i></button>
+                    </div>
                     <div id="image-container"></div>
                 </div>
             </div>
@@ -182,7 +185,7 @@
                 const result = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(result.error || "An error occurred while saving.");
+                    throw new Error(result.error || "An error occurred while deleting.");
                 }
 
                 window.location.href = "/manager/";
@@ -262,32 +265,83 @@
     </script>
 
     <script>
-        fetch("/media/api/list_images")
-            .then(response => response.json())
-            .then(images => {
-                const container = document.getElementById("image-container");
-                container.innerHTML = "";
+        function getImageOptions() {
+            const mainCoverImage = document.getElementById("cover-image-item");
 
-                images.forEach(image => {
-                    const div = document.createElement("div");
-                    div.className = "select-image-item";
+            fetch("/media/api/list_images")
+                .then(response => response.json())
+                .then(images => {
+                    const container = document.getElementById("image-container");
+                    container.innerHTML = "";
 
-                    if (image.name == "{{ image_name }}") div.classList.add("active");
+                    images.forEach(image => {
+                        const div = document.createElement("div");
+                        div.className = "select-image-item";
+                        div.setAttribute("data-imgid", image.name)
 
-                    const img = document.createElement("img");
-                    img.className = "select-image-image";
-                    img.src = image.url;
+                        if (image.name == "{{ image_name }}") div.classList.add("active");
 
-                    const span = document.createElement("span");
-                    span.className = "select-image-name";
-                    span.textContent = image.name;
+                        const img = document.createElement("img");
+                        img.className = "select-image-image";
+                        img.src = image.url;
 
-                    div.appendChild(img);
-                    div.appendChild(span);
-                    container.appendChild(div);
-                });
-            })
-            .catch(error => console.error("Error fetching images:", error));
+                        const span = document.createElement("span");
+                        span.className = "select-image-name";
+                        span.textContent = image.name;
+
+                        div.appendChild(img);
+                        div.appendChild(span);
+                        container.appendChild(div);
+                    });
+
+                    const div2 = document.createElement("div");
+                    div2.className = "select-image-item";
+                    div2.id = "add-new-image";
+                    div2.innerHTML = '<i class="fa-solid fa-plus"></i> Upload image';
+                    container.appendChild(div2);
+
+
+
+                    const elements = document.querySelectorAll(".select-image-item");
+                    elements.forEach(el => {
+                        el.addEventListener("click", async () => {
+
+                            try {
+                                const imgId = el.getAttribute("data-imgid")
+
+                                const response = await fetch(`/media/api/set_cover?article={{ id }}&image=${imgId}`, {
+                                    method: "POST"
+                                });
+
+                                const result = await response.json();
+
+                                if (!response.ok) {
+                                    throw new Error(result.error || "An error occurred while updating cover.");
+                                }
+
+                                mainCoverImage.src = `/media/api/get_image/${imgId}`
+
+                                elements.forEach(item => item.classList.remove("active"));
+                                el.classList.add("active");
+                                
+                            } catch (err) {
+                                status.innerText = "Error updating image: " + err.message;
+                                status.style.background = "var(--red)";
+
+                                setTimeout(() => {
+                                    status.innerText = "";
+                                    status.style.background = "";
+                                }, 2000);
+                            }
+                            
+                        });
+                    });
+
+                })
+                .catch(error => console.error("Error fetching images:", error));
+        };
+
+        getImageOptions();
     </script>
 
     <script>
