@@ -1,12 +1,14 @@
 ---
 title: "Politici reageren op vertrek Omtzigt: 'Respect voor alles wat je hebt gedaan'"
 description: "Vanuit Den Haag reageren veel politici op het vertrek van NSC-oprichter Pieter Omtzigt uit de landelijke politiek"
-datetime_edited: "2025-04-18T19:04:20.142Z"
+datetime_edited: "2025-06-06T13:42:02.044Z"
 datetime: "2025-04-18T19:03:45.438444+00:00"
 tags:
   - "politiek"
+  - "binnenland"
 authors:
   - "NOS Nieuws"
+cover: "img_YGV4RDNGL5SJ"
 ---
 
 Vanuit Den Haag reageren veel politici op het vertrek van NSC-oprichter Pieter Omtzigt uit de landelijke politiek. Omtzigt, die ruim twee decennia in de Tweede Kamer zat en al langere tijd kampt met burn-outklachten, wordt geroemd om zijn jarenlange inzet voor mensen in kwetsbare posities.
@@ -22,3 +24,5 @@ PVV-leider en coalitiegenoot Wilders schrijft: "Veel respect Pieter voor alles w
 Zijn eigen partij NSC stelt in een brief aan de leden van de partij dat Omtzigt "met pijn in het hart" afscheid neemt. "Pieter boekte in 2023 een van de grootste zeges ooit in de Nederlandse politiek. NSC kwam met 20 zetels in de Kamer. Hij bewees daarmee hoezeer Nederland behoefte heeft aan een partij die zich inzet voor bestaanszekerheid en goed bestuur en aan politici die zich met empathie en betrokkenheid voor mensen inzetten."
 
 Verschillende NSC'ers, onder wie vicepremier Eddy van Hijum en de nieuwe fractievoorzitter Nicolien van Vroonhoven, schrijven dat zij zullen blijven opkomen voor de idealen en het gedachtegoed van Omtzigt.
+
+# test

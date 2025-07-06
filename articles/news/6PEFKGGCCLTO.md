@@ -1,11 +1,13 @@
 ---
 title: "ASML worstelt met onzekerheid rond importheffingen, beurskoers daalt verder"
 description: "Chipmachinefabrikant ASML uit Veldhoven gaat de gevolgen van de importheffingen merken, maar in welke mate en of het financiële impact gaat hebben, is nog niet duidelijk"
+datetime_edited: "2025-06-28T16:48:09.634Z"
 datetime: "2025-04-18T13:40:16.067Z"
 tags:
   - "economie"
 authors:
   - "NOS Nieuws"
+cover: "img_QA3DR4OVMWJY"
 ---
 
 Chipmachinefabrikant ASML uit Veldhoven gaat de gevolgen van de importheffingen merken, maar in welke mate en of het financiële impact gaat hebben, is nog niet duidelijk. Het bedrijf probeert met andere bedrijven in de chipsector de gevolgen zo klein mogelijk te houden.
