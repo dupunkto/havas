@@ -1,0 +1,32 @@
+{% extends "frontend_base.html" %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('frontend.static', filename='article.css') }}">
+{% endblock %}
+
+{% block content %}
+    <header class="article-header">
+        <img class="article-cover-image" src="{{ url_for('media.get_file', id=article.cover_image_id) }}">
+        <h1 class="article-title">{{ article.title }}</h1>
+        <div class="article-metadata">
+            <ul class="article-authors">
+                {% for author in article.authors %}
+                    <li>{{ author }}</li>
+                {% endfor %}
+            </ul>
+            <div class="article-date">
+                <span class="article-date-made"><strong>{{ article.datetime_made.strftime("%B %d, %Y at %H:%M") }}</strong></span>
+                {% if article.datetime_edited != article.datetime_made %}
+                    <span class="article-date-edited">Edited at <strong>{{ article.datetime_edited.strftime("%B %d, %Y at %H:%M") }}</strong></span>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <article>
+        {{ article.html | safe }}
+    </article>
+{% endblock %}
+

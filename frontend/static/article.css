@@ -1,0 +1,54 @@
+main article *,
+main header * {
+    margin: revert;
+    padding: revert;
+}
+
+.article-cover-image {
+    aspect-ratio: 16/9;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+main article *,
+main header * {
+    margin: revert;
+    padding: revert;
+}
+
+.article-cover-image {
+    aspect-ratio: 16/9;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.article-authors {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
+.article-metadata {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    margin-block: 1em;
+}
+
+.article-header {
+    margin-bottom: 2em;
+}
+
+.article-date {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.article-date-edited {
+    font-size: 0.9em;
+    color: var(--oc-gray-7);
+}

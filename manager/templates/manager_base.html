@@ -1,0 +1,26 @@
+{% extends "skeleton.html" %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('manager.static', filename='base.css') }}" />
+
+    {% block styles %}{% endblock %}
+{% endblock %}
+
+{% block body %}
+    <header>
+        <a href="{{ url_for('manager.index') }}" class="sidebar-title">HavasManager</a>
+        <nav class="manager-page-menu">
+            <a href="{{ url_for('manager.index') }}" class="manager-menu-item{% if url_for('manager.index') == request.path %} manager-menu-item-active{% endif %}">Home</a>
+            <a href="{{ url_for('manager.add_article') }}" class="manager-menu-item{% if url_for('manager.add_article') == request.path %} manager-menu-item-active{% endif %}">Add article</a>
+        </nav>
+        <nav class="manager-shortcuts">
+            <a href="{{ url_for('frontend.index') }}" class="manager-menu-item">Public page</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>This is <a href="https://github.com/Gijs6/Havas">Havas</a></footer>
+{% endblock %}

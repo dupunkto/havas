@@ -1,0 +1,26 @@
+{% extends "skeleton.html" %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('frontend.static', filename='base.css') }}" />
+
+    {% block styles %}{% endblock %}
+{% endblock %}
+
+{% block body %}
+    <header>
+        <span class="page-header-title">Havas</span>
+        <nav class="page-menu">
+            <a href="{{ url_for('frontend.index') }}" class="page-menu-item page-menu-item-home{% if not this_page_tag %} page-menu-item-active{% endif %}">Home</a>
+
+            {% for tag in tags %}
+                <a href="{{ url_for('frontend.tagpage', tag=tag) }}" class="page-menu-item page-menu-item-{{ tag | replace(' ', '-') }}{% if this_page_tag == tag %} page-menu-item-active{% endif %}">{{ tag | capit }}</a>
+            {% endfor %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>Powered by <a href="https://github.com/Gijs6/Havas">Havas</a></footer>
+{% endblock %}

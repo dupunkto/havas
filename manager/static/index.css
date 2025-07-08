@@ -1,0 +1,35 @@
+.manager-table-image img {
+    aspect-ratio: 16/9;
+    width: 12.5em;
+    object-fit: cover;
+}
+
+tr {
+    border: none;
+}
+
+td,
+th {
+    border-bottom: 1px var(--oc-gray-6) solid;
+    border-right: 1px var(--oc-gray-3) solid;
+}
+
+td:last-child,
+th:last-child {
+    border-right: 0;
+}
+
+tr th {
+    border-bottom-color: black;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+td,
+th {
+    padding: 10px 5px;
+    vertical-align: middle;
+    text-align: center;
+}

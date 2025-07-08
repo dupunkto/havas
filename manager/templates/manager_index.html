@@ -1,0 +1,42 @@
+{% extends "manager_base.html" %}
+
+{% block title %}Manager{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('manager.static', filename='index.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Articles</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Tags</th>
+            <th>Authors</th>
+            <th>Created</th>
+            <th>Edited</th>
+        </tr>
+        {% for article in articles %}
+            <tr>
+                <td class="manager-table-id">
+                    <a href="{{ url_for('manager.editor', id=article.id) }}">
+                        <code>{{ article.id }}</code>
+                    </a>
+                </td>
+                <td class="manager-table-title">{{ article.title }}</td>
+                <td class="manager-table-description">{{ article.description[:40] }}{% if article.description|length > 40 %}...{% endif %}</td>
+                <td class="manager-table-image">
+                    <img src="{{ url_for('media.get_file', id=article.cover_image_id) }}" />
+                </td>
+                <td class="manager-table-tags">{{ article.tags | join(", ") }}</td>
+                <td class="manager-table-authors">{{ article.authors | join(", ") }}</td>
+                <td class="manager-table-made">{{ article.datetime_made.strftime("%Y-%d-%m %H:%M") }}</td>
+                <td class="manager-table-edited">{{ article.datetime_edited.strftime("%Y-%d-%m %H:%M") }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

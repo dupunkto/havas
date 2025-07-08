@@ -1,0 +1,50 @@
+.article-listing {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px 35px;
+    margin: auto;
+}
+
+.article-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    text-decoration: none;
+    color: inherit;
+    height: fit-content;
+}
+
+.article-image {
+    width: 100%;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 200ms ease;
+}
+
+.article-title {
+    font-weight: 700;
+    margin: 10px 0 5px 0px;
+}
+
+.article-description {
+    font-weight: 300;
+    font-size: 0.85em;
+    color: var(--oc-gray-7);
+}
+
+.article-datetime {
+    font-weight: 600;
+    font-size: 0.8em;
+    color: var(--oc-gray-8);
+    margin-top: 5px;
+}
+
+.article-container:hover .article-title {
+    text-decoration: underline;
+}
+
+.article-container:hover .article-image {
+    transform: scale(1.05);
+}
