@@ -1,0 +1,64 @@
+form {
+    display: grid;
+    grid-template-areas: "title image" "description image" "authors image" "tags image" "content preview";
+    gap: 25px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto auto 1fr auto;
+}
+
+.manager-editor-section {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.manager-editor-section label {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+.manager-editor-section input, .manager-editor-section textarea {
+    border: none;
+    border: 1px solid var(--oc-gray-3);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 1px 3px 0 var(--oc-gray-2), 0 1px 2px -1px var(--oc-gray-3);
+}
+
+.manager-editor-section input:focus, .manager-editor-section textarea:focus {
+    outline: none;
+}
+
+
+.manager-editor-title {
+    grid-area: title;
+}
+
+.manager-editor-description {
+    grid-area: description;
+}
+
+.manager-editor-image {
+    grid-area: image;
+}
+
+.manager-editor-content {
+    grid-area: content;
+}
+
+.manager-editor-authors {
+    grid-area: authors;
+}
+
+.manager-editor-tags {
+    grid-area: tags;
+}
+
+textarea {
+    resize: none;
+}
+
+.manager-editor-info {
+  margin-bottom: 25px;
+}
+

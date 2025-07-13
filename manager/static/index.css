@@ -1,7 +1,12 @@
+.manager-listing-table {
+    min-width: 100%;
+}
+
 .manager-table-image img {
     aspect-ratio: 16/9;
-    width: 12.5em;
     object-fit: cover;
+    width: 100px;
+    max-width: 100px;
 }
 
 tr {
@@ -21,6 +26,7 @@ th:last-child {
 
 tr th {
     border-bottom-color: black;
+    text-align: center;
 }
 
 tr:last-child td {
@@ -31,5 +37,31 @@ td,
 th {
     padding: 10px 5px;
     vertical-align: middle;
+}
+
+.manager-table-tag-item,
+.manager-table-author-item {
+    padding: 0.1em 0.3em;
+    background-color: var(--oc-gray-2);
+    border-radius: 0.4em;
+    display: inline-block;
+    border: 1px solid var(--oc-gray-5);
+}
+
+.manager-table-tags-container,
+.manager-table-authors-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.manager-table-tag-item i,
+.manager-table-author-item i {
+    color: var(--oc-gray-6);
+}
+
+.manager-table-id,
+.manager-table-image {
     text-align: center;
 }
