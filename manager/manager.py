@@ -48,7 +48,12 @@ def save_api():
     article.title = request.form.get("title", article.title)
     article.description = request.form.get("description", article.description)
     article.content = request.form.get("content", article.content)
+
+    article.authors = list(request.form.get("authors").split(";")) or article.authors
+    article.tags = list(request.form.get("tags").split(";")) or article.tags
+
     article.html = build_HTML(request.form.get("content", article.content))
+
     article.datetime_edited = datetime.now(timezone.utc)
 
     db.session.commit()

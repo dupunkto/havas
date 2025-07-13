@@ -105,7 +105,8 @@ textarea {
     overflow: hidden;
 }
 
-.manager-editor-authors-container {
+.manager-editor-authors-container,
+.manager-editor-tags-container {
     list-style-type: none;
     display: flex;
     flex-direction: row;
@@ -113,7 +114,8 @@ textarea {
     flex-wrap: wrap;
 }
 
-.manager-editor-author-item {
+.manager-editor-author-item,
+.manager-editor-tag-item {
     display: flex;
     flex-direction: revert;
     align-items: center;
@@ -126,24 +128,25 @@ textarea {
     width: fit-content;
 }
 
-.manager-editor-author-remove-item {
+.manager-editor-author-remove-item,
+.manager-editor-tag-remove-item {
     margin-left: 5px;
-}
-
-.manager-editor-author-remove-item {
     color: var(--oc-red-8);
     display: none;
     cursor: pointer;
 }
 
-.manager-editor-author-item:hover .manager-editor-author-remove-item {
+.manager-editor-author-item:hover .manager-editor-author-remove-item,
+.manager-editor-tag-item:hover .manager-editor-tag-remove-item {
     display: unset;
 }
 
-.manager-editor-author-item:has(.manager-editor-author-remove-item:hover) .manager-editor-author-item-name {
+.manager-editor-author-item:has(.manager-editor-author-remove-item:hover) .manager-editor-author-item-name,
+.manager-editor-tag-item:has(.manager-editor-tag-remove-item:hover) .manager-editor-tag-item-name {
     text-decoration: line-through;
 }
 
-.manager-editor-author-add {
+.manager-editor-author-add,
+.manager-editor-tag-add {
     cursor: pointer;
 }

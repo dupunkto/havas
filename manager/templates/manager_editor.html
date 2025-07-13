@@ -8,138 +8,151 @@
 {% endblock %}
 
 {% block content %}
-        <h1>Article editor</h1>
+    <h1>Article editor</h1>
 
-        <div class="manager-editor-info">
-            <h2>You're editing article <code>{{ article.id }}</code></h2>
-        </div>
+    <div class="manager-editor-info">
+        <h2>You're editing article <code>{{ article.id }}</code></h2>
+    </div>
 
-        <div class="manager-editor-actions">
-            <button type="submit" class="manager-editor-save-btn" form="editor-form">Save</button>
-        </div>
+    <div class="manager-editor-actions">
+        <button type="submit" class="manager-editor-save-btn" form="editor-form">Save</button>
+    </div>
 
-        <form action="{{ url_for('manager.save_api') }}" method="post" id="editor-form">
-            <input type="hidden" name="id" value="{{ article.id }}" />
+    <form action="{{ url_for('manager.save_api') }}" method="post" id="editor-form">
+        <input type="hidden" name="id" value="{{ article.id }}" />
 
-            <fieldset class="manager-editor-section manager-editor-title">
-                <legend>Title</legend>
-                <input type="text" id="title" name="title" value="{{ article.title }}" placeholder="Title" maxlength="250" required />
-            </fieldset>
+        <fieldset class="manager-editor-section manager-editor-title">
+            <legend>Title</legend>
+            <input type="text" id="title" name="title" value="{{ article.title }}" placeholder="Title" maxlength="250" required />
+        </fieldset>
 
-            <fieldset class="manager-editor-section manager-editor-description">
-                <legend>Description</legend>
-                <textarea id="description" name="description" maxlength="500" required>{{ article.description }}</textarea>
-            </fieldset>
+        <fieldset class="manager-editor-section manager-editor-description">
+            <legend>Description</legend>
+            <textarea id="description" name="description" maxlength="500" required>{{ article.description }}</textarea>
+        </fieldset>
 
-            <fieldset class="manager-editor-section manager-editor-image">
-                <legend>Image</legend>
-                <img src="{{ url_for('media.get_file', id=article.cover_image_id) }}" alt="Cover image" />
-            </fieldset>
+        <fieldset class="manager-editor-section manager-editor-image">
+            <legend>Image</legend>
+            <img src="{{ url_for('media.get_file', id=article.cover_image_id) }}" alt="Cover image" />
+        </fieldset>
 
-            <fieldset class="manager-editor-section manager-editor-content">
-                <legend>Content</legend>
-                <textarea id="content" name="content" required>{{ article.content }}</textarea>
-
-                <script>
-                    function autoGrow(element) {
-                        element.style.height = "5px";
-                        element.style.height = element.scrollHeight + "px";
-                    }
-
-                    document.addEventListener("DOMContentLoaded", () => {
-                        const textarea = document.getElementById("content");
-                        if (textarea) {
-                            autoGrow(textarea);
-                            textarea.addEventListener("input", () => autoGrow(textarea));
-                        }
-                    });
-                </script>
-            </fieldset>
-
-            <fieldset class="manager-editor-section manager-editor-authors">
-                <legend>Authors</legend>
-                <input type="hidden" id="authors" value="{{ article.authors | join(', ') }}" />
-                <ul id="authors-container" class="manager-editor-authors-container">
-                    {% for author in article.authors %}
-                        <li class="manager-editor-author-item">
-                            <i class="fa-solid fa-user manager-editor-author-icon"></i>
-                            <span class="manager-editor-author-item-name" contenteditable="true">{{ author }}</span>
-                            <i class="fa-solid fa-xmark manager-editor-author-remove-item"></i>
-                        </li>
-                    {% endfor %}
-                    <li class="manager-editor-author-item manager-editor-author-add">Add author <i class="fa-solid fa-plus"></i></li>
-                </ul>
-            </fieldset>
-
-            <fieldset class="manager-editor-section manager-editor-tags">
-                <legend>Tags</legend>
-                <input type="hidden" id="tags" value="{{ article.tags | join(', ') }}" />
-                <ul id="tags-container" class="manager-editor-tags-container">
-                    {% for tag in article.tags %}
-                        <li class="manager-editor-tag-item">
-                            <i class="fa-solid fa-tag manager-editor-tag-icon"></i>
-                            <span class="manager-editor-tag-item-name">{{ tag }}</span>
-                            <i class="fa-solid fa-xmark manager-editor-tag-remove-item"></i>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </fieldset>
+        <fieldset class="manager-editor-section manager-editor-content">
+            <legend>Content</legend>
+            <textarea id="content" name="content" required>{{ article.content }}</textarea>
 
             <script>
-                const xMarks = document.querySelectorAll(".manager-editor-author-remove-item");
+                function autoGrow(element) {
+                    element.style.height = "5px";
+                    element.style.height = element.scrollHeight + "px";
+                }
+
+                document.addEventListener("DOMContentLoaded", () => {
+                    const textarea = document.getElementById("content");
+                    if (textarea) {
+                        autoGrow(textarea);
+                        textarea.addEventListener("input", () => autoGrow(textarea));
+                    }
+                });
+            </script>
+        </fieldset>
+
+        <fieldset class="manager-editor-section manager-editor-authors">
+            <legend>Authors</legend>
+            <input type="hidden" name="authors" id="authors" value="{{ article.authors | join(';') }}" />
+            <ul id="authors-container" class="manager-editor-authors-container">
+                {% for author in article.authors %}
+                <li class="manager-editor-author-item">
+                    <i class="fa-solid fa-user manager-editor-author-icon"></i>
+                    <span class="manager-editor-author-item-name" contenteditable="true">{{ author }}</span>
+                    <i class="fa-solid fa-xmark manager-editor-author-remove-item"></i>
+                </li>
+                {% endfor %}
+                <li class="manager-editor-author-item manager-editor-author-add">Add author <i class="fa-solid fa-plus"></i></li>
+            </ul>
+        </fieldset>
+
+        <fieldset class="manager-editor-section manager-editor-tags">
+            <legend>Tags</legend>
+            <input type="hidden" name="tags" id="tags" value="{{ article.tags | join(';') }}" />
+            <ul id="tags-container" class="manager-editor-tags-container">
+                {% for tag in article.tags %}
+                <li class="manager-editor-tag-item">
+                    <i class="fa-solid fa-tag manager-editor-tag-icon"></i>
+                    <span class="manager-editor-tag-item-name" contenteditable="true">{{ tag }}</span>
+                    <i class="fa-solid fa-xmark manager-editor-tag-remove-item"></i>
+                </li>
+                {% endfor %}
+                <li class="manager-editor-tag-item manager-editor-tag-add">Add tag <i class="fa-solid fa-plus"></i></li>
+            </ul>
+        </fieldset>
+
+        <script>
+            function niceListInput(name) {
+                const xMarks = document.querySelectorAll(`.manager-editor-${name}-remove-item`);
 
                 xMarks.forEach((xMark) => {
-                    xMark.addEventListener(("click"), () => {
-                        xMark.parentElement.remove()
-                    })
-                })
+                    xMark.addEventListener("click", () => {
+                        xMark.parentElement.remove();
+                    });
+                });
 
-                const addButtons = document.querySelectorAll(".manager-editor-author-add")
+                const addButtons = document.querySelectorAll(`.manager-editor-${name}-add`);
 
                 addButtons.forEach((addButton) => {
-                    addButton.addEventListener(("click"), () => {
-                        const authorItem = document.createElement("li");
-                        authorItem.className = "manager-editor-author-item";
+                    addButton.addEventListener("click", () => {
+                        const nameItem = document.createElement("li");
+                        nameItem.className = `manager-editor-${name}-item`;
 
-                        const authorIcon = document.createElement("i");
-                        authorIcon.className = "fa-solid fa-user manager-editor-author-icon";
-                        authorItem.appendChild(authorIcon);
+                        const nameIcon = document.createElement("i");
+                        nameIcon.className = `fa-solid fa-user manager-editor-${name}-icon`;
+                        nameItem.appendChild(nameIcon);
 
                         const itemName = document.createElement("span");
-                        itemName.className = "manager-editor-author-item-name";
+                        itemName.className = `manager-editor-${name}-item-name`;
                         itemName.textContent = "Goeiemiddag";
-                        authorItem.appendChild(itemName);
+                        itemName.contentEditable = true;
+                        nameItem.appendChild(itemName);
 
                         const removeItem = document.createElement("i");
-                        removeItem.className = "fa-solid fa-xmark manager-editor-author-remove-item";
-                        authorItem.appendChild(removeItem);
+                        removeItem.className = `fa-solid fa-xmark manager-editor-${name}-remove-item`;
+                        nameItem.appendChild(removeItem);
 
-                        removeItem.addEventListener(("click"), () => {
-                            removeItem.parentElement.remove()
-                        })
+                        removeItem.addEventListener("click", () => {
+                            removeItem.parentElement.remove();
+                        });
 
-                        addButton.parentElement.insertBefore(authorItem, addButton)
-                    })
-                })
+                        addButton.parentElement.insertBefore(nameItem, addButton);
+                    });
+                });
+
+                document.getElementById("editor-form").addEventListener("submit", () => {
+                    const nameItems = document.querySelectorAll(`.manager-editor-${name}-item-name`);
+                    const items = Array.from(nameItems).map((item) => item.textContent.trim());
+                    document.getElementById(`${name}s`).value = items.join(";");
+                });
+            }
+
+            niceListInput("author");
+            niceListInput("tag");
+        </script>
+
+        <fieldset class="manager-editor-section manager-editor-preview">
+            <legend>Preview</legend>
+            <article id="preview"></article>
+            <script>
+                const title = document.getElementById("title");
+                const content = document.getElementById("content");
+                const preview = document.getElementById("preview");
+
+                function updatePreview() {
+                    const fullMarkdown = "# " + title.value + "\n\n" + content.value;
+                    preview.innerHTML = marked.parse(fullMarkdown);
+                }
+
+                content.addEventListener("input", updatePreview);
+                title.addEventListener("input", updatePreview);
+                updatePreview();
             </script>
-
-            <fieldset class="manager-editor-section manager-editor-preview">
-                <legend>Preview</legend>
-                <article id="preview"></article>
-                <script>
-                    const title = document.getElementById("title");
-                    const content = document.getElementById("content");
-                    const preview = document.getElementById("preview");
-
-                    function updatePreview() {
-                        const fullMarkdown = "# " + title.value + "\n\n" + content.value;
-                        preview.innerHTML = marked.parse(fullMarkdown);
-                    }
-
-                    content.addEventListener("input", updatePreview);
-                    title.addEventListener("input", updatePreview);
-                    updatePreview();
-                </script>
-            </fieldset>
-        </form>
+        </fieldset>
+    </form>
 {% endblock %}
