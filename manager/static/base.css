@@ -72,3 +72,36 @@ code {
     color: inherit;
     text-decoration: none;
 }
+
+.flashes {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 1.1em;
+    font-weight: 800;
+}
+
+.flash {
+    padding: 5px;
+    border-radius: 5px;
+    animation: disappear 0s linear 3s forwards;
+}
+
+.flash-success {
+    background: var(--oc-green-7);
+    color: white;
+}
+
+.flash-error {
+    background: var(--oc-red-7);
+    color: white;
+}
+
+@keyframes disappear {
+    to {
+        visibility: hidden;
+    }
+}

@@ -100,3 +100,50 @@ textarea {
     object-fit: cover;
     border-radius: 5px;
 }
+
+.manager-editor-content textarea {
+    overflow: hidden;
+}
+
+.manager-editor-authors-container {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.manager-editor-author-item {
+    display: flex;
+    flex-direction: revert;
+    align-items: center;
+    gap: 5px;
+
+    padding: 0.1em 0.3em;
+    background-color: var(--oc-gray-2);
+    border-radius: 0.4em;
+    border: 1px solid var(--oc-gray-5);
+    width: fit-content;
+}
+
+.manager-editor-author-remove-item {
+    margin-left: 5px;
+}
+
+.manager-editor-author-remove-item {
+    color: var(--oc-red-8);
+    display: none;
+    cursor: pointer;
+}
+
+.manager-editor-author-item:hover .manager-editor-author-remove-item {
+    display: unset;
+}
+
+.manager-editor-author-item:has(.manager-editor-author-remove-item:hover) .manager-editor-author-item-name {
+    text-decoration: line-through;
+}
+
+.manager-editor-author-add {
+    cursor: pointer;
+}

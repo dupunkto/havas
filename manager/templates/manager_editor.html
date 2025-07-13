@@ -14,7 +14,11 @@
             <h2>You're editing article <code>{{ article.id }}</code></h2>
         </div>
 
-        <form action="{{ url_for('manager.save_api') }}" method="post">
+        <div class="manager-editor-actions">
+            <button type="submit" class="manager-editor-save-btn" form="editor-form">Save</button>
+        </div>
+
+        <form action="{{ url_for('manager.save_api') }}" method="post" id="editor-form">
             <input type="hidden" name="id" value="{{ article.id }}" />
 
             <fieldset class="manager-editor-section manager-editor-title">
@@ -35,17 +39,89 @@
             <fieldset class="manager-editor-section manager-editor-content">
                 <legend>Content</legend>
                 <textarea id="content" name="content" required>{{ article.content }}</textarea>
+
+                <script>
+                    function autoGrow(element) {
+                        element.style.height = "5px";
+                        element.style.height = element.scrollHeight + "px";
+                    }
+
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const textarea = document.getElementById("content");
+                        if (textarea) {
+                            autoGrow(textarea);
+                            textarea.addEventListener("input", () => autoGrow(textarea));
+                        }
+                    });
+                </script>
             </fieldset>
 
             <fieldset class="manager-editor-section manager-editor-authors">
                 <legend>Authors</legend>
                 <input type="hidden" id="authors" value="{{ article.authors | join(', ') }}" />
+                <ul id="authors-container" class="manager-editor-authors-container">
+                    {% for author in article.authors %}
+                        <li class="manager-editor-author-item">
+                            <i class="fa-solid fa-user manager-editor-author-icon"></i>
+                            <span class="manager-editor-author-item-name" contenteditable="true">{{ author }}</span>
+                            <i class="fa-solid fa-xmark manager-editor-author-remove-item"></i>
+                        </li>
+                    {% endfor %}
+                    <li class="manager-editor-author-item manager-editor-author-add">Add author <i class="fa-solid fa-plus"></i></li>
+                </ul>
             </fieldset>
 
             <fieldset class="manager-editor-section manager-editor-tags">
                 <legend>Tags</legend>
                 <input type="hidden" id="tags" value="{{ article.tags | join(', ') }}" />
+                <ul id="tags-container" class="manager-editor-tags-container">
+                    {% for tag in article.tags %}
+                        <li class="manager-editor-tag-item">
+                            <i class="fa-solid fa-tag manager-editor-tag-icon"></i>
+                            <span class="manager-editor-tag-item-name">{{ tag }}</span>
+                            <i class="fa-solid fa-xmark manager-editor-tag-remove-item"></i>
+                        </li>
+                    {% endfor %}
+                </ul>
             </fieldset>
+
+            <script>
+                const xMarks = document.querySelectorAll(".manager-editor-author-remove-item");
+
+                xMarks.forEach((xMark) => {
+                    xMark.addEventListener(("click"), () => {
+                        xMark.parentElement.remove()
+                    })
+                })
+
+                const addButtons = document.querySelectorAll(".manager-editor-author-add")
+
+                addButtons.forEach((addButton) => {
+                    addButton.addEventListener(("click"), () => {
+                        const authorItem = document.createElement("li");
+                        authorItem.className = "manager-editor-author-item";
+
+                        const authorIcon = document.createElement("i");
+                        authorIcon.className = "fa-solid fa-user manager-editor-author-icon";
+                        authorItem.appendChild(authorIcon);
+
+                        const itemName = document.createElement("span");
+                        itemName.className = "manager-editor-author-item-name";
+                        itemName.textContent = "Goeiemiddag";
+                        authorItem.appendChild(itemName);
+
+                        const removeItem = document.createElement("i");
+                        removeItem.className = "fa-solid fa-xmark manager-editor-author-remove-item";
+                        authorItem.appendChild(removeItem);
+
+                        removeItem.addEventListener(("click"), () => {
+                            removeItem.parentElement.remove()
+                        })
+
+                        addButton.parentElement.insertBefore(authorItem, addButton)
+                    })
+                })
+            </script>
 
             <fieldset class="manager-editor-section manager-editor-preview">
                 <legend>Preview</legend>

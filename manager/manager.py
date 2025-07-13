@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 
-from db.models import Article
+from db.models import Article, db
 
+from datetime import datetime, timezone
+import markdown
 
 manager_bp = Blueprint(
     "manager",
@@ -31,6 +33,24 @@ def editor(id):
     return render_template("manager_editor.html", article=article)
 
 
+def build_HTML(markdown_input):
+    return markdown.markdown(markdown_input)
+
+
 @manager_bp.route("/save_api", methods=["POST"])
 def save_api():
-    return "", 200
+    article_id = request.form.get("id")
+    article = Article.query.get(article_id)
+    if not article:
+        flash("Article not found", "error")
+        return redirect(url_for("manager.index"))
+
+    article.title = request.form.get("title", article.title)
+    article.description = request.form.get("description", article.description)
+    article.content = request.form.get("content", article.content)
+    article.html = build_HTML(request.form.get("content", article.content))
+    article.datetime_edited = datetime.now(timezone.utc)
+
+    db.session.commit()
+    flash("Article saved", "success")
+    return redirect(url_for("manager.editor", id=article.id))

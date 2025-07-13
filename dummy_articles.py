@@ -7,147 +7,207 @@ with app.app_context():
 
     articles = [
         Article(
-            title="Local Man Claims to Be Time Traveler, Only Predicts Weather",
-            description="A local man baffled residents by claiming he's from the year 2147, but could only predict the next day's rain.",
-            content="Residents of Pinecone Valley were left amused when local man Barry 'The Time Nomad' Jenkins claimed he was from the year 2147. When asked for insights into the future, Jenkins could only state that 'it's probably going to drizzle tomorrow.' Coincidentally, it did rain the next day.",
-            html="<p>Residents of Pinecone Valley were left amused when local man Barry 'The Time Nomad' Jenkins claimed he was from the year 2147. When asked for insights into the future, Jenkins could only state that 'it's probably going to drizzle tomorrow.' Coincidentally, it did rain the next day.</p>",
-            authors=["Barry's Lawyer"],
-            tags=["local news", "remarkable"],
+            title="Government Announces New Economic Stimulus Plan",
+            description="The administration unveils a $250 billion package to support small businesses and infrastructure development.",
+            content="""
+## Government Announces New Economic Stimulus Plan
+
+The federal government has unveiled a **$250 billion economic stimulus package** aimed at revitalizing the economy after months of sluggish growth. The plan includes substantial investments in infrastructure, targeted tax credits for small businesses, and funding to improve public transportation networks.
+
+> "We are committed to creating jobs, supporting local businesses, and modernizing our nation's infrastructure," said the finance minister during a press conference in the capital.
+
+Analysts note that the stimulus could boost GDP growth by up to 1.5% over the next year. Critics, however, argue that the plan risks adding to the national debt without addressing underlying structural issues. The government insists the debt burden remains sustainable.
+
+### Key Measures
+- $100 billion for roads, bridges, and transit systems
+- $75 billion in small business loans and grants
+- Tax incentives for renewable energy projects
+- Expansion of workforce training programs
+
+Economists are divided on the long-term effects but broadly welcome the short-term relief for struggling sectors.
+""",
+            html="""
+<h2>Government Announces New Economic Stimulus Plan</h2>
+<p>The federal government has unveiled a <strong>$250 billion economic stimulus package</strong> aimed at revitalizing the economy after months of sluggish growth. The plan includes substantial investments in infrastructure, targeted tax credits for small businesses, and funding to improve public transportation networks.</p>
+<blockquote>"We are committed to creating jobs, supporting local businesses, and modernizing our nation's infrastructure," said the finance minister during a press conference in the capital.</blockquote>
+<p>Analysts note that the stimulus could boost GDP growth by up to 1.5% over the next year. Critics, however, argue that the plan risks adding to the national debt without addressing underlying structural issues. The government insists the debt burden remains sustainable.</p>
+<h3>Key Measures</h3>
+<ul>
+<li>$100 billion for roads, bridges, and transit systems</li>
+<li>$75 billion in small business loans and grants</li>
+<li>Tax incentives for renewable energy projects</li>
+<li>Expansion of workforce training programs</li>
+</ul>
+<p>Economists are divided on the long-term effects but broadly welcome the short-term relief for struggling sectors.</p>
+""",
+            authors=["Jane Smith"],
+            tags=["economy", "politics"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
-            cover_image_id=None,
+            cover_image_id="123",
         ),
         Article(
-            title="Cat Elected Mayor in Unopposed Write-In Campaign",
-            description="A feline named Chairman Meow has become mayor of a small town after an accidental campaign.",
-            content="In an unprecedented electoral upset, a cat named Chairman Meow became mayor of the sleepy town of Furburg. Locals say the campaign started as a joke, but with no other candidates on the ballot, the 4-year-old tabby secured a landslide victory. His first act was to nap through his own inauguration.",
-            html="<p>In an unprecedented electoral upset, a cat named Chairman Meow became mayor of the sleepy town of Furburg. Locals say the campaign started as a joke, but with no other candidates on the ballot, the 4-year-old tabby secured a landslide victory. His first act was to nap through his own inauguration.</p>",
-            authors=["E. Pawlson"],
-            tags=["politics"],
+            title="International Community Responds to Escalating Conflict",
+            description="World leaders call for ceasefire as violence intensifies between rival factions.",
+            content="""
+## International Community Responds to Escalating Conflict
+
+World leaders have urged an **immediate ceasefire** in the wake of escalating violence between rival factions in the region. The conflict, which has displaced over 200,000 civilians in recent weeks, has drawn condemnation from the United Nations and neighboring countries.
+
+UN Secretary-General António Guterres called the situation "deeply troubling" and emphasized the need for humanitarian corridors to allow aid agencies to deliver critical supplies.
+
+> "We cannot stand by while innocent lives are lost," he said in an emergency session.
+
+Diplomatic talks have stalled, with both sides accusing the other of violating previous agreements. Meanwhile, international NGOs warn of a looming humanitarian crisis if the fighting continues.
+
+### Key Developments
+- Over 500 confirmed civilian casualties
+- Major cities experiencing power and water shortages
+- Border nations preparing for refugee influx
+- Ongoing negotiations mediated by neutral states
+
+Observers say the international community faces significant challenges in brokering a sustainable peace deal.
+""",
+            html="""
+<h2>International Community Responds to Escalating Conflict</h2>
+<p>World leaders have urged an <strong>immediate ceasefire</strong> in the wake of escalating violence between rival factions in the region. The conflict, which has displaced over 200,000 civilians in recent weeks, has drawn condemnation from the United Nations and neighboring countries.</p>
+<p>UN Secretary-General António Guterres called the situation "deeply troubling" and emphasized the need for humanitarian corridors to allow aid agencies to deliver critical supplies.</p>
+<blockquote>"We cannot stand by while innocent lives are lost," he said in an emergency session.</blockquote>
+<p>Diplomatic talks have stalled, with both sides accusing the other of violating previous agreements. Meanwhile, international NGOs warn of a looming humanitarian crisis if the fighting continues.</p>
+<h3>Key Developments</h3>
+<ul>
+<li>Over 500 confirmed civilian casualties</li>
+<li>Major cities experiencing power and water shortages</li>
+<li>Border nations preparing for refugee influx</li>
+<li>Ongoing negotiations mediated by neutral states</li>
+</ul>
+<p>Observers say the international community faces significant challenges in brokering a sustainable peace deal.</p>
+""",
+            authors=["Ahmed Khan"],
+            tags=["world", "conflict"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
-            cover_image_id=None,
+            cover_image_id="123",
         ),
         Article(
-            title="Scientists Discover Sandwich Missing Since 1983",
-            description="The legendary 'library lunch' has been found behind a bookshelf during renovations.",
-            content="Construction workers renovating the Eastside Public Library made a shocking discovery: a peanut butter and jelly sandwich believed to have been lost in 1983. Perfectly mummified between outdated encyclopedias, the sandwich has sparked interest among local historians and mold enthusiasts.",
-            html="<p>Construction workers renovating the Eastside Public Library made a shocking discovery: a peanut butter and jelly sandwich believed to have been lost in 1983. Perfectly mummified between outdated encyclopedias, the sandwich has sparked interest among local historians and mold enthusiasts.</p>",
-            authors=["Sandra Crumbly"],
-            tags=["history"],
-            datetime_made=datetime.now(),
-            datetime_edited=datetime.now(),
-            cover_image_id=None,
-        ),
-        Article(
-            title="Town Holds Annual Invisible Parade",
-            description="Residents lined empty streets to celebrate tradition.",
-            content="The town of Windmere held its 57th Annual Invisible Parade, with thousands lining the streets to watch absolutely nothing go by. Mayor Sanders praised the event as 'the least disruptive parade we've ever had.'",
-            html="<p>The town of Windmere held its 57th Annual Invisible Parade, with thousands lining the streets to watch absolutely nothing go by. Mayor Sanders praised the event as 'the least disruptive parade we've ever had.'</p>",
-            authors=["J. Holloway"],
-            tags=["culture", "local news"],
-            datetime_made=datetime.now(),
-            datetime_edited=datetime.now(),
-            cover_image_id=None,
-        ),
-        Article(
-            title="Man Claims His Reflection is Taunting Him",
-            description="A local man insists his mirror image is making faces at him.",
-            content="Dennis Rundle has refused to enter his bathroom for three days, claiming his reflection has developed a mind of its own. Experts say it's likely sleep deprivation, but Rundle remains convinced the mirror 'winked mockingly.'",
-            html="<p>Dennis Rundle has refused to enter his bathroom for three days, claiming his reflection has developed a mind of its own. Experts say it's likely sleep deprivation, but Rundle remains convinced the mirror 'winked mockingly.'</p>",
-            authors=["N. Silver"],
-            tags=["remarkable", "local news"],
-            datetime_made=datetime.now(),
-            datetime_edited=datetime.now(),
-            cover_image_id=None,
-        ),
-        Article(
-            title="Library Introduces 'Speed Reading' by Firing Books from Cannon",
-            description="A bold new approach to literacy is making waves.",
-            content="The Rivertown Library has unveiled a controversial 'Speed Reading' program that involves firing books from a small cannon at patrons. Librarians claim it's an 'immersive experience,' though local doctors disagree.",
-            html="<p>The Rivertown Library has unveiled a controversial 'Speed Reading' program that involves firing books from a small cannon at patrons. Librarians claim it's an 'immersive experience,' though local doctors disagree.</p>",
-            authors=["M. Page"],
-            tags=["education", "remarkable"],
-            datetime_made=datetime.now(),
-            datetime_edited=datetime.now(),
-            cover_image_id=None,
-        ),
-        Article(
-            title="Pigeon Starts Blog About City Life",
-            description="A local pigeon has attracted thousands of readers with its urban musings.",
-            content="A pigeon known as Gerald has become an internet sensation for his blog detailing life on the city streets. Posts include reviews of park benches and stern warnings about 'the giant pretzel thief.'",
-            html="<p>A pigeon known as Gerald has become an internet sensation for his blog detailing life on the city streets. Posts include reviews of park benches and stern warnings about 'the giant pretzel thief.'</p>",
-            authors=["A. Beaks"],
+            title="Major Tech Firm Announces Breakthrough in AI Safety Research",
+            description="Company reveals new tools designed to improve transparency and reduce risks in large language models.",
+            content="""
+## Major Tech Firm Announces Breakthrough in AI Safety Research
+
+One of the world's leading technology companies has unveiled **new research aimed at making large language models safer and more transparent**. At a conference yesterday, the firm demonstrated tools that help users better understand how AI systems generate responses and identify potentially harmful outputs.
+
+> "AI has tremendous potential, but we must ensure it's developed responsibly," said the company's Chief AI Scientist.
+
+The new suite includes explainability dashboards, red-teaming frameworks for stress-testing models, and policy guidance for developers. Critics argue these tools, while a step forward, may not go far enough to mitigate misuse.
+
+### Highlights of the Announcement
+- Open-source auditing tools for AI models
+- Improved detection of biased or unsafe content
+- Partnerships with universities for ethics research
+- Commitments to align AI development with human values
+
+Industry observers see the move as part of broader efforts to win public trust and respond to regulatory scrutiny. The firm plans to release its tools in phases over the next year.
+""",
+            html="""
+<h2>Major Tech Firm Announces Breakthrough in AI Safety Research</h2>
+<p>One of the world's leading technology companies has unveiled <strong>new research aimed at making large language models safer and more transparent</strong>. At a conference yesterday, the firm demonstrated tools that help users better understand how AI systems generate responses and identify potentially harmful outputs.</p>
+<blockquote>"AI has tremendous potential, but we must ensure it's developed responsibly," said the company's Chief AI Scientist.</blockquote>
+<p>The new suite includes explainability dashboards, red-teaming frameworks for stress-testing models, and policy guidance for developers. Critics argue these tools, while a step forward, may not go far enough to mitigate misuse.</p>
+<h3>Highlights of the Announcement</h3>
+<ul>
+<li>Open-source auditing tools for AI models</li>
+<li>Improved detection of biased or unsafe content</li>
+<li>Partnerships with universities for ethics research</li>
+<li>Commitments to align AI development with human values</li>
+</ul>
+<p>Industry observers see the move as part of broader efforts to win public trust and respond to regulatory scrutiny. The firm plans to release its tools in phases over the next year.</p>
+""",
+            authors=["Laura Chen"],
             tags=["technology"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
-            cover_image_id=None,
+            cover_image_id="123",
         ),
         Article(
-            title="World's Quietest Rock Band Releases Silent Album",
-            description="The band 'Mute Uprising' pushes artistic boundaries with an entirely silent release.",
-            content="Critics are divided over Mute Uprising's new album, which features 12 tracks of pure silence. The band insists it's a commentary on 'the noise of society.' Fans say it's great for meditation.",
-            html="<p>Critics are divided over Mute Uprising's new album, which features 12 tracks of pure silence. The band insists it's a commentary on 'the noise of society.' Fans say it's great for meditation.</p>",
-            authors=["D. Soundless"],
-            tags=["culture"],
+            title="Health Authorities Warn of Rising Respiratory Infections",
+            description="Public health agencies report a surge in respiratory illnesses as winter approaches.",
+            content="""
+## Health Authorities Warn of Rising Respiratory Infections
+
+Public health officials have issued a **warning about rising cases of respiratory infections** as colder weather sets in. Hospitals are seeing increased admissions for influenza, RSV, and COVID-19, prompting calls for renewed vigilance.
+
+> "We are urging everyone to get vaccinated where possible and practice basic preventive measures," said the national health director.
+
+Hospitals in major cities report higher occupancy rates, with some reactivating emergency surge plans. Pharmacies have also seen elevated demand for antiviral medications and over-the-counter symptom relief.
+
+### Recommended Precautions
+- Get vaccinated against flu and COVID-19
+- Wash hands regularly
+- Stay home if experiencing symptoms
+- Wear masks in crowded indoor settings
+
+Health agencies emphasize that vulnerable populations, including the elderly and immunocompromised, face the highest risk. Officials say they are working to expand access to testing and treatments ahead of peak winter months.
+""",
+            html="""
+<h2>Health Authorities Warn of Rising Respiratory Infections</h2>
+<p>Public health officials have issued a <strong>warning about rising cases of respiratory infections</strong> as colder weather sets in. Hospitals are seeing increased admissions for influenza, RSV, and COVID-19, prompting calls for renewed vigilance.</p>
+<blockquote>"We are urging everyone to get vaccinated where possible and practice basic preventive measures," said the national health director.</blockquote>
+<p>Hospitals in major cities report higher occupancy rates, with some reactivating emergency surge plans. Pharmacies have also seen elevated demand for antiviral medications and over-the-counter symptom relief.</p>
+<h3>Recommended Precautions</h3>
+<ul>
+<li>Get vaccinated against flu and COVID-19</li>
+<li>Wash hands regularly</li>
+<li>Stay home if experiencing symptoms</li>
+<li>Wear masks in crowded indoor settings</li>
+</ul>
+<p>Health agencies emphasize that vulnerable populations, including the elderly and immunocompromised, face the highest risk. Officials say they are working to expand access to testing and treatments ahead of peak winter months.</p>
+""",
+            authors=["Dr. Samuel Lee"],
+            tags=["health", "society"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
-            cover_image_id=None,
+            cover_image_id="123",
         ),
         Article(
-            title="Area Man Builds World's Largest Rubber Band Ball, Forgets Why",
-            description="He started the project during lockdown and lost all motivation.",
-            content="Mark Tevis spent 18 months building a 9-foot rubber band ball in his garage. When asked why, he simply replied, 'I don't know anymore.' Neighbors worry about its structural integrity.",
-            html="<p>Mark Tevis spent 18 months building a 9-foot rubber band ball in his garage. When asked why, he simply replied, 'I don't know anymore.' Neighbors worry about its structural integrity.</p>",
-            authors=["S. Tretch"],
-            tags=["local news", "remarkable"],
+            title="Education Reform Bill Passes Amid Heated Debate",
+            description="Lawmakers approve new standards and funding increases for public schools.",
+            content="""
+## Education Reform Bill Passes Amid Heated Debate
+
+After weeks of contentious debate, lawmakers have passed a sweeping **education reform bill** that aims to raise academic standards and increase funding for under-resourced schools. The bill passed narrowly in the lower chamber before gaining enough support in the upper house.
+
+> "This legislation will help close achievement gaps and ensure every child has access to quality education," said the education minister.
+
+The reform package includes higher minimum teacher salaries, curriculum modernization, and expanded support for special education. Opponents argue the bill fails to address administrative inefficiencies and risks imposing unfunded mandates on local districts.
+
+### Main Provisions
+- $15 billion in new education funding over 5 years
+- Teacher salary floor raised by 20%
+- New national curriculum guidelines
+- Grants for special education services
+
+Education unions largely support the reforms, though some have called for further negotiations on implementation details. The bill now awaits the president's signature.
+""",
+            html="""
+<h2>Education Reform Bill Passes Amid Heated Debate</h2>
+<p>After weeks of contentious debate, lawmakers have passed a sweeping <strong>education reform bill</strong> that aims to raise academic standards and increase funding for under-resourced schools. The bill passed narrowly in the lower chamber before gaining enough support in the upper house.</p>
+<blockquote>"This legislation will help close achievement gaps and ensure every child has access to quality education," said the education minister.</blockquote>
+<p>The reform package includes higher minimum teacher salaries, curriculum modernization, and expanded support for special education. Opponents argue the bill fails to address administrative inefficiencies and risks imposing unfunded mandates on local districts.</p>
+<h3>Main Provisions</h3>
+<ul>
+<li>$15 billion in new education funding over 5 years</li>
+<li>Teacher salary floor raised by 20%</li>
+<li>New national curriculum guidelines</li>
+<li>Grants for special education services</li>
+</ul>
+<p>Education unions largely support the reforms, though some have called for further negotiations on implementation details. The bill now awaits the president's signature.</p>
+""",
+            authors=["Michael Torres"],
+            tags=["politics", "society"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
-            cover_image_id=None,
-        ),
-        Article(
-            title="Scientists Train Worms to Form Conga Line",
-            description="Breakthrough in worm choreography stuns community.",
-            content="A team at Eastfield University claims they've trained earthworms to move in perfect conga-line formation. Lead researcher Dr. Mabel Chong calls it 'a testament to patience, bribery, and lettuce.'",
-            html="<p>A team at Eastfield University claims they've trained earthworms to move in perfect conga-line formation. Lead researcher Dr. Mabel Chong calls it 'a testament to patience, bribery, and lettuce.'</p>",
-            authors=["Dr. Mabel Chong"],
-            tags=["science"],
-            datetime_made=datetime.now(),
-            datetime_edited=datetime.now(),
-            cover_image_id=None,
-        ),
-        Article(
-            title="New Dating App Matches People by Hat Size",
-            description="Algorithm claims cranial compatibility is key to romance.",
-            content="Startup 'HatMatch' says it has cracked the code of love by matching users purely on hat size. CEO Tim Blathers insists 'headroom compatibility' predicts relationship longevity, though critics remain skeptical.",
-            html="<p>Startup 'HatMatch' says it has cracked the code of love by matching users purely on hat size. CEO Tim Blathers insists 'headroom compatibility' predicts relationship longevity, though critics remain skeptical.</p>",
-            authors=["L. Hart"],
-            tags=["technology"],
-            datetime_made=datetime.now(),
-            datetime_edited=datetime.now(),
-            cover_image_id=None,
-        ),
-        Article(
-            title="Man Sues Ghost for Back Rent",
-            description="Landlord claims haunting tenant owes three years of unpaid rent.",
-            content="Stanley Franks filed a lawsuit in Small Claims Court against a ghost allegedly residing in his attic. 'It's only fair,' he says, 'everyone else pays.' The ghost could not be reached for comment.",
-            html="<p>Stanley Franks filed a lawsuit in Small Claims Court against a ghost allegedly residing in his attic. 'It's only fair,' he says, 'everyone else pays.' The ghost could not be reached for comment.</p>",
-            authors=["C. Specter"],
-            tags=["legal", "remarkable"],
-            datetime_made=datetime.now(),
-            datetime_edited=datetime.now(),
-            cover_image_id=None,
-        ),
-        Article(
-            title="Local Gym Offers Membership for Pets",
-            description="Owners say their cats and dogs deserve fitness too.",
-            content="Paws & Reps, a new gym in downtown Elmwood, has launched classes for dogs, cats, and even parrots. Owner Jenna Mills says pets love the treadmill, though cats mostly sit on yoga mats and judge.",
-            html="<p>Paws & Reps, a new gym in downtown Elmwood, has launched classes for dogs, cats, and even parrots. Owner Jenna Mills says pets love the treadmill, though cats mostly sit on yoga mats and judge.</p>",
-            authors=["J. Mills"],
-            tags=["economy"],
-            datetime_made=datetime.now(),
-            datetime_edited=datetime.now(),
-            cover_image_id=None,
+            cover_image_id="123",
         ),
     ]
 
