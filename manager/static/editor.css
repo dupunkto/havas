@@ -1,15 +1,27 @@
+main {
+    max-width: 1250px;
+}
+
 form {
     display: grid;
-    grid-template-areas: "title image" "description image" "authors image" "tags image" "content preview";
+    grid-template-areas:
+        "title image"
+        "description image"
+        "authors image"
+        "tags image"
+        "content preview";
     gap: 25px;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto auto auto 1fr auto;
 }
 
 .manager-editor-section {
     display: flex;
     flex-direction: column;
     gap: 3px;
+    border: 1px solid var(--oc-gray-3);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 1px 3px 0 var(--oc-gray-2), 0 1px 2px -1px var(--oc-gray-3);
 }
 
 .manager-editor-section label {
@@ -17,18 +29,15 @@ form {
     font-size: 1.2em;
 }
 
-.manager-editor-section input, .manager-editor-section textarea {
+.manager-editor-section input,
+.manager-editor-section textarea {
     border: none;
-    border: 1px solid var(--oc-gray-3);
-    border-radius: 5px;
-    padding: 10px;
-    box-shadow: 0 1px 3px 0 var(--oc-gray-2), 0 1px 2px -1px var(--oc-gray-3);
 }
 
-.manager-editor-section input:focus, .manager-editor-section textarea:focus {
+.manager-editor-section input:focus,
+.manager-editor-section textarea:focus {
     outline: none;
 }
-
 
 .manager-editor-title {
     grid-area: title;
@@ -59,6 +68,23 @@ textarea {
 }
 
 .manager-editor-info {
-  margin-bottom: 25px;
+    margin-bottom: 25px;
 }
 
+.manager-editor-description textarea {
+    min-height: unset;
+}
+
+#preview *,
+#preview * {
+    margin: revert;
+    padding: revert;
+}
+
+#preview a {
+    color: var(--oc-blue-8);
+}
+
+#preview h1 {
+    margin-block-start: 0;
+}

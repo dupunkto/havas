@@ -10,11 +10,6 @@ main header * {
     object-fit: cover;
     border-radius: 8px;
 }
-main article *,
-main header * {
-    margin: revert;
-    padding: revert;
-}
 
 .article-cover-image {
     aspect-ratio: 16/9;

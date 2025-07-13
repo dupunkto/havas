@@ -4,6 +4,7 @@
 
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('manager.static', filename='editor.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -44,6 +45,24 @@
         <div class="manager-editor-section manager-editor-tags">
             <label for="tags">Tags</label>
             <input type="text" id="tags" name="tags" value="{{ article.tags | join(', ') }}" placeholder="e.g., tech, health, news" required />
+        </div>
+
+        <div class="manager-editor-section manager-editor-preview">
+            <article id="preview"></article>
+            <script>
+                const title = document.getElementById("title");
+                const content = document.getElementById("content");
+                const preview = document.getElementById("preview");
+            
+                function updatePreview() {
+                    const fullMarkdown = "# " + title.value + "\n\n" + content.value;
+                    preview.innerHTML = marked.parse(fullMarkdown);
+                }
+            
+                content.addEventListener("input", updatePreview);
+                title.addEventListener("input", updatePreview);
+                updatePreview();
+            </script>
         </div>
     </form>
 {% endblock %}
