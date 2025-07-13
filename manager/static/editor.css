@@ -24,7 +24,7 @@ form {
     box-shadow: 0 1px 3px 0 var(--oc-gray-2), 0 1px 2px -1px var(--oc-gray-3);
 }
 
-.manager-editor-section label {
+.manager-editor-section legend {
     font-weight: 700;
     font-size: 1.2em;
 }
@@ -87,4 +87,16 @@ textarea {
 
 #preview h1 {
     margin-block-start: 0;
+}
+
+.manager-editor-section:has(> *:focus) {
+    border-color: var(--oc-blue-8);
+}
+
+.manager-editor-image img {
+    aspect-ratio: 16/9;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
 }

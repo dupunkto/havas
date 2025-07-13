@@ -8,61 +8,62 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Article editor</h1>
+        <h1>Article editor</h1>
 
-    <div class="manager-editor-info">
-        <h2>Your editing article <code>{{ article.id }}</code></h2>
-    </div>
-
-    <form action="{{ url_for('manager.save_api') }}" method="post">
-        <input type="hidden" name="id" value="{{ article.id }}" />
-
-        <div class="manager-editor-section manager-editor-title">
-            <label for="title">Title</label>
-            <input type="text" id="title" name="title" value="{{ article.title }}" placeholder="Enter article title" maxlength="250" required />
+        <div class="manager-editor-info">
+            <h2>You're editing article <code>{{ article.id }}</code></h2>
         </div>
 
-        <div class="manager-editor-section manager-editor-description">
-            <label for="description">Description</label>
-            <textarea id="description" name="description" placeholder="Short summary of the article" maxlength="500" required>{{ article.description }}</textarea>
-        </div>
+        <form action="{{ url_for('manager.save_api') }}" method="post">
+            <input type="hidden" name="id" value="{{ article.id }}" />
 
-        <div class="manager-editor-section manager-editor-image">
-            <label>Image</label>
-            <img src="{{ url_for('media.get_file', id=article.cover_image_id) }}" alt="Cover Image" />
-        </div>
+            <fieldset class="manager-editor-section manager-editor-title">
+                <legend>Title</legend>
+                <input type="text" id="title" name="title" value="{{ article.title }}" placeholder="Title" maxlength="250" required />
+            </fieldset>
 
-        <div class="manager-editor-section manager-editor-content">
-            <label for="content">Content</label>
-            <textarea id="content" name="content" placeholder="Write the full content here..." required>{{ article.content }}</textarea>
-        </div>
+            <fieldset class="manager-editor-section manager-editor-description">
+                <legend>Description</legend>
+                <textarea id="description" name="description" maxlength="500" required>{{ article.description }}</textarea>
+            </fieldset>
 
-        <div class="manager-editor-section manager-editor-authors">
-            <label for="authors">Authors</label>
-            <input type="text" id="authors" name="authors" value="{{ article.authors | join(', ') }}" placeholder="e.g., John Doe, Jane Smith" />
-        </div>
+            <fieldset class="manager-editor-section manager-editor-image">
+                <legend>Image</legend>
+                <img src="{{ url_for('media.get_file', id=article.cover_image_id) }}" alt="Cover image" />
+            </fieldset>
 
-        <div class="manager-editor-section manager-editor-tags">
-            <label for="tags">Tags</label>
-            <input type="text" id="tags" name="tags" value="{{ article.tags | join(', ') }}" placeholder="e.g., tech, health, news" required />
-        </div>
+            <fieldset class="manager-editor-section manager-editor-content">
+                <legend>Content</legend>
+                <textarea id="content" name="content" required>{{ article.content }}</textarea>
+            </fieldset>
 
-        <div class="manager-editor-section manager-editor-preview">
-            <article id="preview"></article>
-            <script>
-                const title = document.getElementById("title");
-                const content = document.getElementById("content");
-                const preview = document.getElementById("preview");
-            
-                function updatePreview() {
-                    const fullMarkdown = "# " + title.value + "\n\n" + content.value;
-                    preview.innerHTML = marked.parse(fullMarkdown);
-                }
-            
-                content.addEventListener("input", updatePreview);
-                title.addEventListener("input", updatePreview);
-                updatePreview();
-            </script>
-        </div>
-    </form>
+            <fieldset class="manager-editor-section manager-editor-authors">
+                <legend>Authors</legend>
+                <input type="hidden" id="authors" value="{{ article.authors | join(', ') }}" />
+            </fieldset>
+
+            <fieldset class="manager-editor-section manager-editor-tags">
+                <legend>Tags</legend>
+                <input type="hidden" id="tags" value="{{ article.tags | join(', ') }}" />
+            </fieldset>
+
+            <fieldset class="manager-editor-section manager-editor-preview">
+                <legend>Preview</legend>
+                <article id="preview"></article>
+                <script>
+                    const title = document.getElementById("title");
+                    const content = document.getElementById("content");
+                    const preview = document.getElementById("preview");
+
+                    function updatePreview() {
+                        const fullMarkdown = "# " + title.value + "\n\n" + content.value;
+                        preview.innerHTML = marked.parse(fullMarkdown);
+                    }
+
+                    content.addEventListener("input", updatePreview);
+                    title.addEventListener("input", updatePreview);
+                    updatePreview();
+                </script>
+            </fieldset>
+        </form>
 {% endblock %}
