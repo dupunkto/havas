@@ -100,6 +100,18 @@ code {
     color: white;
 }
 
+button,
+.btn {
+    padding: 0.1em 0.3em;
+    background-color: var(--oc-gray-2);
+    border-radius: 0.4em;
+    border: 1px solid var(--oc-gray-5);
+    width: fit-content;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+}
+
 @keyframes disappear {
     to {
         visibility: hidden;

@@ -16,6 +16,7 @@
 
     <div class="manager-editor-actions">
         <button type="submit" class="manager-editor-save-btn" form="editor-form">Save</button>
+        <a href="{{ url_for('frontend.view_article', id=article.id) }}" class="btn">Preview</a>
     </div>
 
     <form action="{{ url_for('manager.save_api') }}" method="post" id="editor-form">
