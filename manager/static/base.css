@@ -64,7 +64,7 @@ body > footer {
 code {
     font-family: "Ubuntu Sans Mono", monospace;
     padding: 0.2em 0.4em;
-    background-color: var(--oc-gray-2);
+    background: var(--oc-gray-2);
     border-radius: 0.4em;
 }
 
@@ -102,14 +102,21 @@ code {
 
 button,
 .btn {
-    padding: 0.1em 0.3em;
-    background-color: var(--oc-gray-2);
+    padding: 0.2em 0.4em;
+    background: var(--oc-gray-2);
     border-radius: 0.4em;
     border: 1px solid var(--oc-gray-5);
     width: fit-content;
     text-decoration: none;
     color: inherit;
     font-weight: 500;
+    cursor: pointer;
+}
+
+button:hover,
+.btn:hover {
+    background: var(--oc-gray-3);
+    border-color: var(--oc-gray-6);
 }
 
 @keyframes disappear {

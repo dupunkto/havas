@@ -1,5 +1,22 @@
-main {
+body > main {
     max-width: 1250px;
+    display: grid;
+    grid-template-areas: "info actions" "editor editor";
+    grid-template-columns: 1fr auto;
+    gap: 30px 20px;
+}
+
+.manager-editor-info {
+    grid-area: info;
+}
+
+.manager-editor-actions {
+    grid-area: actions;
+    display: flex;
+    flex-direction: revert;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
 }
 
 form {
@@ -12,6 +29,7 @@ form {
         "content preview";
     gap: 25px;
     grid-template-columns: repeat(2, 1fr);
+    grid-area: editor;
 }
 
 .manager-editor-section {
@@ -67,18 +85,8 @@ textarea {
     resize: none;
 }
 
-.manager-editor-info {
-    margin-bottom: 25px;
-}
-
 .manager-editor-description textarea {
     min-height: unset;
-}
-
-#preview *,
-#preview * {
-    margin: revert;
-    padding: revert;
 }
 
 #preview a {
@@ -121,8 +129,8 @@ textarea {
     align-items: center;
     gap: 5px;
 
-    padding: 0.1em 0.3em;
-    background-color: var(--oc-gray-2);
+    padding: 0.2em 0.4em;
+    background: var(--oc-gray-2);
     border-radius: 0.4em;
     border: 1px solid var(--oc-gray-5);
     width: fit-content;

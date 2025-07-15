@@ -18,12 +18,27 @@ manager_bp = Blueprint(
 def index():
     articles = Article.query.all()
 
-    return render_template("manager_index.html", articles=articles)
+    header_text = "All articles"
+
+    return render_template(
+        "manager_listing.html", articles=articles, header_text=header_text
+    )
 
 
 @manager_bp.route("/add_article")
 def add_article():
     return "", 200
+
+
+@manager_bp.route("/editor")
+def editor_apex():
+    articles = Article.query.order_by(Article.datetime_edited.desc()).all()
+
+    header_text = "Recently edited"
+
+    return render_template(
+        "manager_listing.html", articles=articles, header_text=header_text
+    )
 
 
 @manager_bp.route("/editor/<string:id>")

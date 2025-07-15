@@ -1,0 +1,58 @@
+{% extends "manager_base.html" %}
+
+{% block title %}Manager{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('manager.static', filename='listing.css') }}" />
+{% endblock %}
+
+{% block content %}
+    <h1>{{ header_text }}</h1>
+
+    <table class="manager-listing-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Tags</th>
+                <th>Authors</th>
+                <th>Created</th>
+                <th>Edited</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td class="manager-table-id">
+                        <a href="{{ url_for('manager.editor', id=article.id) }}"><code>{{ article.id }}</code></a>
+                    </td>
+                    <td class="manager-table-title">{{ article.title }}</td>
+                    <td class="manager-table-image">
+                        <img src="{{ url_for('media.get_file', id=article.cover_image_id) }}" alt="Cover image for {{ article.title }}" />
+                    </td>
+                    <td class="manager-table-tags">
+                        <ul class="manager-table-tags-container">
+                            {% for tag in article.tags %}
+                                <li class="manager-table-tag-item"><i class="fa-solid fa-tag"></i> {{ tag }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td class="manager-table-authors">
+                        <ul class="manager-table-authors-container">
+                            {% for author in article.authors %}
+                                <li class="manager-table-author-item"><i class="fa-solid fa-user"></i> {{ author }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td class="manager-table-made">
+                        <time datetime="{{ article.datetime_made.isoformat() }}"> {{ article.datetime_made.strftime("%Y-%d-%m %H:%M") }} </time>
+                    </td>
+                    <td class="manager-table-edited">
+                        <time datetime="{{ article.datetime_edited.isoformat() }}"> {{ article.datetime_edited.strftime("%Y-%d-%m %H:%M") }} </time>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
