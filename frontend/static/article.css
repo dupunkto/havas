@@ -37,6 +37,12 @@ main header * {
     margin-bottom: 2em;
 }
 
+.article-dates {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 .article-date {
     display: flex;
     flex-direction: column;
@@ -46,4 +52,10 @@ main header * {
 .article-date-edited {
     font-size: 0.9em;
     color: var(--oc-gray-7);
+}
+
+main article blockquote {
+    border-left: 3px solid var(--oc-gray-7);
+    margin-inline: 0;
+    padding-inline-start: 1em;
 }
