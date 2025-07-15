@@ -16,12 +16,10 @@ manager_bp = Blueprint(
 
 @manager_bp.route("/")
 def index():
-    articles = Article.query.all()
-
-    header_text = "All articles"
+    articles = Article.query.order_by(Article.datetime_edited.desc()).all()
 
     return render_template(
-        "manager_listing.html", articles=articles, header_text=header_text
+        "manager_index.html", articles=articles
     )
 
 

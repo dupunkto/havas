@@ -1,6 +1,6 @@
 {% extends "manager_base.html" %}
 
-{% block title %}Manager{% endblock %}
+{% block title %}Manager - Editing {{ article.id }}{% endblock %}
 
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('manager.static', filename='editor.css') }}" />

@@ -1,0 +1,26 @@
+{% extends "manager_base.html" %}
+
+{% block title %}Manager - Index{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('manager.static', filename='index.css') }}" />
+{% endblock %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+
+    <ul class="manager-recent-listing">
+        {% for article in articles[:3] %}
+            <li class="manager-recent-listing-entry">
+                <a href="{{ url_for('manager.editor', id=article.id) }}">
+                    <img class="manager-recent-listing-cover" src="{{ url_for('media.get_file', id=article.cover_image_id) }}" alt="Cover image for {{ article.title }}"  />
+                    <span class="manager-recent-listing-title">{{ article.title }}</span>
+                    <div class="manager-recent-listing-meta">
+                        <code class="manager-recent-listing-id">{{ article.id }}</code>
+                        <time class="manager-recent-listing-time" datetime="{{ article.datetime_edited.isoformat() }}"> {{ article.datetime_edited.strftime("%Y-%d-%m %H:%M") }} </time>
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

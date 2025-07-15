@@ -1,0 +1,60 @@
+.manager-recent-listing {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: fit-content;
+}
+
+.manager-recent-listing-entry a {
+    display: grid;
+    color: inherit;
+    text-decoration: none;
+    grid-template-areas: "image title" "image meta ";
+    grid-template-columns: auto 1fr;
+    gap: 5px 10px;
+    grid-template-rows: 1fr 1fr;
+    border: 1px solid var(--oc-gray-3);
+    border-radius: 5px;
+    padding-right: 10px;
+}
+
+.manager-recent-listing-entry a:hover {
+    border-color: var(--oc-gray-5);
+}
+
+.manager-recent-listing-cover {
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    grid-area: image;
+    height: 75px;
+    border-radius: 5px;
+}
+
+.manager-recent-listing-title {
+    grid-area: title;
+    align-content: end;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.manager-recent-listing-meta {
+    grid-area: meta;
+    align-content: start;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    height: fit-content;
+    margin-bottom: 5px;
+}
+
+.manager-recent-listing-id {
+    width: fit-content;
+    font-size: 0.8em;
+}
+
+.manager-recent-listing-time {
+    font-size: 0.8em;
+}
