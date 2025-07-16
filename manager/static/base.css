@@ -2,15 +2,15 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    width: 200px;
+    width: 225px;
     height: 100%;
-    background: var(--oc-gray-2);
+    background: var(--oc-gray-1);
     z-index: 999;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     padding: 25px 15px;
-    gap: 15px;
+    gap: 25px;
 }
 
 .sidebar-title {
@@ -19,6 +19,24 @@ header {
     color: inherit;
     text-decoration: none;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    width: fit-content;
+    margin: auto;
+}
+
+.sidebar-logo {
+    width: 2em;
+    height: 2em;
+}
+
+.manager-nav-containers {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex-grow: 1;
 }
 
 header nav {
@@ -31,46 +49,22 @@ header nav {
 .manager-menu-item {
     color: inherit;
     text-decoration: none;
-    border-left: 5px solid var(--oc-gray-5);
+    border-left: 5px solid var(--oc-orange-5);
     padding: 10px;
     border-radius: 5px;
+    background: var(--oc-gray-3);
+    font-weight: 600;
 }
 
 .manager-menu-item-active,
 .manager-menu-item:hover {
     background: var(--oc-gray-4);
-    font-weight: 700;
-    border-left-color: var(--oc-gray-8);
+    border-left-color: var(--oc-orange-9);
 }
 
 .manager-shortcuts {
     flex-grow: 1;
     justify-content: flex-end;
-}
-
-body > main,
-body > footer {
-    margin-left: 200px;
-}
-
-body > main {
-    padding: 30px 30px 10px 30px;
-}
-
-body > footer {
-    padding: 10px 30px 30px 30px;
-}
-
-code {
-    font-family: "Ubuntu Sans Mono", monospace;
-    padding: 0.2em 0.4em;
-    background: var(--oc-gray-2);
-    border-radius: 0.4em;
-}
-
-.manager-table-id a {
-    color: inherit;
-    text-decoration: none;
 }
 
 .flashes {
@@ -100,6 +94,33 @@ code {
     color: white;
 }
 
+body > main {
+    padding: 30px 30px 10px 30px;
+    margin-left: 225px;
+}
+
+body > footer {
+    padding: 10px 0 30px 0;
+    margin-top: 50px;
+    border-top: 1px solid var(--oc-gray-5);
+    text-align: right;
+    font-weight: 700;
+    margin-right: 30px;
+    margin-left: 255px;
+}
+
+code {
+    font-family: "Ubuntu Sans Mono", monospace;
+    padding: 0.2em 0.4em;
+    background: var(--oc-gray-2);
+    border-radius: 0.4em;
+}
+
+.manager-table-id a {
+    color: inherit;
+    text-decoration: none;
+}
+
 button,
 .btn {
     padding: 0.2em 0.4em;
@@ -117,6 +138,10 @@ button:hover,
 .btn:hover {
     background: var(--oc-gray-3);
     border-color: var(--oc-gray-6);
+}
+
+a {
+    color: var(--oc-blue-8);
 }
 
 @keyframes disappear {

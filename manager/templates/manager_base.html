@@ -7,23 +7,26 @@
 
 {% block body %}
     <header>
-        <a href="{{ url_for('manager.index') }}" class="sidebar-title">HavasManager</a>
+        <a href="{{ url_for('manager.index') }}" class="sidebar-title">
+            HavasManager
+            <img class="sidebar-logo" src="{{ url_for('static', filename='images/logo.svg') }}" /></a>
 
         {% macro build_menu_item(endpoints, name) %}
             {# This macro takes a list of endpoints and a name, and builds a menu item. The href is always the url for the first item in endpoints. #}
         
             <a href="{{ url_for(endpoints[0]) }}" class="manager-menu-item{% if request.endpoint in endpoints %} manager-menu-item-active{% endif %}">{{ name }}</a>
         {% endmacro %}
-
-
-        <nav class="manager-page-menu" aria-label="Manager navigation">
-            {{ build_menu_item(["manager.index"], "Home")}}
-            {{ build_menu_item(["manager.add_article"], "Add article")}}
-            {{ build_menu_item(["manager.editor_apex", "manager.editor"], "Editor")}}
-        </nav>
-        <nav class="manager-shortcuts" aria-label="Shortcuts">
-            <a href="{{ url_for('frontend.index') }}" class="manager-menu-item">Public page</a>
-        </nav>
+        
+        <div class="manager-nav-containers">
+            <nav class="manager-page-menu" aria-label="Manager navigation">
+                {{ build_menu_item(["manager.index"], "Home")}}
+                {{ build_menu_item(["manager.add_article"], "Add article")}}
+                {{ build_menu_item(["manager.editor_apex", "manager.editor"], "Editor")}}
+            </nav>
+            <nav class="manager-shortcuts" aria-label="Shortcuts">
+                <a href="{{ url_for('frontend.index') }}" class="manager-menu-item">Public page</a>
+            </nav>
+        </div>
     </header>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
