@@ -13,7 +13,7 @@
         {% for article in articles[:3] %}
             <li class="manager-recent-listing-entry">
                 <a href="{{ url_for('manager.editor', id=article.id) }}">
-                    <img class="manager-recent-listing-cover" src="{{ url_for('media.get_file', id=article.cover_image_id) }}" alt="Cover image for {{ article.title }}"  />
+                    <img class="manager-recent-listing-cover" src="{{ url_for('media.get_file', id=article.cover_image_id) }}" alt="Cover image for {{ article.title }}" />
                     <span class="manager-recent-listing-title">{{ article.title }}</span>
                     <div class="manager-recent-listing-meta">
                         <code class="manager-recent-listing-id">{{ article.id }}</code>
@@ -23,4 +23,8 @@
             </li>
         {% endfor %}
     </ul>
+
+    <form method="post" action="{{ url_for('manager.regen_html_all') }}">
+        <button type="submit">Rebuild HTML for All Articles</button>
+    </form>
 {% endblock %}

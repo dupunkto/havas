@@ -224,3 +224,13 @@ def regen_html(id):
             "success",
         )
     return redirect(url_for("manager.editor", id=id))
+
+
+@manager_bp.route("/regen_html_all", methods=["POST"])
+def regen_html_all():
+    articles = Article.query.all()
+    for article in articles:
+        article.html = build_HTML(article.content)
+    db.session.commit()
+    flash("HTML for all articles has been regenerated from their content.", "success")
+    return redirect(url_for("manager.editor_apex"))
