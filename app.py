@@ -25,5 +25,8 @@ app.jinja_env.filters["capit"] = filters.capit
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+with app.app_context():
+    db.create_all()
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,6 +1,10 @@
 from datetime import datetime
+import requests
 from db.models import db, Article
 from app import app
+from flask import current_app
+import os
+from db.media import media_bp
 
 with app.app_context():
     db.create_all()
@@ -44,7 +48,7 @@ Economists are divided on the long-term effects but broadly welcome the short-te
             tags=["economy", "politics"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
-            cover_image_id="123",
+            cover_image_id="dummy1",
         ),
         Article(
             title="International Community Responds to Escalating Conflict",
@@ -87,7 +91,7 @@ Observers say the international community faces significant challenges in broker
             tags=["world", "conflict"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
-            cover_image_id="123",
+            cover_image_id="dummy2",
         ),
         Article(
             title="Major Tech Firm Announces Breakthrough in AI Safety Research",
@@ -127,7 +131,7 @@ Industry observers see the move as part of broader efforts to win public trust a
             tags=["technology"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
-            cover_image_id="123",
+            cover_image_id="dummy3",
         ),
         Article(
             title="Health Authorities Warn of Rising Respiratory Infections",
@@ -167,7 +171,7 @@ Health agencies emphasize that vulnerable populations, including the elderly and
             tags=["health", "society"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
-            cover_image_id="123",
+            cover_image_id="dummy4",
         ),
         Article(
             title="Education Reform Bill Passes Amid Heated Debate",
@@ -207,7 +211,7 @@ Education unions largely support the reforms, though some have called for furthe
             tags=["politics", "society"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
-            cover_image_id="123",
+            cover_image_id="dummy4",
         ),
     ]
 
@@ -218,3 +222,22 @@ Education unions largely support the reforms, though some have called for furthe
 
     db.session.commit()
     print("Inserted dummy articles.")
+    
+    
+    def download_images(amount):
+        url = "https://picsum.photos/1920/1080"
+        for i in range(amount):
+            name = f"dummy{i + 1}"
+            
+            folder = os.path.join(current_app.root_path, media_bp.static_folder, "images", f"{name}.jpg")
+            try:
+                response = requests.get(url, timeout=10)
+                response.raise_for_status()
+                with open(folder, "wb") as f:
+                    f.write(response.content)
+                print(f"Downloaded: {folder}")
+            except requests.RequestException as e:
+                print(f"Failed to download {folder} from {url}: {e}")
+    
+    download_images(len(articles))
+

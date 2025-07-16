@@ -16,5 +16,8 @@
                 <span class="article-datetime">{{ article.datetime_edited.strftime("%B %d, %Y at %H:%M") }}</span>
             </a>
         {% endfor %}
+        {% if not articles %}
+            <h2>No articles found</h2>
+        {% endif %}
     </div>
 {% endblock %}
