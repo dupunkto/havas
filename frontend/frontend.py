@@ -35,4 +35,4 @@ def view_article(id):
     if article:
         return render_template("frontend_article.html", article=article)
 
-    abort(400)
+    abort(404)

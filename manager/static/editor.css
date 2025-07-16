@@ -2,7 +2,7 @@ body > main {
     max-width: 1250px;
     display: grid;
     grid-template-areas: "info   tools " "editor editor";
-    grid-template-columns: minmax(auto, 375px) auto;
+    grid-template-columns: 1fr auto;
     gap: 20px;
 }
 
@@ -63,8 +63,8 @@ body > main {
 
 .manager-editor-actions {
     display: flex;
-    flex-direction: revert;
-    gap: 10px;
+    flex-direction: column;
+    gap: 5px;
     flex-wrap: wrap;
     align-content: flex-start;
 }
@@ -88,6 +88,7 @@ body > main {
 .manager-editor-actions .btn {
     border-width: 2px;
     border-style: solid;
+    width: 100%;
 }
 
 .manager-editor-save-btn {
@@ -98,30 +99,48 @@ body > main {
     border-bottom-color: var(--oc-green-8);
 }
 
-.manager-editor-archive-btn,
-.manager-editor-delete-btn,
-.manager-editor-reset-btn {
+.manager-editor-delete-btn {
     border-bottom-color: var(--oc-red-5);
 }
 
-.manager-editor-archive-btn:hover,
-.manager-editor-delete-btn:hover,
-.manager-editor-reset-btn:hover {
+.manager-editor-delete-btn:hover {
     border-bottom-color: var(--oc-red-8);
 }
 
-.manager-editor-unarchive-btn,
-.manager-editor-preview-btn,
-.manager-editor-export-btn,
-.manager-editor-regen-btn {
+.manager-editor-preview-btn {
     border-bottom-color: var(--oc-blue-5);
 }
 
-.manager-editor-unarchive-btn:hover,
-.manager-editor-preview-btn:hover,
-.manager-editor-export-btn:hover,
-.manager-editor-regen-btn:hover {
+.manager-editor-preview-btn:hover {
     border-bottom-color: var(--oc-blue-8);
+}
+
+.manager-editor-more-dropdown {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 10px;
+    gap: 5px;
+    min-width: max-content;
+    background: var(--oc-gray-1);
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid var(--oc-gray-5);
+}
+
+.manager-editor-more-dropdown.show {
+    display: flex;
+}
+
+.manager-editor-more-dropdown form {
+    display: contents;
+}
+
+.manager-editor-actions form {
+    display: contents;
 }
 
 #editor-form {
@@ -265,49 +284,8 @@ textarea {
 
 .manager-editor-more-menu {
     position: relative;
-    display: inline-block;
 }
 
 .manager-editor-more-btn {
     border-bottom-color: var(--oc-gray-5);
-}
-
-.manager-editor-more-dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    background: var(--oc-gray-2);
-    min-width: 180px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    z-index: 1;
-    border-radius: 0.4em;
-    padding: 8px 0;
-    flex-direction: column;
-    gap: 0;
-}
-
-.manager-editor-more-dropdown form,
-.manager-editor-more-dropdown button {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.manager-editor-more-dropdown button {
-    border: none;
-    background: none;
-    text-align: left;
-    width: 100%;
-    padding: 8px 16px;
-    border-radius: 0;
-    color: inherit;
-    cursor: pointer;
-}
-
-.manager-editor-more-dropdown button:hover {
-    background: var(--oc-gray-4);
-}
-
-.manager-editor-more-dropdown.show {
-    display: flex;
 }

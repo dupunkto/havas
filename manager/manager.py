@@ -6,6 +6,8 @@ from flask import (
     url_for,
     flash,
     make_response,
+    abort,
+    jsonify,
 )
 
 from db.models import Article, db
@@ -60,11 +62,34 @@ def editor(id):
     else:
         article = Article.query.get(id)
 
+    if not article:
+        abort(404)
+
     return render_template("manager_editor.html", article=article)
 
 
 def build_HTML(markdown_input):
-    return markdown.markdown(markdown_input)
+    # Can/will be extended in the future
+    return markdown.markdown(
+        markdown_input,
+        extensions=[
+            "tables",
+            "fenced_code",
+            "codehilite",
+            "toc",
+            "sane_lists",
+            "nl2br",
+            "smarty",
+        ],
+    )
+
+
+@manager_bp.route("/build-HTML", methods=["POST"])
+def build_HTML_api():
+    data = request.get_json()
+    html = build_HTML(data.get("content", ""))
+
+    return jsonify({"result": html})
 
 
 @manager_bp.route("/save_api", methods=["POST"])
@@ -92,22 +117,22 @@ def save_api():
             f"New article <b>{new_article.title}</b> created successfully.", "success"
         )
         return redirect(url_for("manager.editor", id=new_article.id))
-    else:
-        article.title = request.form.get("title", article.title)
-        article.description = request.form.get("description", article.description)
-        article.content = request.form.get("content", article.content)
-        authors = split_and_clean("authors")
-        tags = split_and_clean("tags")
-        if authors:
-            article.authors = authors
-        if tags:
-            article.tags = tags
-        article.html = build_HTML(request.form.get("content", article.content))
-        article.datetime_edited = datetime.now(timezone.utc)
 
-        db.session.commit()
-        flash(f"Changes to article <b>{article.title}</b> have been saved.", "success")
-        return redirect(url_for("manager.editor", id=article.id))
+    article.title = request.form.get("title", article.title)
+    article.description = request.form.get("description", article.description)
+    article.content = request.form.get("content", article.content)
+    authors = split_and_clean("authors")
+    tags = split_and_clean("tags")
+    if authors:
+        article.authors = authors
+    if tags:
+        article.tags = tags
+    article.html = build_HTML(request.form.get("content", article.content))
+    article.datetime_edited = datetime.now(timezone.utc)
+
+    db.session.commit()
+    flash(f"Changes to article <b>{article.title}</b> have been saved.", "success")
+    return redirect(url_for("manager.editor", id=article.id))
 
 
 @manager_bp.route("/delete/<string:id>", methods=["POST"])

@@ -114,6 +114,7 @@ code {
     padding: 0.2em 0.4em;
     background: var(--oc-gray-2);
     border-radius: 0.4em;
+    display: inline-block;
 }
 
 .manager-table-id a {

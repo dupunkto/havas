@@ -52,7 +52,7 @@
                 <a href="{{ url_for('frontend.view_article', id=article.id) }}" class="btn manager-editor-preview-btn" target="_blank">Preview</a>
 
                 <div class="manager-editor-more-menu">
-                    <button type="button" class="manager-editor-more-btn" onclick="this.nextElementSibling.classList.toggle('show')">More &#x25BC;</button>
+                    <button type="button" class="manager-editor-more-btn" onclick="this.nextElementSibling.classList.toggle('show')">More <i class="fa-solid fa-caret-down"></i></button>
                     <div class="manager-editor-more-dropdown">
                         <form action="{{ url_for('manager.toggle_archive', id=article.id) }}" method="post">
                             {% if article.archived %}
@@ -210,13 +210,41 @@
                 const content = document.getElementById("content");
                 const preview = document.getElementById("preview");
 
-                function updatePreview() {
+                let debounceTimerContent;
+                let debounceTimerTitle;
+
+                async function updatePreview() {
                     const fullMarkdown = "# " + title.value + "\n\n" + content.value;
-                    preview.innerHTML = marked.parse(fullMarkdown);
+
+                    const response = await fetch("{{ url_for('manager.build_HTML_api') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ content: fullMarkdown }),
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        preview.innerHTML = data.result;
+                    } else {
+                        preview.innerHTML = "<p>Error loading preview</p>";
+                    }
                 }
 
-                content.addEventListener("input", updatePreview);
-                title.addEventListener("input", updatePreview);
+                function debounceUpdateContent() {
+                    clearTimeout(debounceTimerContent);
+                    debounceTimerContent = setTimeout(updatePreview, 700);
+                }
+
+                function debounceUpdateTitle() {
+                    clearTimeout(debounceTimerTitle);
+                    debounceTimerTitle = setTimeout(updatePreview, 700);
+                }
+
+                content.addEventListener("input", debounceUpdateContent);
+                title.addEventListener("input", debounceUpdateTitle);
+
                 updatePreview();
             </script>
         </fieldset>
