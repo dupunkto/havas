@@ -11,14 +11,44 @@
 {% block content %}
     <div class="manager-editor-info">
         <h1>Article editor</h1>
-        <h2>You're editing article <code>{{ article.id }}</code></h2>
+        {% if article.id %}
+            <h2>You're editing article <code>{{ article.id }}</code></h2>
+        {% else %}
+            <h2>You're making a new article</h2>
+        {% endif %}
     </div>
 
-    <div class="manager-editor-actions">
-        <button type="submit" class="manager-editor-save-btn" form="editor-form">Save</button>
-        {% if article.id %}
-            <a href="{{ url_for('frontend.view_article', id=article.id) }}" class="btn" target="_blank">Preview</a>
-        {% endif %}
+    <div class="manager-editor-tools">
+        <div class="manager-editor-status">
+            <span class="manager-editor-status-label">Satus</span>
+            <span class="manager-editor-status-status">
+                {% if article.id %}
+                    <span class="manager-editor-status-icon manager-editor-status-icon-green"></span>
+                    <span class="manager-editor-status-status-title">Published</span>
+                {% else %}
+                    <span class="manager-editor-status-icon manager-editor-status-icon-red"></span>
+                    <span class="manager-editor-status-status-title">Unpublished (new article)</span>
+                {% endif %}
+            </span>
+
+            <span class="manager-editor-status-label">Made</span>
+            <time datetime="{{ article.datetime_made.isoformat() }}"> {{ article.datetime_made.strftime("%Y-%d-%m %H:%M") }} </time>
+
+            <span class="manager-editor-status-label">Edited</span>
+            <time datetime="{{ article.datetime_edited.isoformat() }}"> {{ article.datetime_edited.strftime("%Y-%d-%m %H:%M") }} </time>
+        </div>
+
+        <div class="manager-editor-actions">
+            {% if article.id %}
+                <button type="submit" class="manager-editor-save-btn" form="editor-form">Save</button>
+                <a href="{{ url_for('frontend.view_article', id=article.id) }}" class="btn" target="_blank">Preview</a>
+                <form action="{{ url_for('manager.delete_article', id=article.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this article?');">
+                    <button type="submit" class="btn">Delete</button>
+                </form>
+            {% else %}
+                <button type="submit" class="manager-editor-save-btn" form="editor-form">Save and publish</button>
+            {% endif %}
+        </div>
     </div>
 
     <form action="{{ url_for('manager.save_api') }}" method="post" id="editor-form">
@@ -55,6 +85,12 @@
                         autoGrow(textarea);
                         textarea.addEventListener("input", () => autoGrow(textarea));
                     }
+
+                    const description = document.getElementById("description");
+                    if (description) {
+                        autoGrow(description);
+                        description.addEventListener("input", () => autoGrow(description));
+                    }
                 });
             </script>
         </fieldset>
@@ -64,11 +100,11 @@
             <input type="hidden" name="authors" id="authors" value="{{ article.authors | join(';') }}" />
             <ul id="authors-container" class="manager-editor-authors-container">
                 {% for author in article.authors %}
-                <li class="manager-editor-author-item">
-                    <i class="fa-solid fa-user manager-editor-author-icon"></i>
-                    <span class="manager-editor-author-item-name" contenteditable="true">{{ author }}</span>
-                    <i class="fa-solid fa-xmark manager-editor-author-remove-item"></i>
-                </li>
+                    <li class="manager-editor-author-item">
+                        <i class="fa-solid fa-user manager-editor-author-icon"></i>
+                        <span class="manager-editor-author-item-name" contenteditable="true">{{ author }}</span>
+                        <i class="fa-solid fa-xmark manager-editor-author-remove-item"></i>
+                    </li>
                 {% endfor %}
                 <li class="manager-editor-author-item manager-editor-author-add">Add author <i class="fa-solid fa-plus"></i></li>
             </ul>
@@ -79,11 +115,11 @@
             <input type="hidden" name="tags" id="tags" value="{{ article.tags | join(';') }}" />
             <ul id="tags-container" class="manager-editor-tags-container">
                 {% for tag in article.tags %}
-                <li class="manager-editor-tag-item">
-                    <i class="fa-solid fa-tag manager-editor-tag-icon"></i>
-                    <span class="manager-editor-tag-item-name" contenteditable="true">{{ tag }}</span>
-                    <i class="fa-solid fa-xmark manager-editor-tag-remove-item"></i>
-                </li>
+                    <li class="manager-editor-tag-item">
+                        <i class="fa-solid fa-tag manager-editor-tag-icon"></i>
+                        <span class="manager-editor-tag-item-name" contenteditable="true">{{ tag }}</span>
+                        <i class="fa-solid fa-xmark manager-editor-tag-remove-item"></i>
+                    </li>
                 {% endfor %}
                 <li class="manager-editor-tag-item manager-editor-tag-add">Add tag <i class="fa-solid fa-plus"></i></li>
             </ul>
@@ -112,7 +148,7 @@
 
                         const itemName = document.createElement("span");
                         itemName.className = `manager-editor-${name}-item-name`;
-                        itemName.textContent = "Goeiemiddag";
+                        itemName.textContent = "New";
                         itemName.contentEditable = true;
                         nameItem.appendChild(itemName);
 

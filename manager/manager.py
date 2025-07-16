@@ -63,14 +63,17 @@ def save_api():
     article_id = request.form.get("id")
     article = Article.query.get(article_id)
 
+    def split_and_clean(field):
+        return [x for x in request.form.get(field, "").split(";") if x.strip()]
+
     if not article:
         flash("Made new article", "success")
         new_article = Article(
             title=request.form.get("title"),
             description=request.form.get("description"),
             content=request.form.get("content"),
-            authors=list(request.form.get("authors").split(";")),
-            tags=list(request.form.get("tags").split(";")),
+            authors=split_and_clean("authors"),
+            tags=split_and_clean("tags"),
             html=build_HTML(request.form.get("content")),
             datetime_made=datetime.now(timezone.utc),
             datetime_edited=datetime.now(timezone.utc),
@@ -82,13 +85,28 @@ def save_api():
         article.title = request.form.get("title", article.title)
         article.description = request.form.get("description", article.description)
         article.content = request.form.get("content", article.content)
-        article.authors = (
-            list(request.form.get("authors").split(";")) or article.authors
-        )
-        article.tags = list(request.form.get("tags").split(";")) or article.tags
+        authors = split_and_clean("authors")
+        tags = split_and_clean("tags")
+        if authors:
+            article.authors = authors
+        if tags:
+            article.tags = tags
         article.html = build_HTML(request.form.get("content", article.content))
         article.datetime_edited = datetime.now(timezone.utc)
 
         db.session.commit()
         flash("Article saved", "success")
         return redirect(url_for("manager.editor", id=article.id))
+
+
+@manager_bp.route("/delete/<string:id>", methods=["POST"])
+def delete_article(id):
+    article = Article.query.get(id)
+    if article:
+        db.session.delete(article)
+        db.session.commit()
+        flash("Article deleted", "success")
+    else:
+        flash("Article not found", "error")
+    return redirect(url_for("manager.editor_apex"))
+
