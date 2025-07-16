@@ -29,6 +29,8 @@ class Article(db.Model):
 
     cover_image_id = db.Column(db.String(12), nullable=True)
 
+    archived = db.Column(db.Boolean, default=False)
+
     @property
     def authors(self):
         return json.loads(self.authors_json or "[]")

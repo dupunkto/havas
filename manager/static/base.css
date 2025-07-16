@@ -75,13 +75,13 @@ header nav {
     flex-direction: column;
     gap: 5px;
     font-size: 1.1em;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .flash {
     padding: 5px;
     border-radius: 5px;
-    animation: disappear 0s linear 3s forwards;
+    animation: fadeout 150ms linear 4s forwards;
 }
 
 .flash-success {
@@ -144,8 +144,11 @@ a {
     color: var(--oc-blue-8);
 }
 
-@keyframes disappear {
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
     to {
-        visibility: hidden;
+        opacity: 0;
     }
 }

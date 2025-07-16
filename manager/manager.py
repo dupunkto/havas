@@ -1,9 +1,18 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import (
+    Blueprint,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    flash,
+    make_response,
+)
 
 from db.models import Article, db
 
 from datetime import datetime, timezone
 import markdown
+import json
 
 manager_bp = Blueprint(
     "manager",
@@ -67,7 +76,6 @@ def save_api():
         return [x for x in request.form.get(field, "").split(";") if x.strip()]
 
     if not article:
-        flash("Made new article", "success")
         new_article = Article(
             title=request.form.get("title"),
             description=request.form.get("description"),
@@ -80,6 +88,9 @@ def save_api():
         )
         db.session.add(new_article)
         db.session.commit()
+        flash(
+            f"New article <b>{new_article.title}</b> created successfully.", "success"
+        )
         return redirect(url_for("manager.editor", id=new_article.id))
     else:
         article.title = request.form.get("title", article.title)
@@ -95,7 +106,7 @@ def save_api():
         article.datetime_edited = datetime.now(timezone.utc)
 
         db.session.commit()
-        flash("Article saved", "success")
+        flash(f"Changes to article <b>{article.title}</b> have been saved.", "success")
         return redirect(url_for("manager.editor", id=article.id))
 
 
@@ -105,8 +116,86 @@ def delete_article(id):
     if article:
         db.session.delete(article)
         db.session.commit()
-        flash("Article deleted", "success")
+        flash(
+            f"Article <b>{article.title}</b> (ID: {article.id}) has been deleted.",
+            "success",
+        )
     else:
-        flash("Article not found", "error")
+        flash(f"Article with ID <b>{id}</b> not found. Nothing was deleted.", "error")
     return redirect(url_for("manager.editor_apex"))
 
+
+@manager_bp.route("/reset_dates/<string:id>", methods=["POST"])
+def reset_dates(id):
+    article = Article.query.get(id)
+    if not article:
+        flash(f"Article with ID <b>{id}</b> not found. Dates were not reset.", "error")
+    else:
+        now = datetime.now(timezone.utc)
+        article.datetime_made = now
+        article.datetime_edited = now
+        db.session.commit()
+        flash(
+            f"Timestamps for article <b>{article.title}</b> have been reset to now.",
+            "success",
+        )
+    return redirect(url_for("manager.editor", id=id))
+
+
+@manager_bp.route("/toggle_archive/<string:id>", methods=["POST"])
+def toggle_archive(id):
+    article = Article.query.get(id)
+    if not article:
+        flash(
+            f"Article with ID <b>{id}</b> not found. Archive status unchanged.", "error"
+        )
+    else:
+        article.archived = not getattr(article, "archived", False)
+        db.session.commit()
+        status = "archived" if article.archived else "unarchived"
+        flash(f"Article <b>{article.title}</b> has been {status}.", "success")
+    return redirect(url_for("manager.editor", id=id))
+
+
+@manager_bp.route("/export_json/<string:id>", methods=["GET"])
+def export_json(id):
+    article = Article.query.get(id)
+    if not article:
+        flash(f"Article with ID <b>{id}</b> not found. Export failed.", "error")
+        return redirect(url_for("manager.editor_apex"))
+    data = {
+        "id": article.id,
+        "title": article.title,
+        "description": article.description,
+        "content": article.content,
+        "html": article.html,
+        "authors": article.authors,
+        "tags": article.tags,
+        "datetime_made": article.datetime_made.isoformat(),
+        "datetime_edited": article.datetime_edited.isoformat(),
+        "cover_image_id": article.cover_image_id,
+        "archived": getattr(article, "archived", False),
+    }
+    response = make_response(json.dumps(data, indent=2))
+    response.headers["Content-Disposition"] = (
+        f"attachment; filename=article_{article.id}.json"
+    )
+    response.mimetype = "application/json"
+    return response
+
+
+@manager_bp.route("/regen_html/<string:id>", methods=["POST"])
+def regen_html(id):
+    article = Article.query.get(id)
+    if not article:
+        flash(
+            f"Article with ID <b>{id}</b> not found. HTML was not regenerated.", "error"
+        )
+    else:
+        article.html = build_HTML(article.content)
+        db.session.commit()
+        flash(
+            f"HTML for article <b>{article.title}</b> has been regenerated from its content.",
+            "success",
+        )
+    return redirect(url_for("manager.editor", id=id))

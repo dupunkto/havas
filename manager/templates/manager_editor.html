@@ -23,8 +23,13 @@
             <span class="manager-editor-status-label">Satus</span>
             <span class="manager-editor-status-status">
                 {% if article.id %}
-                    <span class="manager-editor-status-icon manager-editor-status-icon-green"></span>
-                    <span class="manager-editor-status-status-title">Published</span>
+                    {% if article.archived %}
+                        <span class="manager-editor-status-icon manager-editor-status-icon-orange"></span>
+                        <span class="manager-editor-status-status-title">Archived</span>
+                    {% else %}
+                        <span class="manager-editor-status-icon manager-editor-status-icon-green"></span>
+                        <span class="manager-editor-status-status-title">Published</span>
+                    {% endif %}
                 {% else %}
                     <span class="manager-editor-status-icon manager-editor-status-icon-red"></span>
                     <span class="manager-editor-status-status-title">Unpublished (new article)</span>
@@ -41,10 +46,32 @@
         <div class="manager-editor-actions">
             {% if article.id %}
                 <button type="submit" class="manager-editor-save-btn" form="editor-form">Save</button>
-                <a href="{{ url_for('frontend.view_article', id=article.id) }}" class="btn" target="_blank">Preview</a>
                 <form action="{{ url_for('manager.delete_article', id=article.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this article?');">
-                    <button type="submit" class="btn">Delete</button>
+                    <button type="submit" class="manager-editor-delete-btn">Delete</button>
                 </form>
+                <a href="{{ url_for('frontend.view_article', id=article.id) }}" class="btn manager-editor-preview-btn" target="_blank">Preview</a>
+
+                <div class="manager-editor-more-menu">
+                    <button type="button" class="manager-editor-more-btn" onclick="this.nextElementSibling.classList.toggle('show')">More &#x25BC;</button>
+                    <div class="manager-editor-more-dropdown">
+                        <form action="{{ url_for('manager.toggle_archive', id=article.id) }}" method="post">
+                            {% if article.archived %}
+                                <button type="submit" class="manager-editor-unarchive-btn">Unarchive</button>
+                            {% else %}
+                                <button type="submit" class="manager-editor-archive-btn">Archive</button>
+                            {% endif %}
+                        </form>
+                        <form action="{{ url_for('manager.export_json', id=article.id) }}" method="get">
+                            <button type="submit" class="manager-editor-export-btn">Export as JSON</button>
+                        </form>
+                        <form action="{{ url_for('manager.reset_dates', id=article.id) }}" method="post">
+                            <button type="submit" class="manager-editor-reset-btn">Reset Dates</button>
+                        </form>
+                        <form action="{{ url_for('manager.regen_html', id=article.id) }}" method="post">
+                            <button type="submit" class="manager-editor-regen-btn">Regenerate HTML</button>
+                        </form>
+                    </div>
+                </div>
             {% else %}
                 <button type="submit" class="manager-editor-save-btn" form="editor-form">Save and publish</button>
             {% endif %}

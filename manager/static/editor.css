@@ -1,66 +1,127 @@
 body > main {
     max-width: 1250px;
     display: grid;
-    grid-template-areas:
-        "info   tools " "editor editor";
-    grid-template-columns: 1fr auto;
-    gap: 5px 20px;
+    grid-template-areas: "info   tools " "editor editor";
+    grid-template-columns: minmax(auto, 375px) auto;
+    gap: 20px;
 }
 
 .manager-editor-info {
     grid-area: info;
+    align-content: center;
 }
 
 .manager-editor-tools {
-  grid-area: tools;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  overflow: hidden;
-  gap: 10px;
+    grid-area: tools;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 20px;
 }
 
 .manager-editor-status {
-  border-radius: 10px;
-  background: var(--oc-gray-2);
-  display: grid;
-  grid-template-columns: auto auto;
-  gap: 10px 7px;
-  padding: 10px;
+    border-radius: 10px;
+    background: var(--oc-gray-2);
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px 7px;
+    padding: 13px;
+}
+
+.manager-editor-status > * {
+    align-content: center;
 }
 
 .manager-editor-status-label {
-  font-weight: 600;
-  text-align: right;
+    font-weight: 600;
+    text-align: right;
 }
 
 .manager-editor-status-icon {
-  background: var(--oc-gray-8);
-  width: .65em;
-  height: .65em;
-  display: block;
-  border-radius: 100px;
+    background: var(--oc-gray-8);
+    width: 0.65em;
+    height: 0.65em;
+    display: block;
+    border-radius: 100px;
 }
 
 .manager-editor-status-status {
-  text-wrap: nowrap;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 5px;
+    text-wrap: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
 }
 
 .manager-editor-status-icon-green {
-  background: var(--oc-green-9);
+    background: var(--oc-green-9);
 }
 
+.manager-editor-status-icon-orange {
+    background: var(--oc-orange-8);
+}
 
 .manager-editor-actions {
     display: flex;
     flex-direction: revert;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.manager-editor-actions-group {
+    display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 10px;
     justify-content: space-between;
+}
+
+.manager-editor-actions-group * {
+    flex-grow: 1;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.manager-editor-actions button,
+.manager-editor-actions .btn {
+    border-width: 2px;
+    border-style: solid;
+}
+
+.manager-editor-save-btn {
+    border-bottom-color: var(--oc-green-6);
+}
+
+.manager-editor-save-btn:hover {
+    border-bottom-color: var(--oc-green-8);
+}
+
+.manager-editor-archive-btn,
+.manager-editor-delete-btn,
+.manager-editor-reset-btn {
+    border-bottom-color: var(--oc-red-5);
+}
+
+.manager-editor-archive-btn:hover,
+.manager-editor-delete-btn:hover,
+.manager-editor-reset-btn:hover {
+    border-bottom-color: var(--oc-red-8);
+}
+
+.manager-editor-unarchive-btn,
+.manager-editor-preview-btn,
+.manager-editor-export-btn,
+.manager-editor-regen-btn {
+    border-bottom-color: var(--oc-blue-5);
+}
+
+.manager-editor-unarchive-btn:hover,
+.manager-editor-preview-btn:hover,
+.manager-editor-export-btn:hover,
+.manager-editor-regen-btn:hover {
+    border-bottom-color: var(--oc-blue-8);
 }
 
 #editor-form {
@@ -200,4 +261,53 @@ textarea {
 .manager-editor-author-add,
 .manager-editor-tag-add {
     cursor: pointer;
+}
+
+.manager-editor-more-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.manager-editor-more-btn {
+    border-bottom-color: var(--oc-gray-5);
+}
+
+.manager-editor-more-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: var(--oc-gray-2);
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    z-index: 1;
+    border-radius: 0.4em;
+    padding: 8px 0;
+    flex-direction: column;
+    gap: 0;
+}
+
+.manager-editor-more-dropdown form,
+.manager-editor-more-dropdown button {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.manager-editor-more-dropdown button {
+    border: none;
+    background: none;
+    text-align: left;
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: 0;
+    color: inherit;
+    cursor: pointer;
+}
+
+.manager-editor-more-dropdown button:hover {
+    background: var(--oc-gray-4);
+}
+
+.manager-editor-more-dropdown.show {
+    display: flex;
 }
