@@ -15,14 +15,14 @@ db = SQLAlchemy()
 class Article(db.Model):
     id = db.Column(db.String(8), primary_key=True, default=random_base36_id)
 
-    title = db.Column(db.String(250), unique=True, nullable=False)
+    title = db.Column(db.String(250), nullable=False)
     description = db.Column(db.String(500), nullable=False)
 
     content = db.Column(db.Text, nullable=False)
     html = db.Column(db.Text, nullable=False)
 
     authors_json = db.Column(db.Text, nullable=True)
-    tags_json = db.Column(db.Text, nullable=False)
+    tags_json = db.Column(db.Text, nullable=True)
 
     datetime_made = db.Column(db.DateTime, nullable=False)
     datetime_edited = db.Column(db.DateTime, nullable=False)

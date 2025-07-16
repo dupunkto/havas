@@ -23,6 +23,7 @@ html {
 
 body {
     font-family: "Ubuntu Sans", sans-serif;
+    min-height: 100vh;
 }
 
 img {
