@@ -3,22 +3,24 @@
 {% block extra_headers %}
     <link rel="stylesheet" href="{{ url_for('frontend.static', filename='base.css') }}" />
     {% block styles %}{% endblock %}
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
     <header>
-        <span class="page-header-title">Havas</span>
+        <section class="page-header-first-bar">
+            <span class="page-header-title">Havas</span>
+            <form action="/search" method="GET" class="searchbar">
+                <input type="text" name="q" placeholder="Search articles" />
+                <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+        </section>
+
         <nav class="page-menu" aria-label="Main navigation">
             <a href="{{ url_for('frontend.index') }}" class="page-menu-item page-menu-item-home{% if not this_page_tag %} page-menu-item-active{% endif %}">Home</a>
             {% for tag in tags %}
                 <a href="{{ url_for('frontend.tagpage', tag=tag) }}" class="page-menu-item page-menu-item-{{ tag | replace(' ', '-') }}{% if this_page_tag == tag %} page-menu-item-active{% endif %}">{{ tag | capit }}</a>
             {% endfor %}
         </nav>
-        <form action="/search" method="GET">
-            <input type="text" name="q" placeholder="Search articles">
-            <button type="submit">Search</button>
-        </form>
-
     </header>
 
     <main>

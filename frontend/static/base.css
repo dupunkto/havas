@@ -1,6 +1,5 @@
 body {
-    padding: 35px;
-    padding-top: 10px;
+    padding: 5px 0 10px 0;
 }
 
 a {
@@ -10,11 +9,9 @@ a {
 body > header {
     margin-bottom: 25px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 50px;
+    flex-direction: column;
     overflow: hidden;
-    align-items: center;
+    align-items: stretch;
 }
 
 .page-menu {
@@ -23,28 +20,26 @@ body > header {
     align-items: center;
     overflow: scroll;
     max-width: 100%;
+    gap: 5px;
 }
 
 .page-menu-item {
-    color: inherit;
+    color: black;
     text-decoration: none;
     font-weight: 600;
     text-wrap: nowrap;
-    margin: 10px 0;
-    padding: 10px 10px;
-    border-right: 2px solid var(--oc-gray-4);
+    padding: 5px 10px;
+    border-radius: 100px;
 }
 
-.page-menu-item:last-child {
+.page-menu-item.page-menu-item-active,
+.page-menu-item:hover {
     border-right: 0;
+    background: var(--oc-orange-8);
+    color: white;
 }
 
-.page-menu-item-active {
-    font-weight: 900;
-    color: var(--oc-blue-8);
-}
-
-.page-menu-item-home {
+.page-menu-item.page-menu-item-home {
     font-weight: 900;
 }
 
@@ -53,18 +48,61 @@ body > header {
     font-weight: 800;
 }
 
-.page-menu-item:hover {
-    color: var(--oc-blue-7);
+body > header > * {
+    border-bottom: 1px solid var(--oc-gray-4);
+    padding: 15px 40px;
+}
+
+.page-header-first-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.searchbar {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.searchbar input {
+    padding: 5px 5px 5px 10px;
+    border-radius: 25px 0 0 25px;
+    border: 1px solid var(--oc-orange-9);
+    border-right: none;
+    width: 150px;
+    color: black;
+    font-weight: 500;
+}
+
+.searchbar button {
+    padding: 5px 7px 5px 5px;
+    border-radius: 0 25px 25px 0;
+    border: 1px solid var(--oc-orange-9);
+    background: var(--oc-yellow-8);
+    color: white;
+    border-left: none;
+}
+
+.searchbar input:focus {
+    outline: none;
+    background: var(--oc-gray-1);
+}
+
+.searchbar button:hover {
+    background: var(--oc-yellow-9);
 }
 
 body > main {
     max-width: 800px;
     margin: auto;
+    padding: 0 15px;
 }
 
 body > footer {
     margin-top: 40px;
     border-top: 1px solid var(--oc-gray-5);
-    padding-top: 5px;
     text-align: right;
+    padding: 10px 15px;
 }

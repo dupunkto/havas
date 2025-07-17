@@ -12,22 +12,25 @@ frontend_bp = Blueprint(
 )
 
 
+@frontend_bp.context_processor
+def inject_tags():
+    articles = Article.query.all()
+    tags = set(tag for a in articles for tag in a.tags)
+    return dict(tags=tags)
+
+
 @frontend_bp.route("/")
 def index():
     articles = Article.query.all()
-    tags = set([tag for a in articles for tag in a.tags])
-
-    return render_template("frontend_listing.html", articles=articles, tags=tags)
+    return render_template("frontend_listing.html", articles=articles)
 
 
 @frontend_bp.route("/tag/<string:tag>")
 def tagpage(tag):
     articles = Article.query.all()
     filtered = [a for a in articles if tag in a.tags]
-    tags = set([tag for a in articles for tag in a.tags])
-
     return render_template(
-        "frontend_listing.html", articles=filtered, tags=tags, this_page_tag=tag
+        "frontend_listing.html", articles=filtered, this_page_tag=tag
     )
 
 
@@ -35,10 +38,7 @@ def tagpage(tag):
 def view_article(id):
     article = Article.query.get(id)
     if article:
-        articles = Article.query.all()
-        tags = set([tag for a in articles for tag in a.tags])
-
-        return render_template("frontend_article.html", tags=tags, article=article)
+        return render_template("frontend_article.html", article=article)
 
     abort(404)
 
@@ -46,11 +46,5 @@ def view_article(id):
 @frontend_bp.route("/search")
 def search_article():
     query = request.args.get("q", "").lower()
-
     articles = Article.query.filter(Article.title.ilike(f"%{query}%")).all()
-    
-    
-    all_articles = Article.query.all()
-    tags = set([tag for a in all_articles for tag in a.tags])
-
-    return render_template("frontend_listview.html", articles=articles, tags=tags)
+    return render_template("frontend_listview.html", articles=articles)
