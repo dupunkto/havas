@@ -93,7 +93,81 @@
 
         <fieldset class="manager-editor-section manager-editor-image">
             <legend>Image</legend>
+            <input type="hidden" name="cover_image_id" id="cover_image_id" value="{{ article.cover_image_id }}" />
             <img src="{{ url_for('media.get_file', id=article.cover_image_id) }}" alt="Cover image" />
+            <button type="button" class="manager-editor-image-replace" onclick="this.nextElementSibling.classList.toggle('show')">Replace image</button>
+            <div class="manager-editor-image-replace-container">
+                <div id="image-gallery-controls">
+                    <input type="file" id="image-upload" accept=".jpg" />
+                </div>
+                <div id="image-gallery" class="image-gallery"></div>
+            </div>
+
+            <script>
+                const coverInput = document.getElementById("cover_image_id");
+                const coverPreview = document.querySelector("input[name='cover_image_id'] + img");
+                const gallery = document.getElementById("image-gallery");
+                const uploadInput = document.getElementById("image-upload");
+
+                async function loadGallery() {
+                    gallery.innerHTML = "";
+                    const response = await fetch("{{ url_for('media.list_images') }}");
+                    if (!response.ok) return;
+
+                    const images = await response.json();
+                    images.forEach((image) => {
+                        const id = image.id;
+                        console.log(image);
+
+                        const url = image.url;
+
+                        const img = document.createElement("img");
+                        img.src = url;
+                        img.dataset.id = id;
+
+                        if (coverInput.value === id) {
+                            img.classList.add("selected");
+                        }
+
+                        img.addEventListener("click", () => {
+                            document.querySelectorAll("#image-gallery img").forEach((el) => el.classList.remove("selected"));
+                            img.classList.add("selected");
+
+                            coverInput.value = id;
+                            coverPreview.src = img.src;
+                        });
+
+                        gallery.appendChild(img);
+                    });
+                }
+
+                uploadInput.addEventListener("change", async () => {
+                    const file = uploadInput.files[0];
+                    if (!file || !file.name.toLowerCase().endsWith(".jpg")) {
+                        alert("Only .jpg files allowed");
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append("file", file);
+
+                    const response = await fetch("{{ url_for('media.uploader') }}", {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    const result = await response.json();
+                    if (response.ok && result.success) {
+                        await loadGallery();
+                    } else {
+                        alert(result.message || "Upload failed");
+                    }
+                });
+
+                document.addEventListener("DOMContentLoaded", () => {
+                    loadGallery();
+                });
+            </script>
         </fieldset>
 
         <fieldset class="manager-editor-section manager-editor-content">

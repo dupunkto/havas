@@ -105,12 +105,25 @@ def save_api():
             title=request.form.get("title"),
             description=request.form.get("description"),
             content=request.form.get("content"),
+            cover_image_id=request.form.get("cover_image_id"),
             authors=split_and_clean("authors"),
             tags=split_and_clean("tags"),
             html=build_HTML(request.form.get("content")),
             datetime_made=datetime.now(timezone.utc),
             datetime_edited=datetime.now(timezone.utc),
         )
+
+        if (
+            new_article.title == "Title"
+            or new_article.description == "Description"
+            or new_article.content == "Content"
+            or new_article.html == "<p>Content</p>"
+        ):
+            flash("Enter an title, description and content.", "error")
+            return redirect(
+                url_for("manager.editor_apex")
+            )  # todo(gijs): Don't return to the apex, return to the form on /editor/new (filled in form)
+
         db.session.add(new_article)
         db.session.commit()
         flash(
@@ -121,6 +134,7 @@ def save_api():
     article.title = request.form.get("title", article.title)
     article.description = request.form.get("description", article.description)
     article.content = request.form.get("content", article.content)
+    article.cover_image_id = request.form.get("cover_image_id", article.cover_image_id)
     authors = split_and_clean("authors")
     tags = split_and_clean("tags")
     if authors:
