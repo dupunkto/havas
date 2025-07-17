@@ -14,6 +14,11 @@
                 <a href="{{ url_for('frontend.tagpage', tag=tag) }}" class="page-menu-item page-menu-item-{{ tag | replace(' ', '-') }}{% if this_page_tag == tag %} page-menu-item-active{% endif %}">{{ tag | capit }}</a>
             {% endfor %}
         </nav>
+        <form action="/search" method="GET">
+            <input type="text" name="q" placeholder="Search articles">
+            <button type="submit">Search</button>
+        </form>
+
     </header>
 
     <main>

@@ -33,7 +33,7 @@ Economists are divided on the long-term effects but broadly welcome the short-te
 """,
             html="",
             authors=["Jane Smith"],
-            tags=["economy", "politics"],
+            tags=["politics"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
             cover_image_id="dummy1",
@@ -60,7 +60,7 @@ Observers say the international community faces significant challenges in broker
 """,
             html="",
             authors=["Ahmed Khan"],
-            tags=["world", "conflict"],
+            tags=["world"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
             cover_image_id="dummy2",
@@ -110,7 +110,7 @@ Health agencies emphasize that vulnerable populations, including the elderly and
 """,
             html="",
             authors=["Dr. Samuel Lee"],
-            tags=["health", "society"],
+            tags=["health"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
             cover_image_id="dummy4",
@@ -135,7 +135,7 @@ Education unions largely support the reforms, though some have called for furthe
 """,
             html="",
             authors=["Michael Torres"],
-            tags=["politics", "society"],
+            tags=["politics"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
             cover_image_id="dummy4",
@@ -169,7 +169,7 @@ For more info, visit [IPCC Agriculture Report](https://www.ipcc.ch/srccl/chapter
 """,
             html="",  # Assuming your app generates HTML from markdown
             authors=["Emily Rogers"],
-            tags=["environment", "agriculture", "climate"],
+            tags=["environment"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
             cover_image_id="dummy5",
@@ -201,7 +201,7 @@ Marine biology enthusiasts can follow the expedition blog [here](http://oceanexp
 """,
             html="",
             authors=["Carlos Medina"],
-            tags=["science", "ocean", "discovery"],
+            tags=["science"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
             cover_image_id="dummy6",
@@ -239,7 +239,7 @@ Learn more about sustainable transport at [Global EV Outlook](https://www.iea.or
 """,
             html="",
             authors=["Linda Park"],
-            tags=["technology", "transport", "environment"],
+            tags=["technology"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
             cover_image_id="dummy7",
@@ -270,7 +270,7 @@ Interested in booking a trip? Check [Space Tourism Association](https://spacetou
 """,
             html="",
             authors=["Anita Kumar"],
-            tags=["space", "technology", "tourism"],
+            tags=["science"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
             cover_image_id="dummy8",
@@ -301,7 +301,7 @@ Explore delicious recipes at [Plant-Based Kitchen](https://plantbasedkitchen.exa
 """,
             html="",
             authors=["Mark Taylor"],
-            tags=["food", "health", "lifestyle"],
+            tags=["lifestyle"],
             datetime_made=datetime.now(),
             datetime_edited=datetime.now(),
             cover_image_id="dummy9",
@@ -322,16 +322,21 @@ Explore delicious recipes at [Plant-Based Kitchen](https://plantbasedkitchen.exa
         for i in range(amount):
             name = f"dummy{i + 1}"
 
-            folder = os.path.join(
-                current_app.root_path, media_bp.static_folder, "images", f"{name}.jpg"
+            image_dir = os.path.join(
+                current_app.root_path, media_bp.static_folder, "images"
             )
+
+            image_path = os.path.join(image_dir, f"{name}.jpg")
+
+            os.makedirs(image_dir, exist_ok=True)
+
             try:
                 response = requests.get(url, timeout=10)
                 response.raise_for_status()
-                with open(folder, "wb") as f:
+                with open(image_path, "wb") as f:
                     f.write(response.content)
-                print(f"Downloaded: {folder}")
+                print(f"Downloaded: {image_path}")
             except requests.RequestException as e:
-                print(f"Failed to download {folder} from {url}: {e}")
+                print(f"Failed to download {image_path} from {url}: {e}")
 
     download_images(len(articles))

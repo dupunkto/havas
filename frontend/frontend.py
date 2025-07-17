@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, request
 
 from db.models import Article
 
@@ -26,13 +26,31 @@ def tagpage(tag):
     filtered = [a for a in articles if tag in a.tags]
     tags = set([tag for a in articles for tag in a.tags])
 
-    return render_template("frontend_listing.html", articles=filtered, tags=tags, this_page_tag=tag)
+    return render_template(
+        "frontend_listing.html", articles=filtered, tags=tags, this_page_tag=tag
+    )
 
 
 @frontend_bp.route("/article/<string:id>")
 def view_article(id):
     article = Article.query.get(id)
     if article:
-        return render_template("frontend_article.html", article=article)
+        articles = Article.query.all()
+        tags = set([tag for a in articles for tag in a.tags])
+
+        return render_template("frontend_article.html", tags=tags, article=article)
 
     abort(404)
+
+
+@frontend_bp.route("/search")
+def search_article():
+    query = request.args.get("q", "").lower()
+
+    articles = Article.query.filter(Article.title.ilike(f"%{query}%")).all()
+    
+    
+    all_articles = Article.query.all()
+    tags = set([tag for a in all_articles for tag in a.tags])
+
+    return render_template("frontend_listview.html", articles=articles, tags=tags)
