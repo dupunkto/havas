@@ -2,10 +2,12 @@
 
 {% block title %}Manager - Editing {{ article.id }}{% endblock %}
 
-{% block styles %}
+{% block header_items %}
     <link rel="stylesheet" href="{{ url_for('manager.static', filename='editor.css') }}" />
     <link rel="stylesheet" href="{{ url_for('frontend.static', filename='article.css') }}" />
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -222,27 +224,28 @@
         <fieldset class="manager-editor-section manager-editor-content">
             <legend>Content</legend>
             <textarea id="content" name="content" required>{{ article.content }}</textarea>
-
             <script>
-                function autoGrow(element) {
-                    element.style.height = "5px";
-                    element.style.height = element.scrollHeight + "px";
-                }
+                document.addEventListener("DOMContentLoaded", function () {
+                    const easyMDE = new EasyMDE({
+                        element: document.getElementById("content"),
+                        spellChecker: false,
+                        autosave: {
+                            enabled: falsse
+                        },
+                        placeholder: "Write your article here...",
+                        previewRender: function(plainText) {
+                            return marked.parse(plainText); // still uses your live preview system
+                        },
+                        forceSync: true // syncs markdown back into <textarea> before form submit
+                    });
 
-                document.addEventListener("DOMContentLoaded", () => {
-                    const textarea = document.getElementById("content");
-                    if (textarea) {
-                        autoGrow(textarea);
-                        textarea.addEventListener("input", () => autoGrow(textarea));
-                    }
-
-                    const description = document.getElementById("description");
-                    if (description) {
-                        autoGrow(description);
-                        description.addEventListener("input", () => autoGrow(description));
-                    }
+                    easyMDE.codemirror.on("change", () => {
+                        checkChanges(); // keeps unsaved detection working
+                        debounceUpdateContent(); // keeps preview live
+                    });
                 });
             </script>
+
         </fieldset>
 
         <fieldset class="manager-editor-section manager-editor-authors">

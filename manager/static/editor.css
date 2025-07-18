@@ -356,3 +356,16 @@ textarea {
     text-align: center;
     justify-content: center;
 }
+
+.EasyMDEContainer > * {
+    border-left: 0 !important;
+    border-right: 0 !important;
+}
+
+.EasyMDEContainer > *:first-child {
+    border-top: 0 !important;
+}
+
+.EasyMDEContainer > *:last-child {
+    border-bottom: 0 !important;
+}
