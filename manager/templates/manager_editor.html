@@ -45,14 +45,14 @@
 
         <div class="manager-editor-actions">
             {% if article.id %}
-                <button type="submit" class="manager-editor-save-btn" form="editor-form">Save</button>
+                <button type="submit" class="manager-editor-save-btn" form="manager-editor-form">Save</button>
                 <form action="{{ url_for('manager.delete_article', id=article.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this article?');">
                     <button type="submit" class="manager-editor-delete-btn">Delete</button>
                 </form>
                 <a href="{{ url_for('frontend.view_article', id=article.id) }}" class="btn manager-editor-preview-btn" target="_blank">Preview</a>
 
                 <div class="manager-editor-more-menu">
-                    <button type="button" class="manager-editor-more-btn" onclick="this.nextElementSibling.classList.toggle('show')">More <i class="fa-solid fa-caret-down"></i></button>
+                    <button type="button" class="manager-editor-more-btn manager-dropdown-button" onclick="this.classList.toggle('dropdown-active'); this.nextElementSibling.classList.toggle('show')">More <i class="fa-solid fa-caret-down"></i><i class="fa-solid fa-caret-up"></i></button>
                     <div class="manager-editor-more-dropdown">
                         <form action="{{ url_for('manager.toggle_archive', id=article.id) }}" method="post">
                             {% if article.archived %}
@@ -73,12 +73,12 @@
                     </div>
                 </div>
             {% else %}
-                <button type="submit" class="manager-editor-save-btn" form="editor-form">Save and publish</button>
+                <button type="submit" class="manager-editor-save-btn" form="manager-editor-form">Save and publish</button>
             {% endif %}
         </div>
     </div>
 
-    <form action="{{ url_for('manager.save_api') }}" method="post" id="editor-form">
+    <form action="{{ url_for('manager.save_api') }}" method="post" id="manager-editor-form">
         <input type="hidden" name="id" value="{{ article.id }}" />
 
         <fieldset class="manager-editor-section manager-editor-title">
@@ -95,19 +95,20 @@
             <legend>Image</legend>
             <input type="hidden" name="cover_image_id" id="cover_image_id" value="{{ article.cover_image_id }}" />
             <img src="{{ url_for('media.get_file', id=article.cover_image_id) }}" alt="Cover image" />
-            <button type="button" class="manager-editor-image-replace" onclick="this.nextElementSibling.classList.toggle('show')">Replace image</button>
+            <button type="button" onclick="this.classList.toggle('dropdown-active'); this.nextElementSibling.classList.toggle('show')" class="manager-editor-image-replace manager-dropdown-button">Replace image <i class="fa-solid fa-caret-down"></i><i class="fa-solid fa-caret-up"></i></button>
             <div class="manager-editor-image-replace-container">
-                <div id="image-gallery-controls">
-                    <input type="file" id="image-upload" accept=".jpg" />
+                <div id="manager-image-gallery-controls">
+                    <input type="file" id="manager-image-upload" accept=".jpg" hidden />
+                    <label for="manager-image-upload" class="manager-upload-button btn">Upload image</label>
                 </div>
-                <div id="image-gallery" class="image-gallery"></div>
+                <div id="manager-image-gallery" class="manager-image-gallery"></div>
             </div>
 
             <script>
                 const coverInput = document.getElementById("cover_image_id");
                 const coverPreview = document.querySelector("input[name='cover_image_id'] + img");
-                const gallery = document.getElementById("image-gallery");
-                const uploadInput = document.getElementById("image-upload");
+                const gallery = document.getElementById("manager-image-gallery");
+                const uploadInput = document.getElementById("manager-image-upload");
 
                 async function loadGallery() {
                     gallery.innerHTML = "";
@@ -117,9 +118,10 @@
                     const images = await response.json();
                     images.forEach((image) => {
                         const id = image.id;
-                        console.log(image);
-
                         const url = image.url;
+
+                        const wrapper = document.createElement("div");
+                        wrapper.classList.add("manager-image-gallery-item");
 
                         const img = document.createElement("img");
                         img.src = url;
@@ -130,14 +132,19 @@
                         }
 
                         img.addEventListener("click", () => {
-                            document.querySelectorAll("#image-gallery img").forEach((el) => el.classList.remove("selected"));
+                            document.querySelectorAll("#manager-image-gallery img").forEach((el) => el.classList.remove("selected"));
                             img.classList.add("selected");
 
                             coverInput.value = id;
                             coverPreview.src = img.src;
                         });
 
-                        gallery.appendChild(img);
+                        const code = document.createElement("code");
+                        code.textContent = id;
+
+                        wrapper.appendChild(img);
+                        wrapper.appendChild(code);
+                        gallery.appendChild(wrapper);
                     });
                 }
 
@@ -265,7 +272,7 @@
                     });
                 });
 
-                document.getElementById("editor-form").addEventListener("submit", () => {
+                document.getElementById("manager-editor-form").addEventListener("submit", () => {
                     const nameItems = document.querySelectorAll(`.manager-editor-${name}-item-name`);
                     const items = Array.from(nameItems).map((item) => item.textContent.trim());
                     document.getElementById(`${name}s`).value = items.join(";");
@@ -278,7 +285,7 @@
 
         <fieldset class="manager-editor-section manager-editor-preview">
             <legend>Preview</legend>
-            <article id="preview" class="havas-article-content"></article>
+            <article id="preview" class="manager-article-content"></article>
             <script>
                 const title = document.getElementById("title");
                 const content = document.getElementById("content");

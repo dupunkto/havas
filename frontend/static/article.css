@@ -1,4 +1,4 @@
-.havas-article-content *,
+.manager-article-content *,
 main header * {
     margin: revert;
     padding: revert;
@@ -54,7 +54,7 @@ main header * {
     color: var(--oc-gray-7);
 }
 
-.havas-article-content blockquote {
+.manager-article-content blockquote {
     border-left: 3px solid var(--oc-gray-7);
     margin-inline: 0;
     padding-inline-start: 1em;

@@ -39,7 +39,7 @@ def list_images():
     files = sorted(
         os.listdir(images_path),
         key=lambda f: os.path.getmtime(os.path.join(images_path, f)),
-    )
+    )[::-1]
 
     result = [
         {
