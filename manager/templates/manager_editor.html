@@ -41,6 +41,48 @@
 
             <span class="manager-editor-status-label">Edited</span>
             <time datetime="{{ article.datetime_edited.isoformat() }}"> {{ article.datetime_edited.strftime("%Y-%d-%m %H:%M") }} </time>
+
+            <span class="manager-editor-status-label">File</span>
+            <span id="manager-unsaved-changes-indicator" class="manager-unsaved-changes-indicator">Saved</span>
+
+            <script>
+                let initialState = "";
+                function serializeForm(form) {
+                    const formData = new FormData(form);
+                    return new URLSearchParams(formData).toString();
+                }
+
+                function checkChanges() {
+                    const form = document.getElementById("manager-editor-form");
+                    const unsavedIndicator = document.getElementById("manager-unsaved-changes-indicator");
+
+                    const currentState = serializeForm(form);
+                    if (currentState !== initialState) {
+                        unsavedIndicator.innerText = "Unsaved";
+                    } else {
+                        unsavedIndicator.innerText = "Saved";
+                    }
+                }
+
+                document.addEventListener("DOMContentLoaded", () => {
+                    const form = document.getElementById("manager-editor-form");
+                    const unsavedIndicator = document.getElementById("manager-unsaved-changes-indicator");
+                    initialState = serializeForm(form);
+
+                    form.addEventListener("input", checkChanges);
+                    form.addEventListener("change", checkChanges);
+
+                    document.querySelectorAll("textarea, input").forEach((el) => {
+                        el.addEventListener("input", checkChanges);
+                        el.addEventListener("change", checkChanges);
+                    });
+
+                    form.addEventListener("submit", () => {
+                        initialState = serializeForm(form);
+                        unsavedIndicator.style.display = "none";
+                    });
+                });
+            </script>
         </div>
 
         <div class="manager-editor-actions">
@@ -234,53 +276,70 @@
         </fieldset>
 
         <script>
-            function niceListInput(name) {
-                const xMarks = document.querySelectorAll(`.manager-editor-${name}-remove-item`);
+            document.addEventListener("DOMContentLoaded", () => {
+                function niceListInput(name) {
+                    const updateInputValue = () => {
+                        const nameItems = document.querySelectorAll(`.manager-editor-${name}-item-name`);
+                        const items = Array.from(nameItems).map((item) => item.textContent.trim());
+                        document.getElementById(`${name}s`).value = items.join(";");
 
-                xMarks.forEach((xMark) => {
-                    xMark.addEventListener("click", () => {
-                        xMark.parentElement.remove();
-                    });
-                });
+                        checkChanges();
+                    };
 
-                const addButtons = document.querySelectorAll(`.manager-editor-${name}-add`);
+                    const xMarks = document.querySelectorAll(`.manager-editor-${name}-remove-item`);
 
-                addButtons.forEach((addButton) => {
-                    addButton.addEventListener("click", () => {
-                        const nameItem = document.createElement("li");
-                        nameItem.className = `manager-editor-${name}-item`;
-
-                        const nameIcon = document.createElement("i");
-                        nameIcon.className = `fa-solid fa-user manager-editor-${name}-icon`;
-                        nameItem.appendChild(nameIcon);
-
-                        const itemName = document.createElement("span");
-                        itemName.className = `manager-editor-${name}-item-name`;
-                        itemName.textContent = "New";
-                        itemName.contentEditable = true;
-                        nameItem.appendChild(itemName);
-
-                        const removeItem = document.createElement("i");
-                        removeItem.className = `fa-solid fa-xmark manager-editor-${name}-remove-item`;
-                        nameItem.appendChild(removeItem);
-
-                        removeItem.addEventListener("click", () => {
-                            removeItem.parentElement.remove();
+                    xMarks.forEach((xMark) => {
+                        xMark.addEventListener("click", () => {
+                            xMark.parentElement.remove();
+                            updateInputValue();
                         });
-
-                        addButton.parentElement.insertBefore(nameItem, addButton);
                     });
-                });
 
-                document.getElementById("manager-editor-form").addEventListener("submit", () => {
-                    const nameItems = document.querySelectorAll(`.manager-editor-${name}-item-name`);
-                    const items = Array.from(nameItems).map((item) => item.textContent.trim());
-                    document.getElementById(`${name}s`).value = items.join(";");
-                });
-            }
+                    const addButtons = document.querySelectorAll(`.manager-editor-${name}-add`);
 
-            niceListInput("author");
-            niceListInput("tag");
+                    addButtons.forEach((addButton) => {
+                        addButton.addEventListener("click", () => {
+                            const nameItem = document.createElement("li");
+                            nameItem.className = `manager-editor-${name}-item`;
+
+                            const nameIcon = document.createElement("i");
+                            nameIcon.className = `fa-solid fa-user manager-editor-${name}-icon`;
+                            nameItem.appendChild(nameIcon);
+
+                            const itemName = document.createElement("span");
+                            itemName.className = `manager-editor-${name}-item-name`;
+                            itemName.textContent = "New";
+                            itemName.contentEditable = true;
+                            itemName.addEventListener("input", updateInputValue);
+                            nameItem.appendChild(itemName);
+
+                            const removeItem = document.createElement("i");
+                            removeItem.className = `fa-solid fa-xmark manager-editor-${name}-remove-item`;
+                            nameItem.appendChild(removeItem);
+
+                            removeItem.addEventListener("click", () => {
+                                removeItem.parentElement.remove();
+                                updateInputValue();
+                            });
+
+                            addButton.parentElement.insertBefore(nameItem, addButton);
+                            updateInputValue();
+                        });
+                    });
+
+                    const existingEditableItems = document.querySelectorAll(`.manager-editor-${name}-item-name`);
+                    existingEditableItems.forEach((item) => {
+                        item.addEventListener("input", updateInputValue);
+                    });
+
+                    document.getElementById("manager-editor-form").addEventListener("submit", () => {
+                        updateInputValue();
+                    });
+                }
+
+                niceListInput("author");
+                niceListInput("tag");
+            });
         </script>
 
         <fieldset class="manager-editor-section manager-editor-preview">
