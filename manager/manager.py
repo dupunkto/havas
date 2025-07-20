@@ -152,7 +152,6 @@ def save_api():
 
     article.datetime_edited = datetime.now(timezone.utc)
 
-
     db.session.commit()
 
     flash(f"Changes to article <b>{article.title}</b> have been saved.", "success")
