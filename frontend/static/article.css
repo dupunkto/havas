@@ -1,4 +1,8 @@
-.manager-article-content *,
+main {
+    display: block !important;
+}
+
+.article-content *,
 main header * {
     margin: revert;
     padding: revert;
@@ -54,7 +58,7 @@ main header * {
     color: var(--oc-gray-7);
 }
 
-.manager-article-content blockquote {
+.article-content blockquote {
     border-left: 3px solid var(--oc-gray-7);
     margin-inline: 0;
     padding-inline-start: 1em;

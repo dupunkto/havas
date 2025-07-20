@@ -3,16 +3,18 @@
 {% block title %}Articles{% endblock %}
 
 {% block header_items %}
-    <link rel="stylesheet" href="{{ url_for('frontend.static', filename='listview.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('frontend.static', filename='searchresult.css') }}" />
 {% endblock %}
 
 {% block content %}
-    <form action="/search" method="GET" class="page-searchbar searchbar-big">
-        <input type="text" name="q" value="{{ search_term }}" placeholder="Search articles" />
-        <button type="submit" class="page-searchbar-button"><i class="fa-solid fa-arrow-right"></i></button>
-    </form>
-    
-    <h1>Search results for {{ search_term }}</h1>
+    <section class="article-search-results-header">
+        <h1>Search results for {{ search_term }}</h1>
+
+        <form action="/search" method="GET" class="page-searchbar searchbar-big">
+            <input type="text" name="q" value="{{ search_term }}" placeholder="Search articles" />
+            <button type="submit" class="page-searchbar-button"><i class="fa-solid fa-arrow-right"></i></button>
+        </form>
+    </section>
 
     {% if articles %}
         <div class="article-listing">
