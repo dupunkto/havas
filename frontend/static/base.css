@@ -25,6 +25,8 @@ body > header > * {
 .page-header-title {
     font-size: 1.2em;
     font-weight: 800;
+    color: unset;
+    text-decoration: none;
 }
 
 .page-searchbar {

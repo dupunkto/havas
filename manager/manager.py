@@ -111,6 +111,7 @@ def save_api():
             html=build_HTML(request.form.get("content")),
             datetime_made=datetime.now(timezone.utc),
             datetime_edited=datetime.now(timezone.utc),
+            priority=int(request.form.get("priority", 3)),  # <-- Add this
         )
 
         if (
@@ -120,32 +121,46 @@ def save_api():
             or new_article.html == "<p>Content</p>"
         ):
             flash("Enter an title, description and content.", "error")
+
             return redirect(
                 url_for("manager.editor_apex")
             )  # todo(gijs): Don't return to the apex, return to the form on /editor/new (filled in form)
 
         db.session.add(new_article)
         db.session.commit()
+
         flash(
             f"New article <b>{new_article.title}</b> created successfully.", "success"
         )
+
         return redirect(url_for("manager.editor", id=new_article.id))
 
     article.title = request.form.get("title", article.title)
     article.description = request.form.get("description", article.description)
-    article.content = request.form.get("content", article.content)
+
     article.cover_image_id = request.form.get("cover_image_id", article.cover_image_id)
+
     authors = split_and_clean("authors")
-    tags = split_and_clean("tags")
     if authors:
         article.authors = authors
+
+    tags = split_and_clean("tags")
     if tags:
         article.tags = tags
+
     article.html = build_HTML(request.form.get("content", article.content))
+    article.content = request.form.get("content", article.content)
+
     article.datetime_edited = datetime.now(timezone.utc)
 
+    priority_value = request.form.get("priority")
+    if priority_value is not None:
+        article.priority = int(priority_value)
+
     db.session.commit()
+
     flash(f"Changes to article <b>{article.title}</b> have been saved.", "success")
+
     return redirect(url_for("manager.editor", id=article.id))
 
 
@@ -155,12 +170,14 @@ def delete_article(id):
     if article:
         db.session.delete(article)
         db.session.commit()
+
         flash(
             f"Article <b>{article.title}</b> (ID: {article.id}) has been deleted.",
             "success",
         )
     else:
         flash(f"Article with ID <b>{id}</b> not found. Nothing was deleted.", "error")
+
     return redirect(url_for("manager.editor_apex"))
 
 
@@ -174,25 +191,12 @@ def reset_dates(id):
         article.datetime_made = now
         article.datetime_edited = now
         db.session.commit()
+
         flash(
             f"Timestamps for article <b>{article.title}</b> have been reset to now.",
             "success",
         )
-    return redirect(url_for("manager.editor", id=id))
 
-
-@manager_bp.route("/toggle_archive/<string:id>", methods=["POST"])
-def toggle_archive(id):
-    article = Article.query.get(id)
-    if not article:
-        flash(
-            f"Article with ID <b>{id}</b> not found. Archive status unchanged.", "error"
-        )
-    else:
-        article.archived = not getattr(article, "archived", False)
-        db.session.commit()
-        status = "archived" if article.archived else "unarchived"
-        flash(f"Article <b>{article.title}</b> has been {status}.", "success")
     return redirect(url_for("manager.editor", id=id))
 
 
@@ -201,6 +205,7 @@ def export_json(id):
     article = Article.query.get(id)
     if not article:
         flash(f"Article with ID <b>{id}</b> not found. Export failed.", "error")
+
         return redirect(url_for("manager.editor_apex"))
     data = {
         "id": article.id,
@@ -213,7 +218,7 @@ def export_json(id):
         "datetime_made": article.datetime_made.isoformat(),
         "datetime_edited": article.datetime_edited.isoformat(),
         "cover_image_id": article.cover_image_id,
-        "archived": getattr(article, "archived", False),
+        "priority": article.priority,
     }
     response = make_response(json.dumps(data, indent=2))
     response.headers["Content-Disposition"] = (
@@ -233,10 +238,12 @@ def regen_html(id):
     else:
         article.html = build_HTML(article.content)
         db.session.commit()
+
         flash(
             f"HTML for article <b>{article.title}</b> has been regenerated from its content.",
             "success",
         )
+
     return redirect(url_for("manager.editor", id=id))
 
 
@@ -246,5 +253,7 @@ def regen_html_all():
     for article in articles:
         article.html = build_HTML(article.content)
     db.session.commit()
+
     flash("HTML for all articles has been regenerated from their content.", "success")
+
     return redirect(url_for("manager.editor_apex"))

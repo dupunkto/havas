@@ -29,7 +29,7 @@ class Article(db.Model):
 
     cover_image_id = db.Column(db.String(12), nullable=True)
 
-    archived = db.Column(db.Boolean, default=False)
+    priority = db.Column(db.Integer, default=3)
 
     @property
     def authors(self):

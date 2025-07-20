@@ -8,7 +8,7 @@
 
 {% block content %}
     <div class="article-listing">
-        {% for article in articles %}
+        {% for article in articles[:20] %}
             <a class="article-container" href="{{ url_for('frontend.view_article', id=article.id) }}">
                 <img class="article-image" src="{{ url_for('media.get_file', id=article.cover_image_id) }}" />
                 <span class="article-title">{{ article.title }}</span>

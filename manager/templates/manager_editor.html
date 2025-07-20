@@ -25,13 +25,8 @@
             <span class="manager-editor-status-label">Satus</span>
             <span class="manager-editor-status-status">
                 {% if article.id %}
-                    {% if article.archived %}
-                        <span class="manager-editor-status-icon manager-editor-status-icon-orange"></span>
-                        <span class="manager-editor-status-status-title">Archived</span>
-                    {% else %}
-                        <span class="manager-editor-status-icon manager-editor-status-icon-green"></span>
-                        <span class="manager-editor-status-status-title">Published</span>
-                    {% endif %}
+                    <span class="manager-editor-status-icon manager-editor-status-icon-green"></span>
+                    <span class="manager-editor-status-status-title">Published</span>
                 {% else %}
                     <span class="manager-editor-status-icon manager-editor-status-icon-red"></span>
                     <span class="manager-editor-status-status-title">Unpublished (new article)</span>
@@ -98,13 +93,6 @@
                 <div class="manager-editor-more-menu">
                     <button type="button" class="manager-editor-more-btn manager-dropdown-button" onclick="this.classList.toggle('dropdown-active'); this.nextElementSibling.classList.toggle('show')">More <i class="fa-solid fa-caret-down"></i><i class="fa-solid fa-caret-up"></i></button>
                     <div class="manager-editor-more-dropdown">
-                        <form action="{{ url_for('manager.toggle_archive', id=article.id) }}" method="post">
-                            {% if article.archived %}
-                                <button type="submit" class="manager-editor-unarchive-btn">Unarchive</button>
-                            {% else %}
-                                <button type="submit" class="manager-editor-archive-btn">Archive</button>
-                            {% endif %}
-                        </form>
                         <form action="{{ url_for('manager.export_json', id=article.id) }}" method="get">
                             <button type="submit" class="manager-editor-export-btn">Export as JSON</button>
                         </form>
@@ -343,6 +331,12 @@
                 niceListInput("tag");
             });
         </script>
+
+        <fieldset class="manager-editor-section manager-editor-priority">
+            <legend>Priority</legend>
+            <input type="range" id="priority" name="priority" min="1" max="5" step="1" value="{{ article.priority }}" oninput="this.nextElementSibling.value = this.value">
+            <output>{{ article.priority }}</output>
+        </fieldset>
 
         <fieldset class="manager-editor-section manager-editor-preview">
             <legend>Preview</legend>

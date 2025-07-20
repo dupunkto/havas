@@ -1,18 +1,15 @@
-main {
+.frontend-main {
     display: block !important;
 }
 
 .article-content *,
-main header * {
+.article-header header * {
     margin: revert;
     padding: revert;
 }
 
-.article-cover-image {
-    aspect-ratio: 16/9;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 8px;
+.article-title {
+    margin-top: 10px;
 }
 
 .article-cover-image {
