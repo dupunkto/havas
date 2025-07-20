@@ -2,25 +2,105 @@ body {
     padding: 5px 0 10px 0;
 }
 
-a {
-    color: var(--oc-blue-8);
-}
-
 body > header {
-    margin-bottom: 25px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     align-items: stretch;
 }
 
-.page-menu {
+body > header > * {
+    border-bottom: 1px solid var(--oc-gray-4);
+    padding: 15px 40px;
+}
+
+.page-header-first-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.page-header-title {
+    font-size: 1.2em;
+    font-weight: 800;
+}
+
+.page-searchbar {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.page-searchbar input {
+    padding: 5px 5px 5px 10px;
+    border-radius: 25px 0 0 25px;
+    border: 1px solid var(--oc-orange-9);
+    border-right: none;
+    width: 150px;
+    color: black;
+    font-weight: 500;
+}
+
+.page-searchbar button {
+    padding: 5px 7px 5px 5px;
+    border-radius: 0 25px 25px 0;
+    border: 1px solid var(--oc-orange-9);
+    background: var(--oc-yellow-8);
+    color: white;
+    border-left: none;
+}
+
+.page-searchbar input:focus {
+    outline: none;
+    background: var(--oc-gray-1);
+}
+
+.page-searchbar button:hover {
+    background: var(--oc-yellow-9);
+}
+
+.page-header-menu-big-container {
+    position: relative;
+}
+
+.page-menu-button {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    padding: 5px 10px;
+    border-radius: 25px;
+    border: none;
+    background: var(--oc-yellow-8);
+    color: white;
+}
+
+.page-menu-button.disable {
+    display: none;
+}
+
+#page-menu-scroll-left-button {
+    left: 0;
+}
+
+#page-menu-scroll-right-button {
+    right: 0;
+}
+
+.page-menu-container {
     display: flex;
     flex-direction: revert;
     align-items: center;
     overflow: scroll;
     max-width: 100%;
     gap: 5px;
+    border-radius: 100px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.page-menu-container::-webkit-scrollbar {
+    display: none;
 }
 
 .page-menu-item {
@@ -43,65 +123,28 @@ body > header {
     font-weight: 900;
 }
 
-.page-header-title {
-    font-size: 1.2em;
-    font-weight: 800;
-}
-
-body > header > * {
-    border-bottom: 1px solid var(--oc-gray-4);
-    padding: 15px 40px;
-}
-
-.page-header-first-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.searchbar {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-}
-
-.searchbar input {
-    padding: 5px 5px 5px 10px;
-    border-radius: 25px 0 0 25px;
-    border: 1px solid var(--oc-orange-9);
-    border-right: none;
-    width: 150px;
-    color: black;
-    font-weight: 500;
-}
-
-.searchbar button {
-    padding: 5px 7px 5px 5px;
-    border-radius: 0 25px 25px 0;
-    border: 1px solid var(--oc-orange-9);
-    background: var(--oc-yellow-8);
-    color: white;
-    border-left: none;
-}
-
-.searchbar input:focus {
-    outline: none;
-    background: var(--oc-gray-1);
-}
-
-.searchbar button:hover {
-    background: var(--oc-yellow-9);
+a {
+    color: var(--oc-blue-8);
 }
 
 body > main {
     max-width: 800px;
     margin: auto;
-    padding: 0 15px;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.searchbar-big {
+    max-width: 300px;
+}
+
+.searchbar-big input {
+    flex-grow: 1;
 }
 
 body > footer {
-    margin-top: 40px;
     border-top: 1px solid var(--oc-gray-5);
     text-align: right;
     padding: 10px 15px;

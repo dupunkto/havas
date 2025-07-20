@@ -230,13 +230,13 @@
                         element: document.getElementById("content"),
                         spellChecker: false,
                         autosave: {
-                            enabled: falsse
+                            enabled: false,
                         },
                         placeholder: "Write your article here...",
-                        previewRender: function(plainText) {
+                        previewRender: function (plainText) {
                             return marked.parse(plainText); // still uses your live preview system
                         },
-                        forceSync: true // syncs markdown back into <textarea> before form submit
+                        forceSync: true, // syncs markdown back into <textarea> before form submit
                     });
 
                     easyMDE.codemirror.on("change", () => {
@@ -245,7 +245,6 @@
                     });
                 });
             </script>
-
         </fieldset>
 
         <fieldset class="manager-editor-section manager-editor-authors">

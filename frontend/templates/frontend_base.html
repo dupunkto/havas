@@ -9,25 +9,67 @@
     <header>
         <section class="page-header-first-bar">
             <span class="page-header-title">Havas</span>
-            <form action="/search" method="GET" class="searchbar">
+            <form action="/search" method="GET" class="page-searchbar">
                 <input type="text" name="q" placeholder="Search articles" />
-                <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+                <button type="submit" class="page-searchbar-button"><i class="fa-solid fa-arrow-right"></i></button>
             </form>
         </section>
 
-        <nav class="page-menu" aria-label="Main navigation">
-            <a href="{{ url_for('frontend.index') }}" class="page-menu-item page-menu-item-home{% if not this_page_tag %} page-menu-item-active{% endif %}">Home</a>
-            {% for tag in tags %}
-                <a href="{{ url_for('frontend.tagpage', tag=tag) }}" class="page-menu-item page-menu-item-{{ tag | replace(' ', '-') }}{% if this_page_tag == tag %} page-menu-item-active{% endif %}">{{ tag | capit }}</a>
-            {% endfor %}
-        </nav>
+        <section class="page-header-second-bar">
+            <div class="page-header-menu-big-container">
+                <button class="page-menu-button" id="page-menu-scroll-left-button"><i class="fa-solid fa-angles-left"></i></button>
+                <nav class="page-menu-container" id="page-menu-scroll-container" aria-label="Main navigation">
+                    <a href="{{ url_for('frontend.index') }}" class="page-menu-item page-menu-item-home{% if not this_page_tag %} page-menu-item-active{% endif %}">Home</a>
+                    {% for tag in tags %}
+                        <a href="{{ url_for('frontend.tagpage', tag=tag) }}" class="page-menu-item page-menu-item-{{ tag | replace(' ', '-') }}{% if this_page_tag == tag %} page-menu-item-active{% endif %}">{{ tag | capit }}</a>
+                    {% endfor %}
+                </nav>
+                <button class="page-menu-button" id="page-menu-scroll-right-button"><i class="fa-solid fa-angles-right"></i></button>
+            </div>
+
+            <script>
+                const scrollContainer = document.getElementById("page-menu-scroll-container");
+                const scrollLeftBtn = document.getElementById("page-menu-scroll-left-button");
+                const scrollRightBtn = document.getElementById("page-menu-scroll-right-button");
+                const scrollAmount = 100;
+
+                function updateButtons() {
+                    if (scrollContainer.scrollLeft <= 0) {
+                        scrollLeftBtn.classList.add("disable");
+                        scrollLeftBtn.disabled = true;
+                    } else {
+                        scrollLeftBtn.classList.remove("disable");
+                        scrollLeftBtn.disabled = false;
+                    }
+
+                    if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+                        scrollRightBtn.classList.add("disable");
+                        scrollRightBtn.disabled = true;
+                    } else {
+                        scrollRightBtn.classList.remove("disable");
+                        scrollRightBtn.disabled = false;
+                    }
+                }
+
+                scrollLeftBtn.onclick = () => {
+                    scrollContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+                };
+
+                scrollRightBtn.onclick = () => {
+                    scrollContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+                };
+
+                scrollContainer.addEventListener("scroll", updateButtons);
+                window.addEventListener("resize", updateButtons);
+
+                updateButtons();
+            </script>
+
+        </section>
     </header>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
 
-    <footer>
-        Powered by <a href="https://github.com/Gijs6/Havas">Havas</a>
-    </footer>
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer>Powered by <a href="https://github.com/Gijs6/Havas">Havas</a></footer>
 {% endblock %}

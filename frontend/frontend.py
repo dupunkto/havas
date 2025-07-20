@@ -45,6 +45,9 @@ def view_article(id):
 
 @frontend_bp.route("/search")
 def search_article():
-    query = request.args.get("q", "").lower()
+    search_term = request.args.get("q", "")
+    query = search_term.lower()
     articles = Article.query.filter(Article.title.ilike(f"%{query}%")).all()
-    return render_template("frontend_listview.html", articles=articles)
+    return render_template(
+        "frontend_searchresult.html", articles=articles, search_term=search_term
+    )

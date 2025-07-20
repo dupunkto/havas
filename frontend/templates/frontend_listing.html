@@ -10,7 +10,7 @@
     <div class="article-listing">
         {% for article in articles %}
             <a class="article-container" href="{{ url_for('frontend.view_article', id=article.id) }}">
-                <img class="article-image" src="{{ url_for('media.get_file', id=article.cover_image_id) }}">
+                <img class="article-image" src="{{ url_for('media.get_file', id=article.cover_image_id) }}" />
                 <span class="article-title">{{ article.title }}</span>
                 <span class="article-description">{{ article.description }}</span>
                 <span class="article-datetime">{{ article.datetime_edited.strftime("%B %d, %Y at %H:%M") }}</span>
