@@ -160,7 +160,6 @@ body > main {
         "description image"
         "authors image"
         "tags image"
-        "priority image"
         "content preview";
     gap: 25px;
     grid-template-columns: repeat(2, 1fr);
@@ -206,22 +205,6 @@ body > main {
 
 .manager-editor-tags {
     grid-area: tags;
-}
-
-.manager-editor-priority {
-    grid-area: priority;
-    display: flex;
-    flex-direction: revert;
-    gap: 10px;
-    align-items: center;
-}
-
-.manager-editor-priority input {
-    flex-grow: 1;
-}
-
-.manager-editor-priority output {
-    padding: 0px 15px;
 }
 
 .manager-editor-content {

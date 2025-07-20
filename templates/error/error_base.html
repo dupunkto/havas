@@ -1,0 +1,11 @@
+{% extends "skeleton.html" %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/error.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+{% endblock %}

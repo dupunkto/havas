@@ -332,12 +332,6 @@
             });
         </script>
 
-        <fieldset class="manager-editor-section manager-editor-priority">
-            <legend>Priority</legend>
-            <input type="range" id="priority" name="priority" min="1" max="5" step="1" value="{{ article.priority }}" oninput="this.nextElementSibling.value = this.value">
-            <output>{{ article.priority }}</output>
-        </fieldset>
-
         <fieldset class="manager-editor-section manager-editor-preview">
             <legend>Preview</legend>
             <article id="preview" class="article-content"></article>

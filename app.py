@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import os
 
 from db.models import db
@@ -27,6 +27,17 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 with app.app_context():
     db.create_all()
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("error/404.html"), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("error/500.html"), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)

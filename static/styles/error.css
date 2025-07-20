@@ -1,0 +1,48 @@
+body {
+    min-height: 100vh;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.error {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 100%;
+    color: black;
+    border-bottom: 10px solid var(--oc-orange-8);
+    padding: 20px;
+}
+
+.error h1 {
+    font-size: 7.5em;
+}
+
+.error h2 {
+    font-size: 2.5em;
+}
+
+a {
+    font-size: 2em;
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    padding: 15px;
+    background: var(--oc-yellow-8);
+    color: white;
+    font-weight: 700;
+    text-align: center;
+}
+
+a:hover {
+    opacity: 0.8;
+}

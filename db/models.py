@@ -29,8 +29,6 @@ class Article(db.Model):
 
     cover_image_id = db.Column(db.String(12), nullable=True)
 
-    priority = db.Column(db.Integer, default=3)
-
     @property
     def authors(self):
         return json.loads(self.authors_json or "[]")

@@ -21,13 +21,14 @@ def inject_tags():
 
 @frontend_bp.route("/")
 def index():
-    articles = Article.query.all()
+    articles = Article.query.order_by(Article.datetime_made.desc()).all()
+
     return render_template("frontend_listing.html", articles=articles)
 
 
 @frontend_bp.route("/tag/<string:tag>")
 def tagpage(tag):
-    articles = Article.query.all()
+    articles = Article.query.order_by(Article.datetime_made.desc()).all()
     filtered = [a for a in articles if tag in a.tags]
     return render_template(
         "frontend_listing.html", articles=filtered, this_page_tag=tag
@@ -47,7 +48,11 @@ def view_article(id):
 def search_article():
     search_term = request.args.get("q", "")
     query = search_term.lower()
-    articles = Article.query.filter(Article.title.ilike(f"%{query}%")).all()
+    articles = (
+        Article.query.filter(Article.title.ilike(f"%{query}%"))
+        .order_by(Article.datetime_made.desc())
+        .all()
+    )
     return render_template(
         "frontend_searchresult.html", articles=articles, search_term=search_term
     )

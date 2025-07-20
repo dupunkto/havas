@@ -111,7 +111,6 @@ def save_api():
             html=build_HTML(request.form.get("content")),
             datetime_made=datetime.now(timezone.utc),
             datetime_edited=datetime.now(timezone.utc),
-            priority=int(request.form.get("priority", 3)),  # <-- Add this
         )
 
         if (
@@ -153,9 +152,6 @@ def save_api():
 
     article.datetime_edited = datetime.now(timezone.utc)
 
-    priority_value = request.form.get("priority")
-    if priority_value is not None:
-        article.priority = int(priority_value)
 
     db.session.commit()
 
@@ -218,7 +214,6 @@ def export_json(id):
         "datetime_made": article.datetime_made.isoformat(),
         "datetime_edited": article.datetime_edited.isoformat(),
         "cover_image_id": article.cover_image_id,
-        "priority": article.priority,
     }
     response = make_response(json.dumps(data, indent=2))
     response.headers["Content-Disposition"] = (

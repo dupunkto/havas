@@ -1,0 +1,12 @@
+{% extends "error/error_base.html" %}
+
+{% block title %}500 Internal Server Error{% endblock %}
+
+{% block content %}
+    <div class="error">
+        <h1>500</h1>
+        <h2>Internal Server Error</h2>
+        <h2>Oops! Something went wrong on our end. Please try again later.</h2>
+    </div>
+    <a href="{{ url_for('frontend.index') }}">Go back to Home <i class="fa-solid fa-arrow-right"></i></a>
+{% endblock %}
