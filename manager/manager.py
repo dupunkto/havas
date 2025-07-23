@@ -37,15 +37,19 @@ def add_article():
     return redirect(url_for("manager.editor", id="new"))
 
 
-@manager_bp.route("/editor")
-def editor_apex():
+@manager_bp.route("/all")
+def all_articles():
     articles = Article.query.order_by(Article.datetime_edited.desc()).all()
 
-    header_text = "Recently edited"
+    header_text = "All articles"
 
     return render_template(
         "manager_listing.html", articles=articles, header_text=header_text
     )
+
+@manager_bp.route("/editor")
+def editor_apex():
+    return redirect(url_for("manager.all_articles"))
 
 
 @manager_bp.route("/editor/<string:id>")
@@ -122,7 +126,7 @@ def save_api():
             flash("Enter an title, description and content.", "error")
 
             return redirect(
-                url_for("manager.editor_apex")
+                url_for("manager.all_articles")
             )  # todo(gijs): Don't return to the apex, return to the form on /editor/new (filled in form)
 
         db.session.add(new_article)
@@ -173,7 +177,7 @@ def delete_article(id):
     else:
         flash(f"Article with ID <b>{id}</b> not found. Nothing was deleted.", "error")
 
-    return redirect(url_for("manager.editor_apex"))
+    return redirect(url_for("manager.all_articles"))
 
 
 @manager_bp.route("/reset_dates/<string:id>", methods=["POST"])
@@ -201,7 +205,7 @@ def export_json(id):
     if not article:
         flash(f"Article with ID <b>{id}</b> not found. Export failed.", "error")
 
-        return redirect(url_for("manager.editor_apex"))
+        return redirect(url_for("manager.all_articles"))
     data = {
         "id": article.id,
         "title": article.title,
@@ -250,4 +254,4 @@ def regen_html_all():
 
     flash("HTML for all articles has been regenerated from their content.", "success")
 
-    return redirect(url_for("manager.editor_apex"))
+    return redirect(url_for("manager.all_articles"))

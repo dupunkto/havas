@@ -21,7 +21,13 @@
             <nav class="manager-page-menu" aria-label="Manager navigation">
                 {{ build_menu_item(["manager.index"], "Home") }}
                 {{ build_menu_item(["manager.add_article"], "Add article") }}
-                {{ build_menu_item(["manager.editor_apex", "manager.editor"], "Editor") }}
+                {{ build_menu_item(["manager.all_articles"], "All articles") }}
+            </nav>
+
+            <nav class="manager-dynamic-unlisted" aria-label="Unlisted pages">
+                {% if request.endpoint == "manager.editor" %}
+                    <a href="{{ request.path }}" class="manager-menu-item manager-menu-item-active">Editor</a>
+                {% endif %}
             </nav>
 
             <nav class="manager-shortcuts" aria-label="Shortcuts">
